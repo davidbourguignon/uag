@@ -2,4 +2,4 @@ uag
 ===
 
 Name: µAg (micro-agriculture).
-Description: distributed mobile information system for managing field-to-fork agricultural processes.
+Description: minimal distributed mobile information system for managing field-to-fork agricultural processes.
