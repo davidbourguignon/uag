@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="style/image/jasmine_favicon.png">
+
+  <link rel="stylesheet" type="text/css" href="style/jasmine.css">
+  <script type="text/javascript" src="js/jasmine/jasmine.js"></script>
+  <script type="text/javascript" src="js/jasmine/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="file:///C:/Users/Sebstien/Documents/EclipseWorkSpaces/projet_nsy209/Field/assets/www/js/uag/uag.js"></script>
+  <script type="text/javascript" src="file:///C:/Users/Sebstien/Documents/EclipseWorkSpaces/projet_nsy209/Field/assets/www/js/uag/uag.data.model.js"></script>
+
+  <!-- include spec files here... -->
+  <!--<script type="text/javascript" src="js/spec/SpecHelper.js"></script>-->
+  <script type="text/javascript" src="js/spec/dataModelSpec.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var trivialReporter = new jasmine.TrivialReporter();
+
+      jasmineEnv.addReporter(trivialReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+</head>
+
+<body>
+</body>
+</html>
