@@ -326,7 +326,6 @@ uag.data.model = uag.data.model || {};
 		
 	// uag.data.model.producer object definition association    
 	uag.data.model.producer = producer;
-	//console.log(uag.data.model.producer);
 
 }());
 
@@ -340,30 +339,75 @@ uag.data.model = uag.data.model || {};
 	var worker = function () {
 		
 		// fields (private attributes)
+		var _id = null;
+		var _name = null;
+		var _smartphoneId = null;
+		var _containersId = null;
+		var _producersId = null;
 		
 		// initialization
 		try {
 			
-			var isValidJSON = false;
+			var isValidJSON = 
+				null != arguments && 
+				1 == arguments.length && 
+				null != arguments[0] && 
+				typeof(arguments[0]) == "object" && 
+				typeof(arguments[0].id) == "string" &&
+				typeof(arguments[0].name) == "string" &&
+				typeof(arguments[0].smartphoneId) == "string" &&
+				typeof(arguments[0].containersId) == "object" &&
+				typeof(arguments[0].producersId) == "object";
 			
-			var isValidArgumentArray = false;
+			var isValidArgumentArray =  
+				null != arguments && 
+				5 == arguments.length &&
+				typeof(arguments[0]) == "string" &&
+				typeof(arguments[1]) == "string" &&
+				typeof(arguments[2]) == "string" &&
+				typeof(arguments[3]) == "object" &&
+				typeof(arguments[4]) == "object";
+			
+			//alert(isValidJSON + " " + isValidArgumentArray + " " + arguments.length);
+			//alert(arguments[0]);
+			//alert("constructeur " + arguments);
 			
 			if (isValidJSON) {
 				// 1 JSON argument
-				
+				//alert("json constructeur " + arguments[0]);
+				_id = arguments[0].id;
+				_name = arguments[0].name;
+				_smartphoneId = arguments[0].smartphoneId;
+				_containersId = arguments[0].containersId;
+				_producersId = arguments[0].producersId;				
 			} else if (isValidArgumentArray) {
 				// arguments array
-				
+				//alert("array constructeur " + arguments[0]);
+				_id = arguments[0];
+				_name = arguments[1];
+				_smartphoneId = arguments[2];
+				_containersId = arguments[3];
+				_producersId = arguments[4];
 			} else {
-				throw new Error('producer expected 1 or # arguments !!');
+				throw new Error('worker expected 1 or # arguments !!');
 			}
 		} catch(e) {
 			throw new Error('bad arguments exception : ' + e.message);
 		}
 		
 		// privileged  methods (read only public properties)
+		this.getId = function() { return _id; };
+		this.getName = function() { return _name; };
+		this.getSmartphoneId = function() { return _smartphoneId; };
+		this.getContainersId = function() { return _containersId; };
+		this.getProducersId = function() { return _producersId; };
 		
 		// public properties
+		//this.id = this.getId();
+		//this.name = this.getName();
+		//this.smartphoneId = this.getSmartphoneId();
+		this.containers = null;
+		this.producers = null;
 		
 	};
 
@@ -374,15 +418,26 @@ uag.data.model = uag.data.model || {};
 		 * @returns {String} 
 		 */
 		toString : function() {
-			var producerStr = 'not imlemented'; 
-			return producerStr;
+			var workerToString = 
+				'{"id":"' + this.getId() + '",' +
+				'"name":"' + this.getName() + '",' +  
+				'"smartphoneId":"' + this.getSmartphoneId() + '",' +  
+				'"containersId":' + JSON.stringify(this.getContainersId()) + ',' +  
+				'"producersId":' + JSON.stringify(this.getProducersId()) + '}';
+			return workerToString;
+		},
+	
+		/** toJSON method
+		 * @returns {String} 
+		 */
+		toJSON : function() {
+			return JSON.parse(this.toString());
 		}
 			
 	};
 		
 	// uag.data.model.worker object definition association    
 	uag.data.model.worker = worker;
-	//console.log(uag.data.model.worker);
 	
 }());
 
@@ -411,7 +466,7 @@ uag.data.model = uag.data.model || {};
 				// arguments array
 				
 			} else {
-				throw new Error('producer expected 1 or # arguments !!');
+				throw new Error('product expected 1 or # arguments !!');
 			}
 		} catch(e) {
 			throw new Error('bad arguments exception : ' + e.message);
@@ -438,19 +493,17 @@ uag.data.model = uag.data.model || {};
 		
 	// uag.data.model.product object definition association    
 	uag.data.model.product = product;
-	//console.log(uag.data.model.product);
 
 }());
 
 
-
-// crate object declaration scope
+// container object declaration scope
 (function(){
 	
 	/**
-	 * @class crate class 
+	 * @class container 
 	 */
-	var crate = function () {
+	var container = function () {
 		
 		// fields (private attributes)
 		
@@ -468,20 +521,20 @@ uag.data.model = uag.data.model || {};
 				// arguments array
 				
 			} else {
-				throw new Error('producer expected 1 or # arguments !!');
+				throw new Error('container expected 1 or # arguments !!');
 			}
 		} catch(e) {
 			throw new Error('bad arguments exception : ' + e.message);
 		}
 		
-		// privileged  methods (read only public properties)
+		// privileged methods (read only public properties)
 		
 		// public properties
 		
 	};
 
-	// crate object publics, non-privileged methods  
-	crate.prototype = {
+	// container object publics, non-privileged methods  
+	container.prototype = {
 			
 		/** toString method
 		 * @returns {String} 
@@ -493,9 +546,63 @@ uag.data.model = uag.data.model || {};
 			
 	};
 		
-	// uag.data.model.crate object definition association    
-	uag.data.model.crate = crate;
-	//console.log(uag.data.model.crate);
+	// uag.data.model.container object definition association    
+	uag.data.model.container = container;
+
+}());
+
+
+//quality object declaration scope
+(function(){
+	
+	/**
+	 * @class quality 
+	 */
+	var quality = function () {
+		
+		// fields (private attributes)
+		
+		// initialization
+		try {
+
+			var isValidJSON = false;
+			
+			var isValidArgumentArray = false;
+			
+			if (isValidJSON) {
+				// 1 JSON argument
+				
+			} else if (isValidArgumentArray) {
+				// arguments array
+				
+			} else {
+				throw new Error('quality expected 1 or # arguments !!');
+			}
+		} catch(e) {
+			throw new Error('bad arguments exception : ' + e.message);
+		}
+		
+		// privileged methods (read only public properties)
+		
+		// public properties
+		
+	};
+
+	// container object publics, non-privileged methods  
+	quality.prototype = {
+			
+		/** toString method
+		 * @returns {String} 
+		 */
+		toString : function() {
+			var qualityToString = 'not imlemented'; 
+			return qualityToString;
+		}
+			
+	};
+		
+	// uag.data.model.quality object definition association    
+	uag.data.model.quality = quality;
 
 }());
 
