@@ -11,7 +11,7 @@
 describe("position", function() {
 
 	// 4 arguments constructor 
-	it("should be able to initialize object position with 4 arguments", function() {
+	it("should be able to initialize position object with 4 arguments", function() {
 		var id1 = "position_id_1"; 
 		var lat1 = 2; 
 		var lon1 = 4;
@@ -24,7 +24,7 @@ describe("position", function() {
 	});
 	
 	// 1 arguments constructor 
-	it("should be able to initialize object position with 1 json argument", function() {
+	it("should be able to initialize position object with 1 json argument", function() {
 		var jsonData = { "id":"position_id_2","latitude":1,"longitude":2,"altitude":4 }
 		var position = new uag.data.model.position( jsonData );
 		expect(position.getId()).toEqual(jsonData.id);
@@ -77,7 +77,7 @@ describe("position", function() {
 describe("field", function() {
 
 	// 6 arguments constructor
-	it("should be able to initialize object position with 4 arguments", function() {
+	it("should be able to initialize field object with 6 arguments", function() {
 		var id = "field_id_1"; 
 		var name = "nom"; 
 		var description = "description"; 
@@ -94,7 +94,7 @@ describe("field", function() {
 	});
 	
 	// 1 json arguments constructor
-	it("should be able to initialize object position with 1 json arguments", function() {
+	it("should be able to initialize field object with 1 json arguments", function() {
 		var jsonData = {
 			"id":"field_id_1", 
 			"name":"nom",
@@ -118,7 +118,7 @@ describe("field", function() {
 describe("producer", function() {
 
 	// 7 arguments constructor
-	it("should be able to initialize object position with 4 arguments", function() {
+	it("should be able to initialize producer object with 7 arguments", function() {
 		var id = "producer_id_1";
 		var name = "nom";
 		var smartphoneId = "smart_phone_id";
@@ -147,7 +147,7 @@ describe("producer", function() {
 	});
 	
 	// 1 json arguments constructor
-	it("should be able to initialize object position with 1 json arguments", function() {
+	it("should be able to initialize producer object with 1 json arguments", function() {
 		var jsonData = {
 			"id":"producer_id_1", 
 			"name":"nom", 
@@ -174,6 +174,48 @@ describe("producer", function() {
 
 describe("worker", function() {
 
+	// 5 arguments constructor
+	it("should be able to initialize worker object with 5 arguments", function() {
+		var id = "worker_id_1";
+		var name = "workerName";
+		var smartphoneId = "smart_phone_id";
+		var containersId = ["container_id_1","container_id_2","container_id_3"];
+		var producersId = ["producer_id_1","producer_id_2","producer_id_3"];
+		
+		var worker = 
+			new uag.data.model.worker(
+				id, 
+				name, 
+				smartphoneId, 
+				containersId, 
+				producersId);
+		
+		expect(worker.getId()).toEqual(id);
+		expect(worker.getName()).toEqual(name);
+		expect(worker.getSmartphoneId()).toEqual(smartphoneId);
+		expect(worker.getContainersId()).toEqual(containersId);
+		expect(worker.getProducersId()).toEqual(producersId);
+	});
+	
+	// 1 json arguments constructor
+	it("should be able to initialize worker object with 1 json arguments", function() {
+		var jsonData = {
+			"id":"worker_id_1", 
+			"name":"workerName", 
+			"smartphoneId":"smart_phone_id", 
+			"containersId":["container_id_1","container_id_2","container_id_3"], 
+			"producersId":["producer_id_1","producer_id_2","producer_id_3"]
+		};
+		
+		var worker = new uag.data.model.worker(jsonData);
+		
+		expect(worker.getId()).toEqual(jsonData.id);
+		expect(worker.getName()).toEqual(jsonData.name);
+		expect(worker.getSmartphoneId()).toEqual(jsonData.smartphoneId);
+		expect(worker.getContainersId()).toEqual(jsonData.containersId);
+		expect(worker.getProducersId()).toEqual(jsonData.producersId);
+	});
+
 });
 
 
@@ -182,6 +224,11 @@ describe("product", function() {
 });
 
 
-describe("crate", function() {
+describe("container", function() {
+
+});
+
+
+describe("quality", function() {
 
 });
