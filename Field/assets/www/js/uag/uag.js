@@ -10,6 +10,11 @@
 uag = {};
 //console.log('uag (in uag.js) : ' + uag);
 
+
+/**@namespace Holds util functionality 
+ * */
+uag.util = uag.util || {};
+
 /**@namespace Holds controller functionality 
  * */
 uag.controller = {};
