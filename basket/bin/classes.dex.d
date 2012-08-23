@@ -1,0 +1,27 @@
+/home/db/src/uag/basket/bin/classes.dex : \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$layout.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$string.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$color.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$drawable.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$xml.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$styleable.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$attr.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$raw.class \
+/home/db/src/uag/basket/bin/classes/com/google/zxing/client/android/R$id.class \
+/home/db/src/uag/basket/bin/classes/com/phonegap/plugins/barcodescanner/BarcodeScanner.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$layout.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$string.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$color.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/MainActivity.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$drawable.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$xml.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$styleable.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/BuildConfig.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$attr.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$raw.class \
+/home/db/src/uag/basket/bin/classes/uag/basket/R$id.class \
+/home/db/src/uag/lib/barcodescanner/bin/classes.jar \
+/home/db/lib/android-sdk-linux/tools/support/annotations.jar \
+/home/db/src/uag/basket/libs/cordova-2.0.0.jar \
