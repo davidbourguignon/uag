@@ -9,7 +9,7 @@
 //console.log(p1.toSource());
  
 describe("Position", function() {
-
+	
 	// 4 arguments constructor 
 	it("should be able to initialize position object with 4 arguments", function() {
 		
@@ -36,35 +36,48 @@ describe("Position", function() {
 	
 	// 1 arguments constructor 
 	it("should be able to initialize position object with 1 json argument", function() {
+		
 		var jsonData = { "id":"position_id_2","latitude":1,"longitude":2,"altitude":4 };
 		var position = new uag.data.model.Position( jsonData );
 		expect(position.getId()).toEqual(jsonData.id);
 		expect(position.getLatitude()).toEqual(jsonData.latitude);
 		expect(position.getLongitude()).toEqual(jsonData.longitude);
 		expect(position.getAltitude()).toEqual(jsonData.altitude);
+		
+	});
+
+	it ("Should not be able to initialize position global object", function() {
+		
+		expect(function() { 
+			new Position("position_id_",1,2,3); 
+		}).toThrow();
+		
 	});
 	
 	// other constructors based on arguments bad number (0, 2, 3, 5 arguments) or type (1+ null arguments, ...) 
 	it("should throw exception if bad arguments", function() {
+		
 		expect(function(){
-			var position = new uag.data.model.Position();
+			new uag.data.model.Position();
 		}).toThrow("bad arguments exception : position expected 1 or 4 arguments !!");
 		expect(function(){
-			var position = new uag.data.model.Position("", 10);
+			new uag.data.model.Position("", 10);
 		}).toThrow("bad arguments exception : position expected 1 or 4 arguments !!");
 		expect(function(){
-			var position = new uag.data.model.Position("", 10, 20);
+			new uag.data.model.Position("", 10, 20);
 		}).toThrow("bad arguments exception : position expected 1 or 4 arguments !!");
 		expect(function(){
-			var position = new uag.data.model.Position("", 10, 20, 30, 40);
+			new uag.data.model.Position("", 10, 20, 30, 40);
 		}).toThrow("bad arguments exception : position expected 1 or 4 arguments !!");
 		expect(function(){
-			var position = new uag.data.model.Position("", 10, 20, null);
+			new uag.data.model.Position("", 10, 20, null);
 		}).toThrow("bad arguments exception : position expected 1 or 4 arguments !!");
+		
 	});
 	
 	// others constructor based on bad json input data 
 	it("should throw exception if bad json arguments", function() {
+		
 		expect(function(){
 			var jsonData = { "id":null,"latitude":1,"longitude":2,"altitude":4 };
 			var position = new uag.data.model.Position( jsonData );
@@ -80,6 +93,7 @@ describe("Position", function() {
 			var position = new uag.data.model.Position( jsonData );
 			alert(position.getId());
 		}).toThrow("bad arguments exception : position expected 1 or 4 arguments !!");
+		
 	});
 
 });
@@ -89,6 +103,7 @@ describe("Field", function() {
 
 	// 6 arguments constructor
 	it("should be able to initialize field object with 6 arguments", function() {
+		
 		var id = "field_id_1"; 
 		var name = "nom"; 
 		var description = "description"; 
@@ -118,6 +133,7 @@ describe("Field", function() {
 	
 	// 1 json arguments constructor
 	it("should be able to initialize field object with 1 json arguments", function() {
+		
 		var jsonData = {
 			"id":"field_id_1", 
 			"name":"nom",
@@ -133,6 +149,22 @@ describe("Field", function() {
 		expect(field.getPositionId()).toEqual(jsonData.positionId);
 		expect(field.getProductsId()).toEqual(jsonData.productsId);
 		expect(field.getProducerId()).toEqual(jsonData.producerId);
+		
+	});
+
+	it ("Should not be able to initialize field global object", function() {
+		
+		var id = "field_id_1"; 
+		var name = "nom"; 
+		var description = "description"; 
+		var positionId = "position_id_1"; 
+		var productsId = ["product_id_1","product_id_2","product_id_3"]; 
+		var producerId = "procucer_id_1"; 
+
+		expect(function() { 
+			new Field(id, name, description, positionId, productsId, producerId);
+		}).toThrow();
+		
 	});
 	
 });
@@ -142,6 +174,7 @@ describe("Producer", function() {
 
 	// 7 arguments constructor
 	it("should be able to initialize producer object with 8 arguments", function() {
+		
 		var id = "producer_id_1";
 		var name = "nom";
 		var smartphoneId = "smart_phone_id";
@@ -186,6 +219,7 @@ describe("Producer", function() {
 	
 	// 1 json arguments constructor
 	it("should be able to initialize producer object with 1 json arguments", function() {
+		
 		var jsonData = {
 			"id":"producer_id_1", 
 			"name":"nom", 
@@ -210,6 +244,31 @@ describe("Producer", function() {
 		
 	});
 
+	it ("Should not be able to initialize Producer global object", function() {
+		
+		var id = "producer_id_1";
+		var name = "nom";
+		var smartphoneId = "smart_phone_id";
+		var farmName = "farm_name";
+		var websiteUrl = "http://www.domaine.ext";
+		var workersId = ["worker_id_1","worker_id_2","worker_id_3"];
+		var fieldsId = ["field_id_1","field_id_2","field_id_3"];
+		var productsId = ["product_id_1","product_id_2","product_id_3"];
+		
+		expect(function() { 
+				new Producer(
+					id, 
+					name, 
+					smartphoneId, 
+					farmName, 
+					websiteUrl, 
+					workersId, 
+					fieldsId,
+					productsId);
+		}).toThrow();
+		
+	});
+
 });
 
 
@@ -217,6 +276,7 @@ describe("worker", function() {
 
 	// 5 arguments constructor
 	it("should be able to initialize worker object with 5 arguments", function() {
+		
 		var id = "worker_id_1";
 		var name = "workerName";
 		var smartphoneId = "smart_phone_id";
@@ -236,10 +296,12 @@ describe("worker", function() {
 		expect(worker.getSmartphoneId()).toEqual(smartphoneId);
 		expect(worker.getContainersId()).toEqual(containersId);
 		expect(worker.getProducersId()).toEqual(producersId);
+		
 	});
 	
 	// 1 json arguments constructor
 	it("should be able to initialize worker object with 1 json arguments", function() {
+		
 		var jsonData = {
 			"id":"worker_id_1", 
 			"name":"workerName", 
@@ -255,6 +317,28 @@ describe("worker", function() {
 		expect(worker.getSmartphoneId()).toEqual(jsonData.smartphoneId);
 		expect(worker.getContainersId()).toEqual(jsonData.containersId);
 		expect(worker.getProducersId()).toEqual(jsonData.producersId);
+		
+	});
+
+	it ("Should not be able to initialize Worker global object", function() {
+		// this test can't pass, because Worker object already exist in global scope as web Worker 
+		/*
+		var id = "worker_id_";
+		var name = "workerName";
+		var smartphoneId = "smart_phone_id";
+		var containersId = ["container_id_1","container_id_2","container_id_3"];
+		var producersId = ["producer_id_1","producer_id_2","producer_id_3"];
+		
+		expect(function() { 
+			var worker = 
+				new Worker(
+					id, 
+					name, 
+					smartphoneId, 
+					containersId, 
+					producersId);
+		}).toThrow();
+		*/
 	});
 
 });
@@ -264,6 +348,7 @@ describe("Product", function() {
 
 	// 3 arguments constructor
 	it("should be able to initialize Product object with 3 arguments", function() {
+		
 		var id = "product_id_1"; 
 		var name = "productName"; 
 		var description = "productDescription"; 
@@ -285,6 +370,7 @@ describe("Product", function() {
 	
 	// 1 json arguments constructor
 	it("should be able to initialize Product object with 1 json arguments", function() {
+		
 		var jsonData = {
 			"id":"product_id_1", 
 			"name":"productName",
@@ -297,6 +383,18 @@ describe("Product", function() {
 		expect(product.getDescription()).toEqual(jsonData.description);
 		
 	});
+
+	it ("Should not be able to initialize Product global object", function() {
+		
+		var id = "product_id_1"; 
+		var name = "productName"; 
+		var description = "productDescription"; 
+		
+		expect(function() { 
+			new Product(id, name, description);
+		}).toThrow();
+		
+	});
 	
 });
 
@@ -304,13 +402,14 @@ describe("Product", function() {
 describe("Container", function() {
 
 	// 8 arguments constructor
-	it("should be able to initialize Container object with 8 arguments", function() {
+	it("should be able to initialize Container object with 7 arguments", function() {
+		
 		var id = "container_id_1";
 		var weight = 1.5;
 		var ts = Date.now();
 		var qualityId = "quality_id_1";
-		var workerId = "worker_id_1";
-		var producerId = "producer_id_1";
+		//var workerId = "worker_id_1";
+		//var producerId = "producer_id_1";
 		var fieldId = "field_id_1";
 		var productId = "product_id_1";
 		
@@ -320,8 +419,8 @@ describe("Container", function() {
 					weight, 
 					ts,
 					qualityId,
-					workerId,
-					producerId,
+					//workerId,
+					//producerId,
 					fieldId,
 					productId);
 		
@@ -329,8 +428,8 @@ describe("Container", function() {
 		expect(container.getWeight()).toEqual(weight);
 		expect(container.getTs()).toEqual(ts);
 		expect(container.getQualityId()).toEqual(qualityId);
-		expect(container.getWorkerId()).toEqual(workerId);
-		expect(container.getProducerId()).toEqual(producerId);
+		//expect(container.getWorkerId()).toEqual(workerId);
+		//expect(container.getProducerId()).toEqual(producerId);
 		expect(container.getFieldId()).toEqual(fieldId);
 		expect(container.getProductId()).toEqual(productId);
 		
@@ -340,8 +439,8 @@ describe("Container", function() {
 		expect(container.getWeight()).toEqual(jsonContainer.weight);
 		expect(container.getTs()).toEqual(jsonContainer.ts);
 		expect(container.getQualityId()).toEqual(jsonContainer.qualityId);
-		expect(container.getWorkerId()).toEqual(jsonContainer.workerId);
-		expect(container.getProducerId()).toEqual(jsonContainer.producerId);
+		//expect(container.getWorkerId()).toEqual(jsonContainer.workerId);
+		//expect(container.getProducerId()).toEqual(jsonContainer.producerId);
 		expect(container.getFieldId()).toEqual(jsonContainer.fieldId);
 		expect(container.getProductId()).toEqual(jsonContainer.productId);
 
@@ -349,13 +448,14 @@ describe("Container", function() {
 	
 	// 1 json arguments constructor
 	it("should be able to initialize Container object with 1 json arguments", function() {
+		
 		var jsonData = {
 			"id":"container_id_1",
 			"weight":1.5,
 			"ts":Date.now(),
 			"qualityId":"quality_id_1",
-			"workerId":"worker_id_1",
-			"producerId":"producer_id_1",
+			//"workerId":"worker_id_1",
+			//"producerId":"producer_id_1",
 			"fieldId":"field_id_1",
 			"productId":"product_id_1"};
 		
@@ -365,10 +465,35 @@ describe("Container", function() {
 		expect(container.getWeight()).toEqual(jsonData.weight);
 		expect(container.getTs()).toEqual(jsonData.ts);
 		expect(container.getQualityId()).toEqual(jsonData.qualityId);
-		expect(container.getWorkerId()).toEqual(jsonData.workerId);
-		expect(container.getProducerId()).toEqual(jsonData.producerId);
+		//expect(container.getWorkerId()).toEqual(jsonData.workerId);
+		//expect(container.getProducerId()).toEqual(jsonData.producerId);
 		expect(container.getFieldId()).toEqual(jsonData.fieldId);
 		expect(container.getProductId()).toEqual(jsonData.productId);
+		
+	});
+
+	it ("Should not be able to initialize Container global object", function() {
+		
+		var id = "container_id_1";
+		var weight = 1.5;
+		var ts = Date.now();
+		var qualityId = "quality_id_1";
+		//var workerId = "worker_id_1";
+		//var producerId = "producer_id_1";
+		var fieldId = "field_id_1";
+		var productId = "product_id_1";
+		
+		expect(function() { 
+			new Container(
+					id, 
+					weight, 
+					ts,
+					qualityId,
+					//workerId,
+					//producerId,
+					fieldId,
+					productId);
+		}).toThrow();
 		
 	});
 
@@ -379,6 +504,7 @@ describe("Quality", function() {
 
 	// 3 arguments constructor
 	it("should be able to initialize Product object with 3 arguments", function() {
+		
 		var id = "quality_id_1"; 
 		var name = "qualityName"; 
 		var description = "qualityDescription"; 
@@ -400,6 +526,7 @@ describe("Quality", function() {
 	
 	// 1 json arguments constructor
 	it("should be able to initialize Product object with 1 json arguments", function() {
+		
 		var jsonData = {
 			"id":"quality_id_1", 
 			"name":"qualityName",
@@ -410,6 +537,18 @@ describe("Quality", function() {
 		expect(quality.getId()).toEqual(jsonData.id);
 		expect(quality.getName()).toEqual(jsonData.name);
 		expect(quality.getDescription()).toEqual(jsonData.description);
+		
+	});
+
+	it ("Should not be able to initialize Quality global object", function() {
+		
+		var id = "quality_id_1"; 
+		var name = "qualityName"; 
+		var description = "qualityDescription"; 
+		
+		expect(function() { 
+			new Quality(id, name, description);
+		}).toThrow();
 		
 	});
 
