@@ -3,150 +3,211 @@
  * @version Copyright (c) 2012
  * */
 
-// Holds util functionality 
-uag.util = uag.util || {};
-//console.log('uag data (in uag.data.js) : ' + uag.data);
+
+//var uag = uag || {};
+
+///**
+// * @namespace Holds util functionality
+// */
+//uag.util = uag.util || {};
+
+// Type object declaration scope
+//uag.util = (function(util) {
+var uag = (function(parent) {
+	"use strict";
+
+	var util = parent.util = parent.util || {}; 
 	
-/**
- * @class Type 
- */
-var Type = function() {};
+	/**
+	 * @class Type 
+	 * @memberOf uag.util 
+	 */
+	var Type = function() {};
 
-/** @description <b>is method</b>, checking object's type
- * @static
- * @private
- * @param type the type
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.is = function(type, obj) {
-	var classe = Object.prototype.toString.call(obj).slice(8,-1);
-	var valid = 
-		obj !== undefined &&
-		obj !== null &&
-		classe === type;
-	return valid;
-};
+	/** @description <b>is method</b>, checking object's type
+	 * @memberOf uag.util.Type
+	 * @static
+	 * @private
+	 * @param type the type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var is = function(type, obj) {
+		var classe = Object.prototype.toString.call(obj).slice(8,-1);
+		var valid = 
+			obj !== undefined &&
+			obj !== null &&
+			classe === type;
+		return valid;
+	};
 
-/** @description <b>isArguments method</b>, checking object's type is Arguments
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isArguments = function(obj) {
-	return uag.util.Type.is("Arguments",obj);
-};
+	Type.is = is;
+	
+	/** @description <b>isArguments method</b>, checking object's type is Arguments
+	 * @memberOf uag.util.Type
+	 * @static
+	 * @public
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isArguments = function(obj) {
+		return uag.util.Type.is("Arguments",obj);
+	};
 
-/** @description <b>isArray method</b>, checking object's type is Array
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isArray = function(obj) {
-	return uag.util.Type.is("Array",obj);
-};
+	Type.isArguments = isArguments; 
+	
+	/** @description <b>isArray method</b>, checking object's type is Array
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isArray = function(obj) {
+		return uag.util.Type.is("Array",obj);
+	};
 
-/** @description <b>isBoolean method</b>, checking object's type is Boolean 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isBoolean = function(obj) {
-	return uag.util.Type.is("Boolean",obj);
-};
+	Type.isArray = isArray;
+	
+	/** @description <b>isBoolean method</b>, checking object's type is Boolean 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isBoolean = function(obj) {
+		return uag.util.Type.is("Boolean",obj);
+	};
 
-/** @description <b>isDate method</b>, checking object's type is Date 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isDate = function(obj) {
-	return uag.util.Type.is("Date",obj);
-};
+	Type.isBoolean = isBoolean;
+	
+	/** @description <b>isDate method</b>, checking object's type is Date 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isDate = function(obj) {
+		return uag.util.Type.is("Date",obj);
+	};
 
-/** @description <b>isError method</b>, checking object's type is Error 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isError = function(obj) {
-	return uag.util.Type.is("Error",obj);
-};
+	Type.isDate = isDate;
+	
+	/** @description <b>isError method</b>, checking object's type is Error 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isError = function(obj) {
+		return uag.util.Type.is("Error",obj);
+	};
 
-/** @description <b>isFunction method</b>, checking object's type is Function 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isFunction = function(obj) {
-	return uag.util.Type.is("Function",obj);
-};
+	Type.isError = isError;
+	
+	/** @description <b>isFunction method</b>, checking object's type is Function 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isFunction = function(obj) {
+		return uag.util.Type.is("Function",obj);
+	};
 
-/** @description <b>isJSON method</b>, checking object's type is JSON 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isJSON = function(obj) {
-	return uag.util.Type.is("JSON",obj);
-};
+	Type.isFunction = isFunction;
+	
+	/** @description <b>isJSON method</b>, checking object's type is JSON 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isJSON = function(obj) {
+		return uag.util.Type.is("JSON",obj);
+	};
 
-/** @description <b>isMath method</b>, checking object's type is Math 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isMath = function(obj) {
-	return uag.util.Type.is("Math",obj);
-};
+	Type.isJSON = isJSON;
+	
+	/** @description <b>isMath method</b>, checking object's type is Math 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isMath = function(obj) {
+		return uag.util.Type.is("Math",obj);
+	};
 
-/** @description <b>isNumber method</b>, checking object's type is Number 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isNumber = function(obj) {
-	return uag.util.Type.is("Number",obj);
-};
+	Type.isMath = isMath;
+	
+	/** @description <b>isNumber method</b>, checking object's type is Number 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isNumber = function(obj) {
+		return uag.util.Type.is("Number",obj);
+	};
 
-/** @description <b>isObject method</b>, checking object's type is Object 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isObject = function(obj) {
-	return uag.util.Type.is("Object",obj);
-};
+	Type.isNumber = isNumber;
+	
+	/** @description <b>isObject method</b>, checking object's type is Object 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isObject = function(obj) {
+		return uag.util.Type.is("Object",obj);
+	};
 
-/** @description <b>isRegExp method</b>, checking object's type is RegExp 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isRegExp = function(obj) {
-	return uag.util.Type.is("RegExp",obj);
-};
+	Type.isObject = isObject;
+	
+	/** @description <b>isRegExp method</b>, checking object's type is RegExp 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	Type.isRegExp = function(obj) {
+		return uag.util.Type.is("RegExp",obj);
+	};
 
-/** @description <b>isString method</b>, checking object's type is String 
- * @static
- * @public
- * @param obj the object
- * @returns {Boolean} 
- */
-Type.isString = function(obj) {
-	return uag.util.Type.is("String",obj);
-};
-
-// uag.util.Type object definition association    
-uag.util.Type = Type;
+	/** @description <b>isString method</b>, checking object's type is String 
+	 * @static
+	 * @public
+	 * @memberOf uag.util.Type
+	 * @param obj the object
+	 * @returns {Boolean} 
+	 */
+	var isString = function(obj) {
+		return uag.util.Type.is("String",obj);
+	};
+	
+	Type.isString = isString;
+	
+	//alert(util);
+	//alert(Type);
+	
+	util.Type = Type;
+	//alert(util.Type);
+	
+	parent.util = util; 
+	//alert(parent);
+	//alert(parent.util);
+	//alert(parent.util.Type);
+	
+	return parent;
+	
+}(uag || {}));

@@ -3,51 +3,60 @@
  * @version Copyright (c) 2012
  * */
 
-// Holds data functionality 
-uag.data = uag.data || {};
-//console.log('uag data (in uag.data.js) : ' + uag.data);
 
 
-// storage object declaration scope 
-//(function() {
+//var uag = uag || {};
+
+///**
+// * @namespace Holds data functionality 
+// */
+//uag.data = uag.data || {};
+
+
+// storage object declaration scope
+var uag = (function (parent) {
+	"use strict";	
 	
 	/**
+	 * @memberOf uag.data
 	 * @class Storage
 	 */
 	var Storage = function() {};
 	
 	/** @description <b>Retrieve methods</b>, get data from local storage
+	 * @memberOf uag.data.Storage
 	 * @static
 	 * @param key the local storage key 
 	 * @returns {Array} json object list 
 	 */
-	Storage.Retrieve = function(key) {
-		
+	var Retrieve = function(key) {
 		// get list from local storage 
 		var list = JSON.parse(localStorage.getItem(key));
-
+	
 		var valid = 
-			undefined !== list &&
+			list !== undefined &&
 			null !== list &&
 			uag.util.Type.isArray(list);
 		
 		if (valid) {
 			return list;
 		} else {
-			return new Array();
+			return [];
 		}
-
+	
 	};
 	
+	Storage.Retrieve = Retrieve;
+	
 	/** @description <b>Save method</b>, set data to the local storage 
+	 * @memberOf uag.data.Storage
 	 * @static
 	 * @param key the local storage key
 	 * @param list the data's list, expected an Array
 	 */
-	Storage.Save =  function(key, list) {
-		
+	var Save =  function(key, list) {	
 		var valid = 
-			undefined !== list && 
+			list !== undefined && 
 			null !== list && 
 			uag.util.Type.isArray(list) && 
 			list.length > 0 ;
@@ -71,41 +80,58 @@ uag.data = uag.data || {};
 		
 	}; 
 	
+	Storage.Save = Save;
+	
 	/** @description <b>Delete method</b>, delete data from local storage 
+	 * @memberOf uag.data.Storage
 	 * @static
 	 * @param key the local storage key
 	 */
-	Storage.Delete = function(key) {
+	var Delete = function(key) {
 		// remove item for key from local storage  
 		localStorage.removeItem(key);
 	};
 	
-	// uag.data.storage object definition association    
-	uag.data.Storage = Storage;
+	Storage.Delete = Delete;
 	
-//}());
+	
+	parent.data = parent.data || {};
+	parent.data.Storage = Storage;
+	
+	return parent;
+	
+}(uag || {}));
 
 
-//workers object declaration scope   
-//(function(){
+
+// workers object declaration scope
+//uag.data = (function (data) {
+uag = (function (parent) {
+	"use strict";
 	
-	/** @class Workers
+	/** 
+	 * @memberOf uag.data
+	 * @class Workers
 	 * */
 	var Workers = function(){};
 	
 	// fields object public, static, non-privileged methods  
 	
 	/** @description <b>getLocalStorageKey method</b>, workers local storage key getter 
+	 * @memberOf uag.data.Workers
 	 * @static
 	 * @returns {String} key 
 	 */
-	Workers.getLocalStorageKey = function() { return "workers"; };
+	var getLocalStorageKey = function() { return "workers"; };
+	
+	Workers.getLocalStorageKey = getLocalStorageKey;
 	
 	/** @description <b>getAll method</b>, fetch all workers method
+	 * @memberOf uag.data.Workers
 	 * @static
 	 * @returns {Array} workers list
 	 */
-	Workers.getAll = function() {
+	var getAll = function() {
 		// get workers json string list 
 		var list = uag.data.Storage.Retrieve(Workers.getLocalStorageKey());
 		
@@ -118,12 +144,15 @@ uag.data = uag.data || {};
 		return currentWorkers;
 	};
 	
+	Workers.getAll = getAll;
+	
 	/** @description <b>findById method</b>, find a worker method 
+	 * @memberOf uag.data.Workers
 	 * @static 
 	 * @param workerId The worker's Id  
 	 * @returns {Object} a worker 
 	 */
-	Workers.findById = function(workerId) {
+	var findById = function(workerId) {
 		// get current workers list  
 		var currentWorkers = Workers.getAll();
 		
@@ -138,12 +167,30 @@ uag.data = uag.data || {};
 		return null;
 	};
 	
+	Workers.findById = findById;
+	
 	/** @description <b>add method</b>, add a worker to workers list method
+	 * @memberOf uag.data.Workers
 	 * @static
 	 * @param name worker's name 
+	 * @param producersId roducer's id array 
 	 * @returns {String} new worker's Id
 	 */
-	Workers.add = function(name) {
+	var addWorker = function(name, producersId) {
+		// input validation 
+		//TODO : name input validation
+		
+		// producersId input validation
+		if (undefined === producersId || 
+				null === producersId || 
+				!uag.util.Type.isArray(producersId)) {
+			producersId = [];
+		}
+		
+		// delete old worker 
+		uag.data.Workers.clear();
+		
+		// create new worker 
 		// read from phonegap/cordova device  
 		var smartphoneId = "uuid";//device.uuid;
 		// worker_id_ts_name_smartphoneId
@@ -154,33 +201,38 @@ uag.data = uag.data || {};
 				id,
 				name, 
 				smartphoneId, 
-				new Array(),
-				new Array());
-		// get current workers list  
+				[],
+				producersId);
+	
+		// get current workers list (expect empty) 
 		var currentWorkers = Workers.getAll();
 		// add new worker to workers list 
 		currentWorkers.push(worker);
+		
 		// save new workers list 
 		uag.data.Storage.Save(Workers.getLocalStorageKey(), currentWorkers);
 		
 		return id;
 	};
 	
+	Workers.addWorker = addWorker;
+	
 	/** @description <b>getContainers method</b>, fetch containers for a worker and a producer 
+	 * @memberOf uag.data.Workers
 	 * @static
-	 * @param workerId worker's id
-	 * @param producerId producer's id 
 	 * @returns {Array} containers list 
 	 */
-	Workers.getContainers = function(workerId, producerId) {
+	var getContainers = function() {
+		// get Setup data 
+		var setup = uag.data.Setup.get();
 		// get worker 
-		var worker = uag.data.Workers.findById(workerId);
+		var worker = uag.data.Workers.findById(setup.workerId);
 		// containers list  
-		var currentContainers = new Array();
+		var currentContainers = [];
 		// filter container
 		for ( var int = 0 ; int < worker.containers.length ; int++ ) {
 			// if producer's container , 
-			if (worker.containers[int].getProducerId() === producerId) {
+			if (worker.containers[int].getProducerId() === setup.producerId) {
 				// then add it
 				currentContainers.push(
 						new uag.data.model.Container(worker.containers[int]));
@@ -189,210 +241,268 @@ uag.data = uag.data || {};
 		return currentContainers;
 	};
 	
+	Workers.getContainers = getContainers;
+	
 	/** @description <b>findContainerById method</b>, find a container for a worker and a producer 
+	 * @memberOf uag.data.Workers
 	 * @static
-	 * @param workerId worker's id
-	 * @param producerId producer's id 
 	 * @param containerId container's id 
 	 * @returns {String} container's id 
 	 */
-	Worker.findContainerById = function(workerId, producerId, containerId) {
-		
+	var findContainerById = function(containerId) {
+		workerId = producerId = containerId = 0;
 	};
+	
+	Worker.findContainerById = findContainerById;
 	
 	/** @description <b>addContainer method</b>, create new container for a worker and a producer 
+	 * @memberOf uag.data.Workers
 	 * @static
-	 * @param workerId worker's id
-	 * @param producerId producer's id 
+	 * @param weight harvest weight 
+	 * @param qualityId harvest quality's id
+	 * @param fieldId harvest field's id 
+	 * @param productId harvest product's id 
 	 * @returns {String} container's id 
 	 */
-	Worker.addContainer = function(workerId, producerId) {
+	var addContainer = function(weight, qualityId, fieldId, productId) {
+		
+		// TODO : input validation 
+		
+		
+		var id = "container_id_1";
+		var ts = Date.now();
+		
+		var container = 
+			new uag.data.model.Container(
+					id, 
+					weight, 
+					ts,
+					qualityId,
+					//workerId,
+					//producerId,
+					fieldId,
+					productId);
 		
 	};
 	
+	Worker.addContainer = addContainer;
+	
 	/** @description <b>removeContainer method</b>, remove a container for a worker and a producer 
+	 * @memberOf uag.data.Workers
 	 * @static
 	 * @param workerId worker's id
 	 * @param producerId producer's id 
 	 * @param containerId container's id 
 	 */
-	Worker.removeContainer = function(workerId, producerId, containerId) {
-		
+	var removeContainer = function(containerId) {
+		workerId = producerId = containerId = 0;
 	};
 	
+	Worker.removeContainer = removeContainer;
+	
 	/** @description <b>remove method</b>, remove a worker from workers list method 
+	 * @memberOf uag.data.Workers
 	 * @static 
 	 * @param workerId worker's id
 	 */
-	Workers.remove = function(workerId) {
+	var remove = function(workerId) {
 		// get current workers list  
 		var currentWorkers = Workers.getAll();
 		// update workers list 
 		var updatedWorkers = [];
 		for ( var int = 0 ; int < currentWorkers.length ; int++ ) {
-			if (currentWorkers[int].getId() != workerId) {
+			if (currentWorkers[int].getId() !== workerId) {
 				updatedWorkers.push(currentWorkers[int]);
 			}
 			// so else remove implicitly worker for id 
 		}
 		// save updated workers list  
 		uag.data.Storage.Save(Workers.getLocalStorageKey(), updatedWorkers);
-	}
+	};
+	
+	Workers.remove = remove; 
 	
 	/** @description <b>clear method</b>, clear workers list 
+	 * @memberOf uag.data.Workers
 	 * @static 
 	 */
-	Workers.clear = function() {
+	var clear = function() {
 		// clear 
 		uag.data.Storage.Delete(Workers.getLocalStorageKey());
 	};
-		
-	// uag.data.workers object definition association    
-	uag.data.Workers = Workers;
 	
-//}());
+	Workers.clear = clear;
+	
+	
+	parent.data = parent.data || {};
+	parent.data.Workers = Workers;
+	
+	return parent;
+	
+}(uag || {}));
 
 
-//producers object declaration scope   
-//(function(){
-	
-	/** @class Producers
+
+// producers object declaration scope
+//uag.data = (function (data) {
+uag = (function (parent) {
+	"use strict";
+
+	/** 
+	 * @class Producers
+	 * @memberOf uag.data
 	 * */
 	var Producers = function(){};
 	
 	// fields object public, static, non-privileged methods  
 	
 	/** @description <b>getLocalStorageKey method</b>, producers local storage key getter method
+	 * @memberOf uag.data.Producers
 	 * @static
 	 * @returns {String} key 
 	 */
-	Producers.getLocalStorageKey = function() { return "producers"; };
+	var getLocalStorageKey = function() { return "producers"; };
 	
-	/** @description <b>getAll method</b>, fetch all producers, 
-	 * eventually for a particular worker   
+	Producers.getLocalStorageKey = getLocalStorageKey;
+	
+	/** @description <b>getAll method</b>, fetch all producers 
+	 * @memberOf uag.data.Producers
 	 * @static
-	 * @param workerId worker's id
 	 * @returns {Array} producers list 
 	 */
-	Producers.getAll = function(workerId) {
+	var getAll = function() {
 		// get producer's list 
 		var list = uag.data.Storage.Retrieve(Producers.getLocalStorageKey());
 		// build producer object list
 		var currentProducers = [];
-		// if workerId
-		if (undefined !== workerId && null !== workerId) {
-			// then producers for worker
-			var worker = uag.data.Workers.findById(workerId);
-			if (null !== worker) {
-				// filter producers 
-				for ( var int = 0 ; int < list.length ; int++ ) {
-					// if producer associate with worker, 
-					if (-1 !== worker.getProducersId().indexOf(list[int].id)) {
-						// then add id to list 
-						currentProducers.push(
-								new uag.data.model.Producer(list[int]));
-					}
-				}
-			}
-		} else {
-			// all producers 
-			for ( var int = 0 ; int < list.length ; int++ ) {
-				// add to list 
-				currentProducers.push(
-						new uag.data.model.Producer(list[int]));
-			}
+		// all producers 
+		for ( var int = 0 ; int < list.length ; int++ ) {
+			// add to list 
+			currentProducers.push(
+					new uag.data.model.Producer(list[int]));
 		}
 		return currentProducers;
 	};
 	
-	/** @description <b>findById method</b>, find a producer with his id
+	Producers.getAll = getAll;
+	
+	/** @description <b>findById method</b>, find current setup producer 
+	 * @memberOf uag.data.Producers
 	 * @static 
-	 * @param producerId producer's Id  
-	 * @param workerId worker's id
-	 * @returns {Object} a producer 
+	 * @returns {JSON} producer json local storage data 
 	 */
-	Producers.findById = function(producerId) {
-		// get current Producers list  
-		var currentProducers = Producers.getAll();
-		// find worker 
-		for ( var int = 0; int < currentProducers.length; int++) {
+	var findById = function() {
+		// setup 
+		var setup = uag.data.Setup.get();
+		// get producer's list 
+		var list = uag.data.Storage.Retrieve(Producers.getLocalStorageKey());
+		// filter producers 
+		for ( var int = 0; int < list.length; int++) {
 			// if ids match, 
-			if (currentProducers[int].getId() === producerId) {
-				// then return it 
-				return currentProducers[int];
+			if (setup.producerId === list[int].id) {
+				// then return it
+				return list[int];
 			}
 		}
 		return null;
 	};
 	
-	/** @description <b>getFields method</b>, fetch fields 
+	Producers.findById = findById;
+	
+	/** @description <b>getFields method</b>, fetch fields (for current setup producer)
+	 * @memberOf uag.data.Producers
 	 * @static
-	 * @param producerId producer's id
-	 * @returns {Array} fields list 
+	 * @returns {JSON} fields list 
 	 */
-	Producers.getFields = function(producerId) {
+	var getFields = function() {
 		// get producer 
-		var producer = uag.data.Producers.findById(producerId);
-		// 
+		var producer = uag.data.Producers.findById();
+		// get fields 
 		var fields = [];
 		for ( var int = 0; int < producer.fields.length; int++) {
-			fields.push(
-					new uag.data.model.Field(producer.fields[int]));
-			
+			fields.push(producer.fields[int]);
+			//fields.push(new uag.data.model.Field(producer.fields[int]));
 		}
 		return fields;
 	};
 	
-	/** @description <b>findFieldById method</b>, find a field for a producer
+	Producers.getFields = getFields;
+	
+	/** @description <b>findFieldById method</b>, find a field (for current setup producer) 
+	 * @memberOf uag.data.Producers
 	 * @static 
-	 * @param producerId producer's id 
 	 * @param fieldId field's id
-	 * @returns {Object} field  
+	 * @returns {JSON} field  
 	 */
-	Producers.findFieldById = function(producerId, fieldId) {
+	var findFieldById = function(fieldId) {
 		// get producer's fields
-		var fields = uag.data.Producer.getFields(producerId);
-		// find field 
+		var fields = uag.data.Producers.getFields();
+		// filter fields
 		for ( var int = 0; int < fields.length; int++) {
 			// if ids match 
-			if (fields[int].getId() === fieldId) {
+			if (fields[int].id === fieldId) {
 				return fields[int];
 			}
 		}
+		return null;
 	};
 	
-	/** @description <b>getProductsForField method</b>, fetch products for a field and a producer 
+	Producers.findFieldById = findFieldById;
+	
+	/** @description <b>getProducts method</b>, fetch products (for current setup producer) 
+	 * @memberOf uag.data.Producers
 	 * @static
-	 * @param producerId producer's id 
+	 * @return {JSON} producer's products list
+	 */
+	var getProducts = function() {
+		// get producer 
+		var producer = uag.data.Producers.findById();
+		// returns products
+		return producer.products;
+	};
+	
+	Producers.getProducts = getProducts;
+	
+	/** @description <b>getProductsForField method</b>, fetch products for a field (and current setup producer) 
+	 * @memberOf uag.data.Producers
+	 * @static
 	 * @param fieldId field's id
 	 * @returns {Array} products list
 	 */
-	Producers.getProductsForField = function(producerId, fieldId) {
+	var getProductsForField = function(fieldId) {
+		// get products
+		var products = uag.data.Producers.getProducts();
 		// get field 
-		var field = uag.data.Producers.findFieldById(producerId, fieldId);
-		// 
-		var products = [];
-		for ( var int = 0; int < field.products.length; int++) {
-			products.push(
-				new uag.data.model.Product(field.products[int]));
+		var field = uag.data.Producers.findFieldById(fieldId);
+		// declare result set 
+		var fieldProducts = [];
+		// filter products 
+		for ( var int = 0; int < products.length; int++) {
+			// if current product associate with field 
+			if (-1 !== field.productsId.indexOf(products[int].id)) {
+				// then add it 
+				fieldProducts.push(products[int]);
+			}
 		}
-		return products;
+		return fieldProducts;
 	};
 	
-	/** @description <b>findProductsByIdForField method</b>, find product for a field and a producer 
+	Producers.getProductsForField = getProductsForField;
+	
+	/** @description <b>findProductsByIdForField method</b>, find product for a field (and current setup producer) 
+	 * @memberOf uag.data.Producers
 	 * @static
-	 * @param producerId producer's id 
 	 * @param fieldId field's id
 	 * @param productId product's id
 	 * @returns {Object} product  
 	 */
-	Producers.findProductsByIdForField = function(producerId, fieldId, productId) {
+	var findProductsByIdForField = function(fieldId, productId) {
 		// get products 
-		var products = Producers.getProductsForField(producerId, fieldId);
+		var products = Producers.getProductsForField(fieldId);
 		// find product 
 		for ( var int = 0; int < products.length; int++) {
 			// if ids match
-			if (products[int].getId() === productId) {
+			if (products[int].id === productId) {
 				// then return it
 				return products[int];
 			}
@@ -400,128 +510,236 @@ uag.data = uag.data || {};
 		return null;
 	};
 	
+	Producers.findProductsByIdForField = findProductsByIdForField;
+	
+	/** @description <b>getQualities method</b>, fetch producer's qualities list 
+	 * @memberOf uag.data.Producers
+	 * @static
+	 * @returns {Array} quality objects list
+	 */
+	var getQualities = function() {
+		// setup 
+		var setup = uag.data.Setup.get();
+		// get producer 
+		var producer = uag.data.Producers.findById(setup.producerId);
+		// 
+		var qualities = [];
+		for ( var int = 0; int < producer.qualities.length; int++) {
+			qualities.push(
+					new uag.data.model.Quality(producer.qualities[int]));
+			
+		}
+		return qualities;
+	};
+	
+	Producers.getQualities = getQualities;
+	
 	/** @description <b>remove method</b>, remove a producer 
+	 * @memberOf uag.data.Producers
 	 * @static
 	 * @param producerId producer's id
 	 */
-	Producers.remove = function(producerId) {
+	var remove = function(producerId) {
 		// get current producers list  
 		var currentProducers = Producers.getAll();
 		// update producers list 
 		var updatedProducers = [];
 		for ( var int = 0 ; int < currentProducers.length ; int++ ) {
-			if (currentProducers[int].getId() != workerId) {
+			if (currentProducers[int].getId() !== producerId) {
 				updatedProducers.push(currentProducers[int]);
 			}
-			// so else remove implicitly worker for id 
+			// so else remove implicitly producer for id 
 		}
-		// save updated workers list  
-		uag.data.Storage.Save(Workers.getLocalStorageKey(), updatedProducers);
+		// save updated producers list  
+		uag.data.Storage.Save(Producers.getLocalStorageKey(), updatedProducers);
 	};
-		
+	
+	Producers.remove = remove;
+	
 	/** @description <b>clear method</b>, clear all producers 
+	 * @memberOf uag.data.Producers
 	 * @static
 	 * @param producerId producer's id
 	 */
-	Producers.clear = function() {
+	var clear = function() {
 		// delete producer key 
 		uag.data.Storage.Delete(Producers.getLocalStorageKey());
 	};
 	
-	// uag.data.producers object definition association    
-	uag.data.Producers = Producers;
+	Producers.clear = clear;
 	
-//}());
+	
+	parent.data = parent.data || {};
+	parent.data.Producers = Producers;
+	
+	return parent;
+	
+}(uag || {}));
 
 
-//setup object declaration scope
-//(function(){
+
+// setup object declaration scope
+//uag.data = (function (data) {
+uag = (function (parent) {
+	"use strict";
 	
 	/**
 	 * @class Setup
+	 * @memberOf uag.data
 	 */
 	var Setup = function(){};
 	
 	// fields object public, static, non-privileged methods  
-	/** @description <b>get method</b>, 
-	 * 
+	
+	/** @description <b>getLocalStorageKey method</b>, 
+	 * @memberOf uag.data.Setup
+	 * @static
+	 * @returns {String} setup local storage key 
 	 */
-	Setup.get = function() {
-		
+	var getLocalStorageKey = function() { return "setup"; };
+	
+	Setup.getLocalStorageKey = getLocalStorageKey;
+	
+	/** @description <b>get method</b>, 
+	 * @memberOf uag.data.Setup
+	 * @static
+	 * @returns {JSON}
+	 */
+	var get = function() {
+		return JSON.parse(localStorage.getItem(Setup.getLocalStorageKey()));
 	};
+	
+	Setup.get = get;
 	
 	/** @description <b>set method</b>, 
-	 * 
+	 * @memberOf uag.data.Setup
+	 * @static
+	 * @param data json 
 	 */
-	Setup.set = function() {
-		
+	var set = function(data) {
+		localStorage.setItem(Setup.getLocalStorageKey() , JSON.stringify(data));
 	};
 	
-	// uag.data.Setup object definition association    
-	uag.data.Setup = Setup;
+	Setup.set = set;
 	
-//}());
+	
+	parent.data = parent.data || {};
+	parent.data.Setup = Setup;
+	
+	return parent;
+	
+}(uag || {}));
 
 
-//import object declaration scope
-//(function(){
-	
+
+// import object declaration scope
+//uag.data = (function (data) {
+uag = (function (parent) {
+	"use strict";
+
 	/**
 	 * @class Import
+	 * @memberOf uag.data
 	 */
 	var Import = function(){};
 	
 	// fields object public, static, non-privileged methods  
-	/** @description <b>set method</b>, 
+	/** @description <b>addProducer method</b>, add a new producer to local storage  
+	 * @memberOf uag.data.Import
 	 * @static
-	 * @param jsonStringData data
+	 * @param jsonStringProducerData producer string json data 
+	 * @throws {Error} Invalid string JSON data
+	 * @throws {Error} Producer already imported
+	 * @returns {String} producer's id
 	 */
-	Import.set = function(jsonStringData) {
+	var addProducer = function(jsonStringProducerData) {
 		
 		var key = uag.data.Producers.getLocalStorageKey();
 		
-		// validate json data 
-		jsonData = JSON.parse(jsonStringData);
+		var jsonProducerData = null;
+		try {
+			// validate json data 
+			jsonProducerData = JSON.parse(jsonStringProducerData);
+		} catch(e) {
+			throw new Error("Invalid string JSON data");
+		}
 		
-		// json producers list 
-		var producers = uag.data.Storage.Retrieve(key);
+		// get producer's id 
+		var producerId = jsonProducerData.id;
+		// get producer
+		var producer = uag.data.Producers.findById(producerId);
+		// 
+		var exist = 
+			producer !== undefined && 
+			null !== producer; 
 		
-		// add json producer data to json producers list 
-		producers.push(jsonData);
-		
-		// set json producers list to local storage   
-		localStorage.setItem(key, JSON.stringify(producers));
+		// if not exists already
+		if (!exist) {
+			// add it to producers list
+			
+			// json producers list 
+			var producers = uag.data.Storage.Retrieve(key);
+			
+			// add json producer data to json producers list 
+			producers.push(jsonProducerData);
+			
+			// set json producers list to local storage   
+			localStorage.setItem(key, JSON.stringify(producers));
+			
+			// return producer's id
+			return producerId;
+			
+		} else {
+			throw new Error("Producer already imported");
+		} 
 		
 	};
 	
-	// uag.data.Import object definition association    
-	uag.data.Import = Import;
+	Import.addProducer = addProducer;
 	
-//}());
+	
+	parent.data = parent.data || {};
+	parent.data.Import = Import;
+	
+	return parent;
+	
+}(uag || {}));
 
 
-//export object declaration scope 
-//(function(){
-	
+
+// export object declaration scope
+//uag.data = (function (data) {
+uag = (function (parent) {
+	"use strict";
+
 	/**
 	 * @class Export
+	 * @memberOf uag.data
 	 */
 	var Export = function(){};
 	
 	// fields object public, static, non-privileged methods  
 	/** @description <b>get method</b>, 
+	 * @memberOf uag.data.Export
+	 * @static
 	 * 
 	 */
-	Export.det = function() {
+	var get = function() {
 		
 	};
 	
-	// uag.data.Export object definition association    
-	uag.data.Export = Export;
+	Export.get = get;
 	
-//}());
+	
+	parent.data = parent.data || {};
+	parent.data.Export = Export;
+	
+	return parent;
+	
+}(uag || {}));
 
-/*
+
+/**
 //containers object declaration scope   
 (function() {
 	
