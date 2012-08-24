@@ -20,10 +20,8 @@
 
     <div data-role="page" id="home">
         <div data-role="header" data-theme="a">
-            <h1>uAg Basket &mdash; Home</h1>
-            <!-- TODO button behavior -->
+            <h1>Basket</h1>
             <a data-role="button"
-               data-corners="false"
                data-inline="true"
                data-icon="gear"
                class="ui-btn-right"
@@ -32,75 +30,102 @@
         <div data-role="content" data-theme="c">
             <img src="images/uag-basket.jpg"/ alt="basket"
                  style="display:block;margin-left:auto;margin-right:auto" />
-            <p style="text-align:center">
-                <a href="#edit"
-                   data-role="button"
-                   data-corners="false"
-                   data-inline="true">New</a>
-                <a href="#open"
-                   data-role="button"
-                   data-corners="false"
-                   data-inline="true"
-                   data-rel="dialog"
-                   data-transition="pop">Open</a>
-            </p>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a">
+                    <a href="#edit"
+                       data-role="button">New</a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="#open"
+                       data-role="button"
+                       data-rel="dialog"
+                       data-transition="pop">Open</a>
+                </div>
+            </fieldset>
         </div><!-- /content -->
         <div data-role="footer" data-theme="d">
-            <h4><small>Check the <a href="http://github.com/davidbourguignon/uag/"
-                                    data-rel="external">uAg Project</a>
-                       on GitHub!</small></h4>
+            <h4><small>uAg Basket is part of the
+                <a href="http://github.com/davidbourguignon/uag/"
+                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page home -->
 
     <div data-role="page" id="edit">
         <div data-role="header" data-theme="a">
-            <h1>uAg Basket &mdash; Edit</h1>
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-rel="back">Cancel</a>
+            <h1>Edit basket</h1>
+            <a data-role="button"
+               data-theme="b"
+               data-icon="check"
+               onclick="">Save</a><!-- TODO -->
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <!-- TODO add list -->
-            <p style="text-align:center">
-                <a href="#home"
-                   data-role="button"
-                   data-corners="false"
-                   data-inline="true"
-                   data-icon="delete"
-                   data-rel="back">Cancel</a>
-                <!-- TODO button behavior -->
-                <a data-role="button"
-                   data-theme="b"
-                   data-corners="false"
-                   data-inline="true"
-                   data-icon="check"
-                   onclick="">Save</a>
-            </p>
+            <div data-role="collapsible" data-collapsed="false">
+                <h3>Basket</h3>
+                <div data-role="fieldcontain">
+                    <label for="date">Distrib. date:</label>
+                    <input type="date" name="date" id="date" value="" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="number">Approx. quantity:</label>
+                    <input type="number" name="number" id="number" value="" />
+                </div>
+                <div data-role="collapsible" data-collapsed="false">
+                    <h3>Basket item</h3>
+                    <div data-role="fieldcontain">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" id="name" value="" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="textarea">Description:</label>
+                        <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="number">Quantity:</label>
+                        <input type="number" name="number" id="number" value="" />
+                    </div>
+                </div>
+                <!--<input type="checkbox" name="checkbox-1" id="checkbox-1" class="custom" />-->
+            </div>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a">
+                    <button></button>
+                </div>
+                <div class="ui-block-b">
+                    <button></button>
+                </div>
+            </fieldset>
         </div><!-- /content -->
         <div data-role="footer" data-theme="d">
-            <h4><small>Check the <a href="http://github.com/davidbourguignon/uag/"
-                                    data-rel="external">uAg Project</a>
-                       on GitHub!</small></h4>
+            <h4><small>uAg Basket is part of the
+                <a href="http://github.com/davidbourguignon/uag/"
+                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page edit -->
 
     <div data-role="page" id="open">
         <div data-role="header">
-            <h1>uAg Basket &mdash; Open</h1>
+            <h1>Open basket</h1>
         </div><!-- /header -->
+        <!-- TODO file browser UI -->
         <div data-role="content" data-theme="c">
-            <p style="text-align:center">
-                <a href="#home"
-                   data-role="button"
-                   data-corners="false"
-                   data-inline="true"
-                   data-icon="delete"
-                   data-rel="back">Cancel</a>
-                <!-- TODO button behavior -->
-                <a data-role="button"
-                   data-theme="b"
-                   data-corners="false"
-                   data-inline="true"
-                   data-icon="check"
-                   onclick="">OK</a>
-            </p>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a">
+                    <a href="#home"
+                       data-role="button"
+                       data-icon="delete"
+                       data-rel="back">Cancel</a>
+                </div>
+                <div class="ui-block-b">
+                    <a data-role="button"
+                       data-theme="b"
+                       data-icon="check"
+                       onclick="">OK</a><!-- TODO -->
+                </div>
+            </fieldset>
         </div> <!-- /content -->
     </div> <!-- /page open -->
 
