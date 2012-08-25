@@ -1,49 +1,83 @@
-/*global alert, console, jQuery*/ // JSLint settings
+/** jshint forin:true, noarg:true, noempty:true, eqeqeq:true,
+ *  bitwise:true, strict:true, undef:true, unused:true, curly:true,
+ *  browser:true, devel:true, jquery:true, es5:true, indent:4, maxerr:50
+ */
 /**
  * @fileOverview uAg Basket Controller
  * @author David Bourguignon
  * @version 2012-08-23
  */
-var UAG = (function(parent, $, window, document, undefined) { // playing safe with undefined...
+var uag = (function (parent, $, window, document) {
+    'use strict';
     var uAgBasket = parent.basket = parent.basket || {};
+    var uAgDebugOn = parent.debugOn = parent.debugOn || true; // debug flag
 
-    uAgBasket.controller = (function() {
+    uAgBasket.controller = (function () {
+        /* private vars */
         var isReadyCordova = false;
         var isReadyJQueryMobile = false;
+        var fileSystemRoot = null;
+        var currentDir = null;
+        var parentDir = null;
 
+        /* public interface */
         return {
             /* callbacks */
-            onLoad: function(event) {
+            onLoad: function (event) {
                 document.addEventListener('deviceready', this.onDeviceReady, false);
-                alert('deviceready');
+                if (uAgDebugOn) {
+                    alert('deviceready event registered'); /* Remplacer par console.log et regarder dans Firebug ? */
+                }
             },
-            onDeviceReady: function(event) {
+            onDeviceReady: function (event) {
                 isReadyCordova = true;
+
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+                    function (fileSystem) {
+                        fileSystemRoot = fileSystem.root;
+                    },
+                    function (event) {
+                        console.log("File System Error: "
+                                    + event.target.error.code);
+                    });
+
+                $('#open-back-btn').hide(); // View selection
+
                 document.addEventListener('pause', this.onPause, false);
-                alert('pause');
+                if (uAgDebugOn) {
+                    alert('pause event registered');
+                }
             },
-            onPause: function(event) {
+            onPause: function (event) {
                 // TODO
             },
-            pageInit: function(event) {
+            pageInit: function (event) {
                 isReadyJQueryMobile = true;
             },
-            /* other func */
-            init: function() {
+            /* other */
+            init: function () {
                 $(document).bind('pageinit', this.pageInit);
-                alert('pageinit');
+                if (uAgDebugOn) {
+                    alert('pageinit event registered');
+                }
             },
-            isReady: function() {
+            isReady: function () {
                 return (isReadyCordova && isReadyJQueryMobile);
             },
             /* TMP */
-            checkState: function() {
+            checkState: function () {
                 if (this.isReady()) {
-                    alert("OK CONTROL READY"); // TMP
-                } else alert("PROBLEM"); // TMP
-            },
+                    if (uAgDebugOn) {
+                        alert('controller ready');
+                    }
+                } else {
+                    if (uAgDebugOn) {
+                        alert('controller NOT ready');
+                    }
+                }
+            }
         };
     }());
 
     return parent;
-}(UAG || {}, jQuery, this, this.document));
+}(uag || {}, jQuery, this, this.document));
