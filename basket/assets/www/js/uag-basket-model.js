@@ -7,7 +7,7 @@
  * @author David Bourguignon
  * @version 2012-08-23
  */
-var UAG = (function (parent) {
+var uag = (function (parent) {
     'use strict';
     var uAgBasket = parent.Basket = parent.Basket || {};
 
@@ -19,4 +19,4 @@ var UAG = (function (parent) {
     }());
 
     return parent;
-}(UAG || {}));
+}(uag || {}));

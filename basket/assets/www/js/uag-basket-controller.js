@@ -7,24 +7,42 @@
  * @author David Bourguignon
  * @version 2012-08-23
  */
-var UAG = (function (parent, $, window, document) {
+var uag = (function (parent, $, window, document) {
     'use strict';
-    var uAgBasket = parent.basket = parent.basket || {},
-        uAgDebugOn = parent.debugOn = parent.debugOn || true; // debug flag
+    var uAgBasket = parent.basket = parent.basket || {};
+    var uAgDebugOn = parent.debugOn = parent.debugOn || true; // debug flag
 
     uAgBasket.controller = (function () {
-        var isReadyCordova = false,
-            isReadyJQueryMobile = false;
+        /* private vars */
+        var isReadyCordova = false;
+        var isReadyJQueryMobile = false;
+        var fileSystemRoot = null;
+        var currentDir = null;
+        var parentDir = null;
+
+        /* public interface */
         return {
             /* callbacks */
             onLoad: function (event) {
                 document.addEventListener('deviceready', this.onDeviceReady, false);
                 if (uAgDebugOn) {
-                    alert('deviceready event registered');
+                    alert('deviceready event registered'); /* Remplacer par console.log et regarder dans Firebug ? */
                 }
             },
             onDeviceReady: function (event) {
                 isReadyCordova = true;
+
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+                    function (fileSystem) {
+                        fileSystemRoot = fileSystem.root;
+                    },
+                    function (event) {
+                        console.log("File System Error: "
+                                    + event.target.error.code);
+                    });
+
+                $('#open-back-btn').hide(); // View selection
+
                 document.addEventListener('pause', this.onPause, false);
                 if (uAgDebugOn) {
                     alert('pause event registered');
@@ -36,7 +54,7 @@ var UAG = (function (parent, $, window, document) {
             pageInit: function (event) {
                 isReadyJQueryMobile = true;
             },
-            /* other functions */
+            /* other */
             init: function () {
                 $(document).bind('pageinit', this.pageInit);
                 if (uAgDebugOn) {
@@ -62,4 +80,4 @@ var UAG = (function (parent, $, window, document) {
     }());
 
     return parent;
-}(UAG || {}, jQuery, this, this.document));
+}(uag || {}, jQuery, this, this.document));
