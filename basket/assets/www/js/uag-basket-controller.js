@@ -4,48 +4,43 @@
  */
 /**
  * @fileOverview uAg Basket Controller
- * @author David Bourguignon
- * @version 2012-08-23
+ * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
+ * @version 2012-08-26
  */
-var uag = (function (parent, $, window, document) {
-    'use strict';
-    var uAgBasket = parent.basket = parent.basket || {};
-    var uAgDebugOn = parent.debugOn = parent.debugOn || true; // debug flag
+/** @namespace uAg project */
+var uag = (function (parent, $, window, document, FileExplorer) {
+    'use strict'; // strict JS
 
+    var uAgBasket = parent.basket = parent.basket || {};
+    /**
+     * @class
+     * @exports uAgBasket.controller as uag.basket.controller
+     * @description Controller of the Basket app
+     */
     uAgBasket.controller = (function () {
-        /* private vars */
         var isReadyCordova = false;
         var isReadyJQueryMobile = false;
-        var fileSystemRoot = null;
-        var currentDir = null;
-        var parentDir = null;
+        var fileExplorer = null;
+        try {
+            fileExplorer = new FileExplorer($('#open-back-btn'));
+        } catch (e) {
+            console.error(e.message);
+        }
 
-        /* public interface */
+        /** @lends uag.basket.controller */
         return {
-            /* callbacks */
             onLoad: function (event) {
                 document.addEventListener('deviceready', this.onDeviceReady, false);
-                if (uAgDebugOn) {
-                    alert('deviceready event registered'); /* Remplacer par console.log et regarder dans Firebug ? */
-                }
+                console.info('Info: deviceready event registered');
             },
             onDeviceReady: function (event) {
                 isReadyCordova = true;
-
-                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-                    function (fileSystem) {
-                        fileSystemRoot = fileSystem.root;
-                    },
-                    function (event) {
-                        console.log("File System Error: "
-                                    + event.target.error.code);
-                    });
-
-                $('#open-back-btn').hide(); // View selection
-
                 document.addEventListener('pause', this.onPause, false);
-                if (uAgDebugOn) {
-                    alert('pause event registered');
+                console.info('Info: pause event registered');
+                try {
+                    fileExplorer.initAfterCordova();
+                } catch (e) {
+                    console.error(e.message);
                 }
             },
             onPause: function (event) {
@@ -54,30 +49,24 @@ var uag = (function (parent, $, window, document) {
             pageInit: function (event) {
                 isReadyJQueryMobile = true;
             },
-            /* other */
             init: function () {
                 $(document).bind('pageinit', this.pageInit);
-                if (uAgDebugOn) {
-                    alert('pageinit event registered');
-                }
+                console.info('Info: pageinit event registered');
             },
             isReady: function () {
                 return (isReadyCordova && isReadyJQueryMobile);
             },
-            /* TMP */
             checkState: function () {
+                // TMP
                 if (this.isReady()) {
-                    if (uAgDebugOn) {
-                        alert('controller ready');
-                    }
+                    console.log('Debug: uag.basket.controller ready');
                 } else {
-                    if (uAgDebugOn) {
-                        alert('controller NOT ready');
-                    }
+                    console.log('Debug: uag.basket.controller NOT ready');
                 }
             }
         };
     }());
+    Object.freeze(uAgBasket.controller); // final
 
     return parent;
-}(uag || {}, jQuery, this, this.document));
+}(uag || {}, jQuery, this, this.document, uag.utils.FileExplorer));
