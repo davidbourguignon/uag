@@ -19,19 +19,42 @@
     <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" src="js/uag-basket-controller.js"></script>
     <script>
-        uag.basket.controller.init();
+        /** document and page bindings */
+        $(document).ready(uag.basket.controller.init);
+        $(document).bind('pageinit', function (event) {
+            // whenever a new page is loaded and created by jQuery Mobile
+            console.info('Info: pageinit event fired by jQuery Mobile');
+        });
+
+        /** body bindings */
+        $('#home-opt-btn').click(uag.basket.controller.options);
+        $('#home-new-btn').click(uag.basket.controller.newBasket);
+        $('#home-open-btn').click(uag.basket.controller.openBasket);
+        $('#new-save-btn').click(uag.basket.controller.saveBasket);
+        $('#new-tag-btn').click(uag.basket.controller.captureTag);
+        $('#new-add-btn').click(uag.basket.controller.addNewBasketItem);
+        $('#open-load-btn').click(uag.basket.controller.loadBasketFile);
+
+        /** settings */
+        uag.basket.controller.setFileExplorerObj($('#open-root-btn'),
+                                                 $('#open-back-btn'));
+
+        /** final check */
+        if (uag.basket.controller.isReady()) {
+            console.info('Info: uag.basket.controller ready');
+        } else {
+            console.error('Error: uag.basket.controller NOT READY');
+        }
     </script>
 </head>
-<body onload="uag.basket.controller.onLoad()">
+<body>
 
     <div id="home" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
             <h1>uAg Basket</h1>
-            <a data-role="button"
-               data-inline="true"
-               data-icon="gear"
-               class="ui-btn-right"
-               onclick="uag.basket.controller.checkState()">Options</a> <!-- TODO -->
+            <a id="home-opt-btn"
+               data-role="button"
+               class="ui-btn-right">Options</a>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <img src="images/basket-650x650.jpg" alt="basket"
@@ -41,11 +64,13 @@
                         width: 99%" />
             <div class="ui-grid-a">
                 <div class="ui-block-a">
-                    <a href="#edit"
+                    <a id ="home-new-btn"
+                       href="#new"
                        data-role="button">New</a>
                 </div>
                 <div class="ui-block-b">
-                    <a href="#open"
+                    <a id="home-open-btn"
+                       href="#open"
                        data-role="button">Open</a>
                 </div>
             </div>
@@ -57,17 +82,14 @@
         </div><!-- /footer -->
     </div><!-- /page home -->
 
-    <div id="edit" data-role="page">
+    <div id="new" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
             <a href="#home"
                data-role="button"
-               data-icon="delete"
                data-rel="back">Cancel</a>
             <h1>Edit basket</h1>
-            <a data-role="button"
-               data-theme="b"
-               data-icon="check"
-               onclick="">Save</a><!-- TODO -->
+            <a id="new-save-btn"
+               data-role="button">Save</a>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <div data-role="fieldcontain">
@@ -84,7 +106,9 @@
                        id="basket-approx-weight"
                        value="" />
             </div>
-            <div data-role="collapsible" data-collapsed="false">
+            <div data-role="collapsible"
+                 data-collapsed="false"
+                 data-theme="c">
                 <h3>Basket item</h3>
                 <div data-role="fieldcontain">
                     <label for="is-basket-item-in">In</label>
@@ -109,13 +133,11 @@
                            id="basket-item-approx-weight"
                            value="" />
                 </div>
-                <button data-icon="grid"
-                        data-inline="true"
-                        onclick="">Capture tag</button><!-- TODO -->
+                <button id="new-tag-btn">Capture tag</button>
             </div>
-            <button data-icon="add"
-                    data-theme="b"
-                    onclick="">Add new item</button><!-- TODO -->
+            <button id="new-add-btn"
+                    data-icon="add"
+                    data-theme="b">Add new item</button>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
             <h4><small>uAg Basket is part of the
@@ -128,13 +150,10 @@
         <div data-role="header" data-position="fixed" data-theme="a">
             <a href="#home"
                data-role="button"
-               data-icon="delete"
                data-rel="back">Cancel</a>
             <h1>Open basket</h1>
-            <a data-role="button"
-               data-theme="b"
-               data-icon="check"
-               onclick="">OK</a><!-- TODO -->
+            <a id="open-load-btn"
+               data-role="button">OK</a>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <div class="ui-grid-c" id="dirContent">
@@ -168,14 +187,12 @@
             <div class="ui-block-a">
                 <a id="open-back-btn"
                    href="#"
-                   data-icon="back"
                    data-role="button">Back</a>
             </div>
             <div class="ui-block-b">
-                <a id="open-home-btn"
+                <a id="open-root-btn"
                    href="#open"
-                   data-icon="home"
-                   data-role="button">Home</a>
+                   data-role="button">Root</a>
             </div>
         </div>
         <div data-role="footer" data-position="fixed" data-theme="d">

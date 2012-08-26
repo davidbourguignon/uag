@@ -10,7 +10,7 @@
  */
 /** @namespace uAg project */
 var uag = (function (parent) {
-    'use strict'; // strict JS
+    'use strict'; // enforcing strict JS
     var uAgBasket = parent.Basket = parent.Basket || {};
     uAgBasket.Model = (function () {
         return {

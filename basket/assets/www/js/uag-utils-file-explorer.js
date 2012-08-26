@@ -9,7 +9,7 @@
  */
 /** @namespace uAg project */
 var uag = (function (parent, $, window, document) {
-    'use strict';
+    'use strict'; // enforcing strict JS
     var uAgUtils = parent.utils = parent.utils || {};
 
     /**
@@ -17,24 +17,29 @@ var uag = (function (parent, $, window, document) {
      * @exports uAgUtils.FileExplorer as uag.utils.fileExplorer
      * @description File explorer utility for enhancing controllers
      */
-    uAgUtils.FileExplorer = function (viewBackBtn) {
+    uAgUtils.FileExplorer = function ($homeBtn,$backBtn) {
         var view = {}; // jQuery objects
         var fileSystemRoot = null;
         var currentDir = null;
         var parentDir = null;
 
-        if (viewBackBtn instanceof jQuery) {
-            view.backBtn = viewBackBtn;
+        if ($homeBtn instanceof jQuery
+            && $backBtn instanceof jQuery) {
+            view.homeBtn = $homeBtn;
+            view.backBtn = $backBtn;
         } else {
-            throw new TypeError('Error: wrong arguments for fileExplorer()');
+            throw new TypeError('Error: fileExplorer() expecting jQuery objects');
         }
 
-        this.initAfterCordova = function () {
+        this.initAfterDeviceReady = function () {
             window.requestFileSystem(
                 LocalFileSystem.PERSISTENT,
                 0,
                 function (fileSystem) { // success
                     fileSystemRoot = fileSystem.root;
+                    // TMP
+                    //console.log('Debug: File sytem name is ' + fileSystem.name);
+                    //console.log('Debug: Root directory name is ' + fileSystem.root.name);
                 },
                 function (event) { // failure
                     throw new Error('Error: requestFileSystem() failed with code '
@@ -42,6 +47,10 @@ var uag = (function (parent, $, window, document) {
                 }
             );
             view.backBtn.hide(); // view selection
+        }
+
+        this.showFiles = function () {
+
         }
     }
 
