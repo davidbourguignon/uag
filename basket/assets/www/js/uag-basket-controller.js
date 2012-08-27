@@ -4,80 +4,93 @@
  */
 /**
  * @fileOverview uAg Basket Controller
- * @author David Bourguignon
- * @version 2012-08-23
+ * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
+ * @version 2012-08-26
  */
-var uag = (function (parent, $, window, document) {
-    'use strict';
+/** @namespace uAg project */
+var uag = (function (parent, $, window, document, FileExplorer) {
+    'use strict'; // enforcing strict JS
+
     var uAgBasket = parent.basket = parent.basket || {};
-    var uAgDebugOn = parent.debugOn = parent.debugOn || true; // debug flag
-
+    /**
+     * @class
+     * @exports uAgBasket.controller as uag.basket.controller
+     * @description Controller module of the Basket app
+     */
     uAgBasket.controller = (function () {
-        /* private vars */
+        /** @private */
         var isReadyCordova = false;
-        var isReadyJQueryMobile = false;
-        var fileSystemRoot = null;
-        var currentDir = null;
-        var parentDir = null;
+        var fileExplorer = null;
 
-        /* public interface */
+        /**
+         * @function
+         * @private
+         * @description Callbacks
+         */
+        function onDeviceReady (event) {
+            // when a PhoneGap application is ready
+            console.info('Info: deviceready event fired');
+            isReadyCordova = true;
+            document.addEventListener('pause', onPause, false);
+            document.addEventListener("resume", onResume, false);
+            try {
+                fileExplorer.initAfterDeviceReady();
+            } catch (exception) {
+                console.error(exception.message);
+            }
+        }
+        function onPause (event) {
+            // when a PhoneGap application is put into the background
+            console.info('Info: pause event fired');
+        }
+        function onResume (event) {
+            // when a PhoneGap application is retrieved from the background
+            console.info('Info: resume event fired');
+        }
+        /**
+         * @function
+         * @public
+         * @lends uag.basket.controller
+         */
         return {
-            /* callbacks */
-            onLoad: function (event) {
-                document.addEventListener('deviceready', this.onDeviceReady, false);
-                if (uAgDebugOn) {
-                    alert('deviceready event registered'); /* Remplacer par console.log et regarder dans Firebug ? */
-                }
+            init: function () {
+                document.addEventListener('deviceready',
+                                          onDeviceReady, false);
             },
-            onDeviceReady: function (event) {
-                isReadyCordova = true;
-
-                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-                    function (fileSystem) {
-                        fileSystemRoot = fileSystem.root;
-                    },
-                    function (event) {
-                        console.log("File System Error: "
-                                    + event.target.error.code);
-                    });
-
-                $('#open-back-btn').hide(); // View selection
-
-                document.addEventListener('pause', this.onPause, false);
-                if (uAgDebugOn) {
-                    alert('pause event registered');
-                }
-            },
-            onPause: function (event) {
+            options: function (event) {
                 // TODO
             },
-            pageInit: function (event) {
-                isReadyJQueryMobile = true;
+            newBasket: function (event) {
+                // TODO
             },
-            /* other */
-            init: function () {
-                $(document).bind('pageinit', this.pageInit);
-                if (uAgDebugOn) {
-                    alert('pageinit event registered');
+            openBasket: function (event) {
+                // TODO
+            },
+            saveBasket: function (event) {
+                // TODO
+            },
+            captureTag: function (event) {
+                // TODO
+            },
+            addNewBasketItem: function(event) {
+                // TODO
+            },
+            loadBasketFile: function (event) {
+                // TODO
+            },
+            setFileExplorerObj: function ($homeBtn,$backBtn) {
+                try {
+                    fileExplorer = new FileExplorer($homeBtn,$backBtn);
+                } catch (exception) {
+                    console.error(exception.message);
                 }
             },
             isReady: function () {
-                return (isReadyCordova && isReadyJQueryMobile);
+                return isReadyCordova;
             },
-            /* TMP */
-            checkState: function () {
-                if (this.isReady()) {
-                    if (uAgDebugOn) {
-                        alert('controller ready');
-                    }
-                } else {
-                    if (uAgDebugOn) {
-                        alert('controller NOT ready');
-                    }
-                }
-            }
         };
     }());
+    Object.freeze(uAgBasket.controller); // final
 
     return parent;
-}(uag || {}, jQuery, this, this.document));
+}(uag || {}, jQuery, this, this.document, uag.utils.FileExplorer));

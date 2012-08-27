@@ -1,4 +1,4 @@
-/**@fileOverview uag file for default namespace-like declaration
+/**@fileOverview uag Field app dataContext declaration
  * @author Sébastien Vivier, NSY209, CNAM  
  * @version Copyright (c) 2012
  * */
@@ -11,17 +11,24 @@
  */
 var uag = (function (parent) {
 	"use strict";	
-	
+		
 	/**
 	 * @name uag.util
 	 * @namespace uag.util
 	 */
-	parent.util = parent.util || {}; 
+	parent.util = parent.util || {};
+	
 	/**
-	 * @name uag.data
-	 * @namespace uag.data
+	 * @name uag.field
+	 * @namespace uag.field
 	 */
-	parent.data = parent.data || {};
+	parent.field = parent.field || {};
+	
+	/**
+	 * @name uag.field.dataContext
+	 * @namespace uag.field.dataContext
+	 */
+	parent.field.dataContext = parent.field.dataContext || {};
 	
 	// storage object declaration 
 	/**
@@ -71,14 +78,14 @@ var uag = (function (parent) {
 	// producers object declaration 
 	/** 
 	 * @class Producers
-	 * @memberOf uag.data
+	 * @memberOf uag.field.dataContext
 	 * */
 	var Producers = function(){};
 	
 	// fields object public, static, non-privileged methods  
 	
 	/** @description <b>getLocalStorageKey method</b>, producers local storage key getter method
-	 * @name uag.data.Producers.getLocalStorageKey
+	 * @name uag.field.dataContext.Producers.getLocalStorageKey
 	 * @function
 	 * @static
 	 * @returns {String} key 
@@ -86,7 +93,7 @@ var uag = (function (parent) {
 	Producers.getLocalStorageKey = function() { return "producers"; };
 	
 	/** @description <b>getAll method</b>, fetch all producers 
-	 * @name uag.data.Producers.get
+	 * @name uag.field.dataContext.Producers.get
 	 * @function
 	 * @static
 	 * @returns {Array} producers list 
@@ -97,7 +104,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>findById method</b>, find current setup producer 
-	 * @name uag.data.Producers.find
+	 * @name uag.field.dataContext.Producers.find
 	 * @function
 	 * @static 
 	 * @returns {Object} producer json local storage data 
@@ -121,7 +128,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>getFields method</b>, fetch fields (for current setup producer)
-	 * @name uag.data.Producers.getFields
+	 * @name uag.field.dataContext.Producers.getFields
 	 * @function
 	 * @static
 	 * @returns {Array} fields list 
@@ -137,7 +144,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>findField method</b>, find a field (for current setup producer) 
-	 * @name uag.data.Producers.findField
+	 * @name uag.field.dataContext.Producers.findField
 	 * @function
 	 * @static 
 	 * @param fieldId field's id
@@ -157,7 +164,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>getProducts method</b>, fetch products (for current setup producer) 
-	 * @name uag.data.Producers.getProducts
+	 * @name uag.field.dataContext.Producers.getProducts
 	 * @function
 	 * @static
 	 * @return {Array} producer's products list
@@ -174,7 +181,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>getProductsForField method</b>, fetch products for a field (and current setup producer) 
-	 * @name uag.data.Producers.getFieldProducts
+	 * @name uag.field.dataContext.Producers.getFieldProducts
 	 * @function
 	 * @static
 	 * @param fieldId field's id
@@ -185,6 +192,11 @@ var uag = (function (parent) {
 		var products = Producers.getProducts();
 		// get field 
 		var field = Producers.findField(fieldId);
+		
+		return products.filter(function(product) {
+			return -1 !== field.productsId.indexOf(product.id);
+		});
+		/*
 		// declare result set 
 		var fieldProducts = [];
 		// filter products 
@@ -196,10 +208,11 @@ var uag = (function (parent) {
 			}
 		}
 		return fieldProducts;
+		*/
 	};
 	
 	/** @description <b>findProductsByIdForField method</b>, find product for a field (and current setup producer) 
-	 * @name uag.data.Producers.findFieldProduct
+	 * @name uag.field.dataContext.Producers.findFieldProduct
 	 * @function
 	 * @static
 	 * @param fieldId field's id
@@ -221,7 +234,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>getQualities method</b>, fetch producer's qualities list 
-	 * @name uag.data.Producers.getQualities
+	 * @name uag.field.dataContext.Producers.getQualities
 	 * @function
 	 * @static
 	 * @returns {Array} quality objects list
@@ -238,7 +251,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>remove method</b>, remove a producer 
-	 * @name uag.data.Producers.remove
+	 * @name uag.field.dataContext.Producers.remove
 	 * @function
 	 * @static
 	 * @param producerId producer's id
@@ -259,7 +272,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>clear method</b>, clear all producers 
-	 * @name uag.data.Producers.clear
+	 * @name uag.field.dataContext.Producers.clear
 	 * @function
 	 * @static
 	 * @param producerId producer's id
@@ -269,18 +282,18 @@ var uag = (function (parent) {
 		Storage.Delete(Producers.getLocalStorageKey());
 	};
 	
-	parent.data.Producers = Producers;
+	parent.field.dataContext.Producers = Producers;
 
 	
 	// workerContainers object declaration
 	/**
 	 * @class workerContainers
-	 * @memberOf uag.data
+	 * @memberOf uag.field.dataContext
 	 */
 	var WorkerContainers = function() {};
 	
 	/** @description <b>getLocalStorageKey method</b>, 
-	 * @name uag.data.WorkerContainers.getLocalStorageKey
+	 * @name uag.field.dataContext.WorkerContainers.getLocalStorageKey
 	 * @function
 	 * @static
 	 * @returns {String} setup local storage key 
@@ -288,7 +301,7 @@ var uag = (function (parent) {
 	WorkerContainers.getLocalStorageKey = function() { return "workerContainers"; };
 	
 	/** @description <b>getJSON method</b>, from object to json
-	 * @name uag.data.WorkerContainers.getJSON
+	 * @name uag.field.dataContext.WorkerContainers.getJSON
 	 * @function
 	 * @param worker 
 	 * @param containers updated containers list
@@ -304,7 +317,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>get method</b>, 
-	 * @name uag.data.WorkerContainers.get
+	 * @name uag.field.dataContext.WorkerContainers.get
 	 * @function
 	 * @static
 	 * @returns {JSON}  
@@ -315,7 +328,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>getWorker method</b>, 
-	 * @name uag.data.WorkerContainers.getWorker
+	 * @name uag.field.dataContext.WorkerContainers.getWorker
 	 * @function
 	 * @static
 	 * @returns {Object}  
@@ -338,7 +351,7 @@ var uag = (function (parent) {
 	};
 		
 	/** @description <b>setWorker method</b>, 
-	 * @name uag.data.WorkerContainers.setWorker
+	 * @name uag.field.dataContext.WorkerContainers.setWorker
 	 * @function
 	 * @static
 	 * @param name worker's name
@@ -375,7 +388,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>getContainers method</b>, 
-	 * @name uag.data.WorkerContainers.getContainers
+	 * @name uag.field.dataContext.WorkerContainers.getContainers
 	 * @function
 	 * @static
 	 * @returns {Array} containers list  
@@ -395,7 +408,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>addContainers method</b>, 
-	 * @name uag.data.WorkerContainers.addContainer
+	 * @name uag.field.dataContext.WorkerContainers.addContainer
 	 * @function
 	 * @static
 	 * @returns {String} container's id 
@@ -434,7 +447,7 @@ var uag = (function (parent) {
 	
 	
 	/** @description <b>findContainerById method</b>, 
-	 * @name uag.data.WorkerContainers.findContainer
+	 * @name uag.field.dataContext.WorkerContainers.findContainer
 	 * @function
 	 * @param containerId 
 	 * @static
@@ -455,7 +468,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>removeContainers method</b>, 
-	 * @name uag.data.WorkerContainers.removeContainer
+	 * @name uag.field.dataContext.WorkerContainers.removeContainer
 	 * @function
 	 * @static
 	 * @param containerId container's id
@@ -478,7 +491,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>remove method</b>, 
-	 * @name uag.data.WorkerContainers.removeContainers
+	 * @name uag.field.dataContext.WorkerContainers.removeContainers
 	 * @function
 	 * @static
 	 */
@@ -490,7 +503,7 @@ var uag = (function (parent) {
 	};
 	
 	/** @description <b>clear method</b>, 
-	 * @name uag.data.WorkerContainers.clear
+	 * @name uag.field.dataContext.WorkerContainers.clear
 	 * @function
 	 * @static
 	 */
@@ -499,20 +512,20 @@ var uag = (function (parent) {
 		Storage.Delete(WorkerContainers.getLocalStorageKey());
 	};
 	
-	parent.data.WorkerContainers = WorkerContainers;
+	parent.field.dataContext.WorkerContainers = WorkerContainers;
 
 	
 
 	// import object declaration 
 	/**
 	 * @class Import
-	 * @memberOf uag.data
+	 * @memberOf uag.field.dataContext
 	 */
 	var Import = function(){};
 	
 	// fields object public, static, non-privileged methods  
 	/** @description <b>addProducer method</b>, add a new producer to local storage  
-	 * @name uag.data.Import.addProducer
+	 * @name uag.field.dataContext.Import.addProducer
 	 * @function
 	 * @static
 	 * @param jsonProducerData producer json data 
@@ -551,26 +564,26 @@ var uag = (function (parent) {
 	};
 	//Import.addProducer = addProducer;
 	
-	parent.data.Import = Import;
+	parent.field.dataContext.Import = Import;
 
 
 	// export object declaration 
 	/**
 	 * @class Export
-	 * @memberOf uag.data
+	 * @memberOf uag.field.dataContext
 	 */
 	var Export = function(){};
 	
 	// fields object public, static, non-privileged methods  
 	/** @description <b>get method</b>, 
-	 * @name uag.data.Export.get
+	 * @name uag.field.dataContext.Export.get
 	 * @function
 	 * @static
 	 */
 	Export.get = function() {};
 	//Export.get = get;
 	
-	parent.data.Export = Export;
+	parent.field.dataContext.Export = Export;
 	
 	return parent;
 	
