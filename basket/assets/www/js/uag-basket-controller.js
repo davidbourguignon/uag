@@ -18,44 +18,37 @@ var uag = (function (parent, $, window, document, FileExplorer) {
      * @description Controller module of the Basket app
      */
     uAgBasket.controller = (function () {
-        /** @private */
-        var isReadyCordova = false;
-        var fileExplorer = null;
+        var isCordovaReady = false;
+        var platformSpan = null;
+        var versionSpan = null;
+        var uuidSpan = null;
+        var fileExplorer = new FileExplorer();
 
-        /**
-         * @function
-         * @private
-         * @description Callbacks
-         */
-        function onDeviceReady (event) {
-            // when a PhoneGap application is ready
-            console.info('Info: deviceready event fired');
-            isReadyCordova = true;
-            document.addEventListener('pause', onPause, false);
-            document.addEventListener("resume", onResume, false);
-            try {
-                fileExplorer.initAfterDeviceReady();
-            } catch (exception) {
-                console.error(exception.message);
-            }
-        }
-        function onPause (event) {
-            // when a PhoneGap application is put into the background
-            console.info('Info: pause event fired');
-        }
-        function onResume (event) {
-            // when a PhoneGap application is retrieved from the background
-            console.info('Info: resume event fired');
-        }
         /**
          * @function
          * @public
          * @lends uag.basket.controller
          */
         return {
-            init: function () {
-                document.addEventListener('deviceready',
-                                          onDeviceReady, false);
+            onDeviceReady: function (event) {
+                // when a Cordova application is ready
+                console.info('Info: deviceready event fired');
+                isCordovaReady = true;
+                platformSpan.text(device.platform);
+                versionSpan.text(device.version);
+                uuidSpan.text(device.uuid);
+            },
+            onPageInit: function (event) {
+                // when a new page is loaded and created by jQuery Mobile
+                console.info('Info: pageinit event fired');
+            },
+            onPause: function (event) {
+                // when a Cordova application is put into the background
+                console.info('Info: pause event fired');
+            },
+            onResume: function (event) {
+                // when a Cordova application is retrieved from the background
+                console.info('Info: resume event fired');
             },
             options: function (event) {
                 // TODO
@@ -64,6 +57,16 @@ var uag = (function (parent, $, window, document, FileExplorer) {
                 // TODO
             },
             openBasket: function (event) {
+                if (isCordovaReady) {
+                    console.info('Info: uag.basket.controller ready');
+                    try {
+                        fileExplorer.init();
+                    } catch (e) {
+                        console.error(e.message);
+                    }
+                } else {
+                    console.error('Error: uag.basket.controller NOT READY');
+                }
                 // TODO
             },
             saveBasket: function (event) {
@@ -78,15 +81,29 @@ var uag = (function (parent, $, window, document, FileExplorer) {
             loadBasketFile: function (event) {
                 // TODO
             },
-            setFileExplorerObj: function ($homeBtn,$backBtn) {
-                try {
-                    fileExplorer = new FileExplorer($homeBtn,$backBtn);
-                } catch (exception) {
-                    console.error(exception.message);
+            openExplorerRootDir: function (event) {
+                // TODO
+            },
+            openExplorerBackDir: function (event) {
+                // TODO
+            },
+            setInfoView: function ($platformSpan, $versionSpan, $uuidSpan) {
+                if ($platformSpan instanceof jQuery && $platformSpan.is('span')
+                        && $versionSpan instanceof jQuery && $versionSpan.is('span')
+                        && $uuidSpan instanceof jQuery && $uuidSpan.is('span')) {
+                    platformSpan = $platformSpan;
+                    versionSpan = $versionSpan;
+                    uuidSpan = $uuidSpan;
+                } else {
+                    console.error('Error: FileExplorer.setView() expecting view info');
                 }
             },
-            isReady: function () {
-                return isReadyCordova;
+            setExplorerView: function ($gridDiv, $rootBtn, $backBtn) {
+                try {
+                    fileExplorer.setView($gridDiv, $rootBtn, $backBtn);
+                } catch (e) {
+                    console.error(e.message);
+                }
             },
         };
     }());
