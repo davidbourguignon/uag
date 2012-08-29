@@ -1,7 +1,7 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-08-26
+    Version: 2012-08-29
 -->
 <!DOCTYPE html>
 <html>
@@ -23,12 +23,12 @@
 
     <div id="home" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
-            <a id="home-info-btn"
-               href="#info"
+            <a id="home-about-btn"
+               href="#about"
                data-role="button"
                data-rel="dialog"
                data-transition="pop"
-               class="ui-btn-left">Info</a>
+               class="ui-btn-left">About</a>
             <h1>uAg Basket</h1>
             <a id="home-opt-btn"
                data-role="button"
@@ -54,22 +54,32 @@
             </div>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
-            <h4><small>uAg Basket is part of the
-                <a href="http://github.com/davidbourguignon/uag/"
-                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="info" data-role="page">
+    <div id="about" data-role="page">
         <div data-role="header" data-theme="a">
-            <h1>Device info</h1>
+            <h1>About</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <div id="device-info">
-              <h4>Platform: <span id="device-platform">&nbsp;</span></h4>
-              <h4>Version: <span id="device-version">&nbsp;</span></h4>
-              <h4>UUID:   <span id="device-uuid">&nbsp;</span></h4>
-            </div>
+            <p>
+                The uAg Basket app is part of the
+                <a href="http://github.com/davidbourguignon/uag/"
+                data-rel="external">uAg Project</a>, a minimal
+                distributed mobile information system for managing
+                field-to-fork agricultural processes.
+            </p>
+            <p>Version: 0.1 pre</p>
+            <p>Authors: <a href="http://github.com/davidbourguignon/"
+                           data-rel="external">David Bourguignon</a>,
+                        <a href="http://github.com/sebviv/"
+                           data-rel="external">Sebastien Vivier</a></p>
+            <p>
+                Device info:<br />
+                <small>Platform: <span id="device-platform">&nbsp;</span></small><br />
+                <small>Version: <span id="device-version">&nbsp;</span></small><br />
+                <small>UUID: <span id="device-uuid">&nbsp;</span></small><br />
+            </p>
         </div><!-- /content -->
     </div><!-- /page -->
 
@@ -131,15 +141,13 @@
                     data-theme="b">Add new item</button>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
-            <h4><small>uAg Basket is part of the
-                <a href="http://github.com/davidbourguignon/uag/"
-                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 
     <div id="open" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
-            <a href="#home"
+            <!-- TODO: button not working? -->
+            <a href="uag-basket-view.html#home"
                data-role="button"
                data-rel="back">Cancel</a>
             <h1>Open basket</h1>
@@ -160,9 +168,6 @@
             </div>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
-            <h4><small>uAg Basket is part of the
-                <a href="http://github.com/davidbourguignon/uag/"
-                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 

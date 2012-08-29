@@ -5,12 +5,11 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-26
+ * @version 2012-08-29
  */
 /** @namespace uAg project */
-var uag = (function (parent, $, window, document, FileExplorer) {
+var uag = (function (parent, $, window, document, makeFileExplorer) {
     'use strict'; // enforcing strict JS
-
     var uAgBasket = parent.basket = parent.basket || {};
     /**
      * @class
@@ -18,14 +17,15 @@ var uag = (function (parent, $, window, document, FileExplorer) {
      * @description Controller module of the Basket app
      */
     uAgBasket.controller = (function () {
+        /**
+         * @private
+         */
         var isCordovaReady = false;
         var platformSpan = null;
         var versionSpan = null;
         var uuidSpan = null;
-        var fileExplorer = new FileExplorer();
-
+        var fileExplorer = makeFileExplorer();
         /**
-         * @function
          * @public
          * @lends uag.basket.controller
          */
@@ -108,6 +108,5 @@ var uag = (function (parent, $, window, document, FileExplorer) {
         };
     }());
     Object.freeze(uAgBasket.controller); // final
-
     return parent;
-}(uag || {}, jQuery, this, this.document, uag.utils.FileExplorer));
+}(uag || {}, jQuery, this, this.document, uag.utils.makeFileExplorer));

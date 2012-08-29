@@ -1,7 +1,7 @@
 /**
  * File overview: uAg Basket View CSS
  * Author: www.davidbourguignon.net
- * Version 2012-08-26
+ * Version 2012-08-29
  */
 .folder, .file {
     font-family: sans;
@@ -10,14 +10,18 @@
 }
 
 .folder {
-    background: url('../images/folder-32x32.png') no-repeat 50% 0%;
+    background-image: url('../images/folder-32x32.png');
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
     margin: 2px;
     padding-top: 25px;
     text-align: center;
 }
 
-.file{
-    background: url('../images/file-32x32.png') no-repeat 50% 0%;
+.file {
+    background-image: url('../images/file-32x32.png');
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
     margin: 2px;
     padding-top: 25px;
     text-align: center;
