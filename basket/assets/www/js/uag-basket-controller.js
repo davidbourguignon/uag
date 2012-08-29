@@ -11,6 +11,7 @@
 var uag = (function (parent, $, window, document, makeFileExplorer) {
     'use strict'; // enforcing strict JS
     var uAgBasket = parent.basket = parent.basket || {};
+
     /**
      * @class
      * @exports uAgBasket.controller as uag.basket.controller
@@ -25,6 +26,7 @@ var uag = (function (parent, $, window, document, makeFileExplorer) {
         var versionSpan = null;
         var uuidSpan = null;
         var fileExplorer = makeFileExplorer();
+
         /**
          * @public
          * @lends uag.basket.controller
@@ -57,10 +59,10 @@ var uag = (function (parent, $, window, document, makeFileExplorer) {
                 // TODO
             },
             openBasket: function (event) {
-                if (isCordovaReady) {
+                if (/*isCordovaReady*/true) {
                     console.info('Info: uag.basket.controller ready');
                     try {
-                        fileExplorer.init();
+                        fileExplorer.start();
                     } catch (e) {
                         console.error(e.message);
                     }
@@ -81,13 +83,7 @@ var uag = (function (parent, $, window, document, makeFileExplorer) {
             loadBasketFile: function (event) {
                 // TODO
             },
-            openExplorerRootDir: function (event) {
-                // TODO
-            },
-            openExplorerBackDir: function (event) {
-                // TODO
-            },
-            setInfoView: function ($platformSpan, $versionSpan, $uuidSpan) {
+            setAboutView: function ($platformSpan, $versionSpan, $uuidSpan) {
                 if ($platformSpan instanceof jQuery && $platformSpan.is('span')
                         && $versionSpan instanceof jQuery && $versionSpan.is('span')
                         && $uuidSpan instanceof jQuery && $uuidSpan.is('span')) {
@@ -108,5 +104,6 @@ var uag = (function (parent, $, window, document, makeFileExplorer) {
         };
     }());
     Object.freeze(uAgBasket.controller); // final
+
     return parent;
 }(uag || {}, jQuery, this, this.document, uag.utils.makeFileExplorer));

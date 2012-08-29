@@ -11,42 +11,56 @@
 var uag = (function (parent, $, window, document) {
     'use strict'; // enforcing strict JS
     var uAgUtils = parent.utils = parent.utils || {};
+
     /**
      * @constructor
-     * @exports uAgUtils.makeFileExplorer as uag.utils.makeFileExplorer
+     * @exports uAgUtils.makeFileExplorer as uag.utils.FileExplorer
      * @description File explorer utility for enhancing controllers
      */
     uAgUtils.makeFileExplorer = function () {
         /**
          * @private
          */
+        // view objects
         var gridDiv = null;
+        var folderDiv = null;
+        var fileDiv = null;
         var rootBtn = null;
         var backBtn = null;
+
+        // file API objects
         var rootDir = null;
         var currentDir = null;
         var parentDir = null;
         var directoryEntries = [];
         var fileEntries = [];
+        var activeEntry = null;
 
+        // callback functions
         function onFailureEvent (event) {
             throw new Error('Error: failed with code ' + event.target.error.code);
         }
+
         function onFileError (fileError) {
             throw new Error('Error: failed with code ' + fileError.code);
         }
+
         function onRequestFileSystemSuccess (fileSystem) {
             rootDir = fileSystem.root;
-            showSortedEntries(rootDir);
+            showDirectory(rootDir);
         }
+
         function onGetParentSuccess (parent) {
             parentDir = parent;
-            if ((parentDir.name == 'sdcard' && currentDir.name != 'sdcard')
-                    || parentDir.name != 'sdcard') {
-                backBtn.show(); // view selection
-                console.log('SHOW BACK BUTTON');//TMP
+            console.log('PARENT DIR');//TMP
+            console.log(parentDir.name);
+            if ((parentDir.name === 'sdcard' && currentDir.name !== 'sdcard')
+                    || parentDir.name !== 'sdcard') {
+                //backBtn.show(); // because of jQuery Mobile bug
+                console.log('SHOW BACKBTN');//TMP
             }
         }
+
         function onReadEntriesSuccess (entries) {
             directoryEntries.length = 0;
             fileEntries.length = 0;
@@ -59,7 +73,7 @@ var uag = (function (parent, $, window, document) {
                 }
             }
             var sortedEntries = directoryEntries.concat(fileEntries);
-            gridDiv.empty(); // view selection
+            gridDiv.empty();
             var uiBlockLetters = ['a','b','c','d'];
             for (var i = 0, len = sortedEntries.length; i < len; i++) {
                 var blockLetter = uiBlockLetters[i%4]; // length uiBlockLetters = 4
@@ -78,10 +92,57 @@ var uag = (function (parent, $, window, document) {
                                    + '</p></div></div>');
                 }
             }
+            folderDiv = $('.folder');
+            fileDiv = $('.file');
+            folderDiv.on('click', onFolderDivClick);
+            fileDiv.on('click', onFileDivClick);
         }
-        function showSortedEntries (directory) {
+
+        function onFolderDivClick () {
+            console.log('CLICK FOLDERDIV');//TMP
+            var name = $(this).text();
+            console.log('NAME '+name);
+            if (currentDir !== null) {
+                currentDir.getDirectory(name, {create:false},
+                                        onGetDirectorySuccess,
+                                        onFileError);
+            } else {
+                throw new Error('Error: current directory does not exist');
+            }
+
+        }
+
+        function onFileDivClick () {
+            console.log('CLICK FILEDIV');//TMP
+            var name = $(this).text();
+            console.log('NAME '+name);
+            if (currentDir !== null) {
+                currentDir.getFile(name, {create:false},
+                                   onGetFileSuccess,
+                                   onFileError);
+            } else {
+                throw new Error('Error: current directory does not exist');
+            }
+        }
+
+        function onGetDirectorySuccess (directory) {
+            activeEntry = directory;
+            console.log('ACTIVE ENTRY DIR '+activeEntry.isDirectory);//TMP
+            console.log('ACTIVE ENTRY NAME '+activeEntry.name);//TMP
+            showDirectory(activeEntry);
+        }
+
+        function onGetFileSuccess (file) {
+            activeEntry = file;
+            //readFile();
+        }
+
+        // other functions
+        function showDirectory (directory) {
             if (directory.isDirectory) {
                 currentDir = directory;
+                console.log('CURRENT DIR');//TMP
+                console.log(currentDir.name);
                 directory.getParent(onGetParentSuccess, onFileError);
             } else {
                 throw new TypeError('Error: FileExplorer.show() expecting directory object');
@@ -90,9 +151,10 @@ var uag = (function (parent, $, window, document) {
             directoryReader.readEntries(onReadEntriesSuccess,
                                         onFileError);
         }
+
         /**
          * @public
-         * @lends uag.utils.makeFileExplorer
+         * @lends uag.utils.FileExplorer
          */
         return {
             setView: function ($gridDiv, $rootBtn, $backBtn) {
@@ -109,16 +171,34 @@ var uag = (function (parent, $, window, document) {
                     throw new TypeError('Error: FileExplorer.setView() expecting view info');
                 }
             },
-            init: function () {
+            start: function () {
                 // how to make sure this is called after onDeviceReady has fired?
+                // how to start again from the previous currentDir?
                 // TODO
-                backBtn.hide(); // view selection
-                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-                                         onRequestFileSystemSuccess,
-                                         onFailureEvent);
+                //if (currentDir === rootDir) {
+                    //backBtn.hide(); // because of jQuery Mobile bug
+                    console.log('HIDE BACKBTN');//TMP
+                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+                                             onRequestFileSystemSuccess,
+                                             onFailureEvent);
+                    rootBtn.on('click', function () {
+                        console.log('CLICK ROOTBTN');//TMP
+                        if (rootDir !== null) {
+                            showDirectory(rootDir);
+                        }
+                    });
+                    backBtn.on('click', function () {
+                        console.log('CLICK BACKBTN');//TMP
+                        if (parentDir !== null) {
+                            showDirectory(parentDir);
+                        }
+                    });
+                //} else {
+
+                //}
             },
-            show: showSortedEntries,
         }
     };
+
     return parent;
 }(uag || {}, jQuery, this, this.document));

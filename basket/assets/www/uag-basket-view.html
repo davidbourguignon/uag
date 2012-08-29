@@ -14,7 +14,7 @@
     <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
     <script type="text/javascript" src="js/cordova-2.0.0.js"></script>
-    <script type="text/javascript" src="js/barcodescanner.js"></script>
+    <!--<script type="text/javascript" src="js/barcodescanner.js"></script>-->
     <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
     <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" src="js/uag-basket-controller.js"></script>
@@ -158,26 +158,30 @@
             <div id="open-explorer-div" class="ui-grid-c">
                 <!-- file explorer content -->
             </div>
-            <div class="ui-grid-a">
+            <!--<div class="ui-grid-a">
                 <div class="ui-block-a">
-                    <button id="open-back-btn">Back</a>
+                    <button id="open-back-btn">Back</button>
                 </div>
                 <div class="ui-block-b">
-                    <button id="open-root-btn">Root</a>
+                    <button id="open-root-btn">Root</button>
                 </div>
-            </div>
+            </div>-->
         </div><!-- /content -->
-        <div data-role="footer" data-position="fixed" data-theme="d">
+        <div data-role="footer" data-theme="d" class="ui-bar">
+            <a id="open-back-btn" href="#" data-role="button">Back</a>
+            <a id="open-root-btn" href="#" data-role="button">Root</a>
         </div><!-- /footer -->
     </div><!-- /page -->
 
     <script>
         $(document).ready(function () {
+            // switch to jQuery calls?
+            // TODO
             document.addEventListener('deviceready', uag.basket.controller.onDeviceReady, false);
             document.addEventListener('pause', uag.basket.controller.onPause, false);
             document.addEventListener("resume", uag.basket.controller.onResume, false);
-            $(document).bind('pageinit', uag.basket.controller.onPageInit);
 
+            $(document).on('pageinit', uag.basket.controller.onPageInit);
             $('#home-opt-btn').on('click', uag.basket.controller.options);
             $('#home-opt-btn').on('click', uag.basket.controller.info);
             $('#home-new-btn').on('click', uag.basket.controller.newBasket);
@@ -186,12 +190,10 @@
             $('#new-tag-btn').on('click', uag.basket.controller.captureTag);
             $('#new-add-btn').on('click', uag.basket.controller.addNewBasketItem);
             $('#open-load-btn').on('click', uag.basket.controller.loadBasketFile);
-            $('#open-root-btn').on('click', uag.basket.controller.openExplorerRootDir);
-            $('#open-back-btn').on('click', uag.basket.controller.openExplorerBackDir);
 
-            uag.basket.controller.setInfoView($('#device-platform'),
-                                              $('#device-version'),
-                                              $('#device-uuid'));
+            uag.basket.controller.setAboutView($('#device-platform'),
+                                               $('#device-version'),
+                                               $('#device-uuid'));
             uag.basket.controller.setExplorerView($('#open-explorer-div'),
                                                   $('#open-root-btn'),
                                                   $('#open-back-btn'));
