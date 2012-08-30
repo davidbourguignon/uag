@@ -1,8 +1,3 @@
-<!--
-    File overview: uAg Basket View HTML
-    Author: www.davidbourguignon.net
-    Version: 2012-08-30
--->
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,36 +5,56 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>uAg Basket</title>
     <link rel="stylesheet" href="css/jquery.mobile-1.1.1.css" />
-    <link rel="stylesheet" href="css/uag-basket-view.css" />
     <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
     <script type="text/javascript" src="js/cordova-2.0.0.js"></script>
-    <!--<script type="text/javascript" src="js/barcodescanner.js"></script>-->
-    <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
-    <script type="text/javascript" src="js/uag-basket-model.js"></script>
-    <script type="text/javascript" src="js/uag-basket-controller.js"></script>
+    <script type="text/javascript" src="js/barcodescanner.js"></script>
 </head>
+<!-- <body onload="init();"> -->
 <body>
 
+<!-- Plain HTML
+    <h1>Test Cordova + jQuery Mobile</h1>
+    <div id="info">
+      <h4>Platform: <span id="platform">&nbsp;</span></h4>
+      <h4>Version: <span id="version">&nbsp;</span></h4>
+      <h4>UUID:   <span id="uuid">&nbsp;</span></h4>
+    </div>
+ -->
+<!-- jQuery Mobile
     <div id="home" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
-            <a id="home-about-btn"
-               href="#about"
+            <h1>Test Cordova + jQuery Mobile</h1>
+        </div>
+        <div data-role="content" data-theme="c">
+            <div id="device-info">
+              <h4>Platform: <span id="platform">&nbsp;</span></h4>
+              <h4>Version: <span id="version">&nbsp;</span></h4>
+              <h4>UUID:   <span id="uuid">&nbsp;</span></h4>
+            </div>
+        </div>
+    </div>
+-->
+
+<div id="home" data-role="page">
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <a id="home-info-btn"
+               href="#device"
                data-role="button"
                data-rel="dialog"
                data-transition="pop"
-               class="ui-btn-left">About</a>
+               class="ui-btn-left">Device</a>
             <h1>uAg Basket</h1>
             <a id="home-opt-btn"
                data-role="button"
                class="ui-btn-right">Options</a>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <img src="images/basket-650x650.jpg" alt="basket"
-                 style="display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 99%" />
+            <div id="device-info">
+              <h4>Platform: <span id="platform">&nbsp;</span></h4>
+              <h4>Version: <span id="version">&nbsp;</span></h4>
+              <h4>UUID:   <span id="uuid">&nbsp;</span></h4>
+            </div>
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <a id ="home-new-btn"
@@ -49,41 +64,23 @@
                 <div class="ui-block-b">
                     <a id="home-open-btn"
                        href="#open"
-                       data-role="button"
-                       data-rel="dialog"
-                       data-transition="pop">Open</a>
+                       data-role="button">Open</a>
                 </div>
             </div>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
-            <h4><small><a href="http://github.com/davidbourguignon/uag/"
-                          data-rel="external">uAg Project</a></small></h4>
+            <h4><small>uAg Basket is part of the
+                <a href="http://github.com/davidbourguignon/uag/"
+                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="about" data-role="page">
+    <div id="toto" data-role="page">
         <div data-role="header" data-theme="a">
-            <h1>About</h1>
+            <h1>Device info</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <p>
-                The uAg Basket app is part of the
-                <a href="http://github.com/davidbourguignon/uag/"
-                data-rel="external">uAg Project</a>, a minimal
-                distributed mobile information system for managing
-                field-to-fork agricultural processes.
-            </p>
-            <p>Version: 0.1 pre</p>
-            <p>Authors: <a href="http://github.com/davidbourguignon/"
-                           data-rel="external">David Bourguignon</a>,
-                        <a href="http://github.com/sebviv/"
-                           data-rel="external">S&eacute;bastien Vivier</a></p>
-            <p>
-                Device info:<br />
-                <small>Platform: <span id="device-platform"></span></small><br />
-                <small>Version: <span id="device-version"></span></small><br />
-                <small>UUID: <span id="device-uuid"></span></small><br />
-            </p>
+
         </div><!-- /content -->
     </div><!-- /page -->
 
@@ -145,40 +142,82 @@
                     data-theme="b">Add new item</button>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
-            <h4><small><a href="http://github.com/davidbourguignon/uag/"
-                          data-rel="external">uAg Project</a></small></h4>
+            <h4><small>uAg Basket is part of the
+                <a href="http://github.com/davidbourguignon/uag/"
+                   data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 
     <div id="open" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#home"
+               data-role="button"
+               data-rel="back">Cancel</a>
             <h1>Open basket</h1>
+            <a id="open-load-btn"
+               data-role="button">OK</a>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <div id="open-explorer-div" class="ui-grid-b">
+            <div id="open-explorer-div" class="ui-grid-c">
                 <!-- file explorer content -->
             </div>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <button id="open-back-btn">Back</a>
+                </div>
+                <div class="ui-block-b">
+                    <button id="open-root-btn">Root</a>
+                </div>
+            </div>
         </div><!-- /content -->
+        <div data-role="footer" data-position="fixed" data-theme="d">
+            <h4><small>uAg Basket is part of the
+                <a href="http://github.com/davidbourguignon/uag/"
+                   data-rel="external">uAg Project</a></small></h4>
+        </div><!-- /footer -->
     </div><!-- /page -->
 
     <script>
-        $(document).ready(function() {
-            $(document).on('deviceready', uag.basket.controller.onDeviceReady);
-            $(document).on('pause', uag.basket.controller.onPause);
-            $(document).on("resume", uag.basket.controller.onResume);
-            $(document).on('pageinit', uag.basket.controller.onPageInit);
-            $('#home-opt-btn').on('click', uag.basket.controller.options);
-            $('#home-opt-btn').on('click', uag.basket.controller.info);
-            $('#home-new-btn').on('click', uag.basket.controller.newBasket);
-            $('#home-open-btn').on('click', uag.basket.controller.openBasket);
-            $('#new-save-btn').on('click', uag.basket.controller.saveBasket);
-            $('#new-tag-btn').on('click', uag.basket.controller.captureTag);
-            $('#new-add-btn').on('click', uag.basket.controller.addNewBasketItem);
-            uag.basket.controller.setAboutView($('#device-platform'),
-                                               $('#device-version'),
-                                               $('#device-uuid'));
-            uag.basket.controller.setExplorerView($('#open-explorer-div'));
+        var fileSystemRoot = {};
+
+        $(document).ready(function () {
+            console.log("GOT AN ONLOAD!!!")
+            document.addEventListener("touchmove", preventBehavior, false);
+            document.addEventListener("deviceready", deviceInfo, true);
         });
+
+        /*function init(){
+            console.log("GOT AN ONLOAD!!!")
+            document.addEventListener("touchmove", preventBehavior, false);
+            document.addEventListener("deviceready", deviceInfo, true);
+        }*/
+
+        var preventBehavior = function(e) {
+          e.preventDefault();
+        };
+
+        var deviceInfo = function(){
+          console.log("In deviceInfo!");
+          document.getElementById("platform").innerHTML = device.platform;
+          document.getElementById("version").innerHTML = device.version;
+          document.getElementById("uuid").innerHTML = device.uuid;
+
+          window.requestFileSystem (
+              LocalFileSystem.PERSISTENT,
+              0,
+              function (fileSystem) { // success
+                  $.extend(true, fileSystemRoot, fileSystem.root); // does not work!
+                  console.log('THIS IS IT\n');
+                  console.log(fileSystem.root.name);
+                  console.log(fileSystemRoot.name);
+              },
+              function (event) { // failure
+
+              }
+          );
+          console.log('THIS IS IT\n');
+          console.log(fileSystemRoot.name);
+        }
     </script>
 
 </body>

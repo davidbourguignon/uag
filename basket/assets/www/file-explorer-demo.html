@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>DigitalNoiz</title>
+    <!-- jQuery Mobile setup -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.1.1.css" />
+    <link rel="stylesheet" href="css/uag-basket-view.css" />
+    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
+    <script type="text/javascript" src="js/cordova-2.0.0.js"></script>
+    <!--<script type="text/javascript" src="js/barcodescanner.js"></script>-->
+    <script type="text/javascript" src="js/file-explorer-demo.js"></script>
+</head>
+
+<body>
+
+<div id="home" data-role="page">
+      <div data-role="header" data-position="fixed">
+            <a id="backBtn" href="#" data-icon="arrow-l">Back</a>
+            <h1>File Explorer</h1>
+            <a id="homeBtn" href="index.html" data-icon="home" data-transition="pop">Home</a>
+      </div>
+      <div data-role="content">
+            <h2>Folder</h2>
+
+<div class="ui-grid-c" id="dirContent">
+    <!--<div class="ui-block-a">
+        <div class="folder"><p>folder name</p></div>
+    </div>
+    <div class="ui-block-b">
+        <div class="folder"><p>folder name</p></div>
+    </div>
+    <div class="ui-block-c">
+        <div class="folder"><p>folder name</p></div>
+    </div>
+    <div class="ui-block-d">
+        <div class="folder"><p>folder name</p></div>
+    </div>
+ next row
+    <div class="ui-block-a">
+        <div class="file"><p>file name</p></div>
+    </div>
+    <div class="ui-block-b">
+        <div class="file"><p>file name</p></div>
+    </div>
+    <div class="ui-block-c">
+        <div class="file"><p>file name</p></div>
+    </div>
+    <div class="ui-block-d">
+        <div class="file"><p>file name</p></div>
+    </div>-->
+</div>
+
+            <a id="menu" href="#menuOptions" data-rel="dialog">file details</a>
+            <a id="get_file_details" href="#fileDetails" data-rel="dialog">file details</a>
+      </div>
+</div>
+
+<div id="menuOptions" data-role="page">
+    <div data-role="header">
+            <h1>Choose</h1>
+      </div>
+      <div data-role="content">
+        <input type="button" id="openBtn" data-theme="e" value="Open">
+        <input type="button" id="copyBtn" value="Copy">
+        <input type="button" id="moveBtn" value="Move">
+        <input type="button" id="pasteBtn" value="Paste" disabled>
+        <input type="button" id="deleteBtn" value="Delete">
+      </div>
+</div>
+
+<div id="fileDetails" data-role="page">
+    <div data-role="header">
+            <h1>File</h1>
+      </div>
+      <div id="file_details" data-role="content"></div>
+</div>
+
+</body>
+
+</html>
