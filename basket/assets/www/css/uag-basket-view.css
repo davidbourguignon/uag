@@ -4,25 +4,28 @@
  * Version 2012-08-30
  */
 .folder, .file {
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    margin: 2px;
+    padding-top: 25px;
+    text-align: center;
     font-family: sans;
     font-size: 10px;
+    word-wrap: break-word;
     cursor: pointer;
 }
 
 .folder {
     background-image: url('../images/folder-32x32.png');
-    background-position: 50% 0%;
-    background-repeat: no-repeat;
-    margin: 2px;
-    padding-top: 25px;
-    text-align: center;
 }
 
 .file {
     background-image: url('../images/file-32x32.png');
-    background-position: 50% 0%;
-    background-repeat: no-repeat;
-    margin: 2px;
-    padding-top: 25px;
-    text-align: center;
+}
+
+.back {
+    background-color: rgb(200,200,200);
+    border: 1px solid rgb(150,150,150);
+    font-family: arial;
+    font-weight: bolder;
 }
