@@ -112,10 +112,7 @@
 /home/db/src/uag/basket/assets/www/css/images/icons-18-black.png \
 /home/db/src/uag/basket/assets/www/css/images/icons-18-white.png \
 /home/db/src/uag/basket/assets/www/images/basket-650x650.jpg \
-/home/db/src/uag/basket/assets/www/images/folder-256x256.png \
 /home/db/src/uag/basket/assets/www/images/README.md \
-/home/db/src/uag/basket/assets/www/images/file-256x256.png \
 /home/db/src/uag/basket/assets/www/images/folder-32x32.png \
 /home/db/src/uag/basket/assets/www/images/file-32x32.png \
-/home/db/src/uag/basket/assets/www/images/basket-265x265.jpg \
 /home/db/src/uag/basket/bin/AndroidManifest.xml \

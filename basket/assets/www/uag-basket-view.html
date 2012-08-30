@@ -1,7 +1,7 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-08-29
+    Version: 2012-08-30
 -->
 <!DOCTYPE html>
 <html>
@@ -49,11 +49,15 @@
                 <div class="ui-block-b">
                     <a id="home-open-btn"
                        href="#open"
-                       data-role="button">Open</a>
+                       data-role="button"
+                       data-rel="dialog"
+                       data-transition="pop">Open</a>
                 </div>
             </div>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
+            <h4><small><a href="http://github.com/davidbourguignon/uag/"
+                          data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 
@@ -73,12 +77,12 @@
             <p>Authors: <a href="http://github.com/davidbourguignon/"
                            data-rel="external">David Bourguignon</a>,
                         <a href="http://github.com/sebviv/"
-                           data-rel="external">Sebastien Vivier</a></p>
+                           data-rel="external">S&eacute;bastien Vivier</a></p>
             <p>
                 Device info:<br />
-                <small>Platform: <span id="device-platform">&nbsp;</span></small><br />
-                <small>Version: <span id="device-version">&nbsp;</span></small><br />
-                <small>UUID: <span id="device-uuid">&nbsp;</span></small><br />
+                <small>Platform: <span id="device-platform"></span></small><br />
+                <small>Version: <span id="device-version"></span></small><br />
+                <small>UUID: <span id="device-uuid"></span></small><br />
             </p>
         </div><!-- /content -->
     </div><!-- /page -->
@@ -141,46 +145,27 @@
                     data-theme="b">Add new item</button>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="d">
+            <h4><small><a href="http://github.com/davidbourguignon/uag/"
+                          data-rel="external">uAg Project</a></small></h4>
         </div><!-- /footer -->
     </div><!-- /page -->
 
     <div id="open" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
-            <!-- TODO: button not working? -->
-            <a href="uag-basket-view.html#home"
-               data-role="button"
-               data-rel="back">Cancel</a>
             <h1>Open basket</h1>
-            <a id="open-load-btn"
-               data-role="button">OK</a>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <div id="open-explorer-div" class="ui-grid-c">
+            <div id="open-explorer-div" class="ui-grid-b">
                 <!-- file explorer content -->
             </div>
-            <!--<div class="ui-grid-a">
-                <div class="ui-block-a">
-                    <button id="open-back-btn">Back</button>
-                </div>
-                <div class="ui-block-b">
-                    <button id="open-root-btn">Root</button>
-                </div>
-            </div>-->
         </div><!-- /content -->
-        <div data-role="footer" data-theme="d" class="ui-bar">
-            <a id="open-back-btn" href="#" data-role="button">Back</a>
-            <a id="open-root-btn" href="#" data-role="button">Root</a>
-        </div><!-- /footer -->
     </div><!-- /page -->
 
     <script>
-        $(document).ready(function () {
-            // switch to jQuery calls?
-            // TODO
-            document.addEventListener('deviceready', uag.basket.controller.onDeviceReady, false);
-            document.addEventListener('pause', uag.basket.controller.onPause, false);
-            document.addEventListener("resume", uag.basket.controller.onResume, false);
-
+        $(document).ready(function() {
+            $(document).on('deviceready', uag.basket.controller.onDeviceReady);
+            $(document).on('pause', uag.basket.controller.onPause);
+            $(document).on("resume", uag.basket.controller.onResume);
             $(document).on('pageinit', uag.basket.controller.onPageInit);
             $('#home-opt-btn').on('click', uag.basket.controller.options);
             $('#home-opt-btn').on('click', uag.basket.controller.info);
@@ -189,14 +174,10 @@
             $('#new-save-btn').on('click', uag.basket.controller.saveBasket);
             $('#new-tag-btn').on('click', uag.basket.controller.captureTag);
             $('#new-add-btn').on('click', uag.basket.controller.addNewBasketItem);
-            $('#open-load-btn').on('click', uag.basket.controller.loadBasketFile);
-
             uag.basket.controller.setAboutView($('#device-platform'),
                                                $('#device-version'),
                                                $('#device-uuid'));
-            uag.basket.controller.setExplorerView($('#open-explorer-div'),
-                                                  $('#open-root-btn'),
-                                                  $('#open-back-btn'));
+            uag.basket.controller.setExplorerView($('#open-explorer-div'));
         });
     </script>
 
