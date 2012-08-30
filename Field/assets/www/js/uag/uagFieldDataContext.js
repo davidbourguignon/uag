@@ -180,6 +180,19 @@ var uag = (function (parent) {
 		}
 	};
 	
+	//Producers.findProduct = function(productId) {};
+	
+	Producers.getProductsKeyNamePairs = function() {
+		// get products
+		var products = Producers.getProducts();
+		
+		var keyNamePairs = [];
+		for ( var int = 0; int < products.length; int++) {
+			keyNamePairs[products[int].id] = products[int].name; 
+		}
+		return keyNamePairs;
+	};
+	
 	/** @description <b>getProductsForField method</b>, fetch products for a field (and current setup producer) 
 	 * @name uag.field.dataContext.Producers.getFieldProducts
 	 * @function
@@ -192,10 +205,14 @@ var uag = (function (parent) {
 		var products = Producers.getProducts();
 		// get field 
 		var field = Producers.findField(fieldId);
-		
-		return products.filter(function(product) {
-			return -1 !== field.productsId.indexOf(product.id);
-		});
+		// products filter 
+		if (null !== field) {
+			return products.filter(function(product) {
+				return -1 !== field.productsId.indexOf(product.id);
+			});
+		} else {
+			return [];
+		}
 		/*
 		// declare result set 
 		var fieldProducts = [];
@@ -248,6 +265,19 @@ var uag = (function (parent) {
 		} else {
 			return [];
 		}
+	};
+	
+	//Procucers.findQuality = function(qualityId) {};
+	
+	Producers.getQualitiesKeyNamePairs = function() {
+		// get qualities
+		var qualities = Producers.getQualities();
+		
+		var keyNamePairs = [];
+		for ( var int = 0; int < qualities.length; int++) {
+			keyNamePairs[qualities[int].id] = qualities[int].name; 
+		}
+		return keyNamePairs;
 	};
 	
 	/** @description <b>remove method</b>, remove a producer 
@@ -358,7 +388,7 @@ var uag = (function (parent) {
 	 * @param producerId worker's selected producer id 
 	 * @returns {String} worker's id 
 	 */
-	WorkerContainers.setWorker = function(name, producerId) {
+	WorkerContainers.setWorker = function(uuid, name, producerId) {
 		// input validation 
 		//TODO : name input validation
 		
@@ -366,7 +396,7 @@ var uag = (function (parent) {
 		WorkerContainers.clear();
 		
 		// read from phonegap/cordova device  
-		var smartphoneId = "uuid";//device.uuid;
+		var smartphoneId = uuid;
 		// worker_id_ts_name_smartphoneId
 		var id = "worker_id_" + Date.now() + "_" + name + "_" + smartphoneId;
 		// create worker 
@@ -437,7 +467,7 @@ var uag = (function (parent) {
 		var containers = WorkerContainers.getContainers();
 		// add container
 		containers.push(container);
-		// save new workers list
+		// save new containers list
 		Storage.Save(
 				WorkerContainers.getLocalStorageKey(), 
 				WorkerContainers.getJSON(worker,containers));
@@ -445,6 +475,27 @@ var uag = (function (parent) {
 		return id;		
 	};
 	
+	WorkerContainers.updateContainer = function(containerId, weight, qualityId, fieldId, productId) {
+		// get containers 
+		var containers = WorkerContainers.getContainers();
+		// filter
+		for ( var int = 0 ; int < containers.length ; int++ ) {
+			// ids match
+			if (containers[int].id === containerId) {
+				// then update it
+				containers[int].weight = weight;
+				containers[int].qualityId = qualityId;
+				containers[int].fieldId = fieldId;
+				containers[int].productId = productId;
+			}
+		}
+		// get worker 
+		var worker = WorkerContainers.getWorker();			
+		// save worker's containers list
+		Storage.Save(
+				WorkerContainers.getLocalStorageKey(), 
+				WorkerContainers.getJSON(worker,containers));
+	};
 	
 	/** @description <b>findContainerById method</b>, 
 	 * @name uag.field.dataContext.WorkerContainers.findContainer

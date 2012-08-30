@@ -27,17 +27,19 @@
 	
 		<div data-role="header" data-position="inline">
 			<h1>Containers</h1>
-			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
-				<a href="#container-page" data-role="button" data-icon="plus">Add</a>
-				<a href="#setup-page" data-role="button" data-icon="gear">Setup</a>
-			</div>
+			<a href="#setup-page" data-role="button" data-icon="gear" class="ui-btn-right">Setup</a>
 		</div>
 
 		<div data-role="content" id="containers-list-page-content">
+			<ul data-role="listview" id="containers-list-page-content-list"></ul>
 		</div>
 		
 		<div data-role="footer">
-			<h4 id="containers-list-page-footer-text">&nbsp;</h4>
+			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left" style="margin: 1px">
+				<a href="#container-page" data-role="button" data-icon="plus">Add</a>
+				<a data-role="button" id="containers-list-page-footer-reset" data-icon="delete">Reset</a>
+			</div>
+			<h4 id="containers-list-page-footer-text" style="text-align: right;">&nbsp;</h4>
 		</div>
 
 	</div>
@@ -46,60 +48,35 @@
 
 		<div data-role="header" data-position="inline">
 			<a href="#containers-list-page" data-icon="home" data-iconpos="notext" data-role="button">Home</a>
-			<h1>Crate</h1>
-<!-- 			<a href="#setup" data-icon="gear" class="ui-btn-right">Setup</a> -->
+			<h1>Container</h1>
 		</div>
 
 		<div data-role="content">
-			<form id="crateform" action="form.php" method="post">
+			<form id="container-page-form" action="" method="post">
 
-				<div data-role="fieldcontain">
-					<label for="weight">Weight:</label> <input type="text"
-						name="weight" id="weight" value="" placeholder="Weight" />
-				</div>
+				<input type="hidden" id="container-page-form-id" name="container-page-form-id" value=""/>
 
-				<div data-role="fieldcontain">
-					<label for="select-choice-quality" class="select">Quality:</label>
-					<select name="select-choice-quality" id="select-choice-quality">
-						<option value="bad">Bad</option>
-						<option value="poor">Poor</option>
-						<option value="good">Good</option>
-						<option value="excellent">Excellent</option>
-					</select>
-				</div>
+				<label for="container-page-form-weight">Weight : </label>
+				<input type="text" name="container-page-form-weight" id="container-page-form-weight" value="" placeholder="Weight" />
 
-				<div data-role="fieldcontain">
-					<label for="date">Date:</label> <input type="text" name="date"
-						id="date" value="" placeholder="Date" />
-				</div>
+				<label for="container-page-form-qualities" class="select">Qualities : </label>
+				<select name="container-page-form-qualities" id="container-page-form-qualities" data-native-menu="false"></select>
 
-				<div data-role="fieldcontain">
-					<label for="select-choice-product" class="select">Product:</label>
-					<select name="select-choice-product" id="select-choice-product">
-						<option value="product_1">Vegetable 1</option>
-						<option value="product_2">Vegetable 2</option>
-						<option value="product_3">Vegetable 3</option>
-						<option value="product_4">Vegetable 4</option>
-					</select>
-				</div>
+				<label for="container-page-form-fields" class="select">fields : </label>
+				<select name="container-page-form-fields" id="container-page-form-fields" data-native-menu="false"></select>
 
-				<div data-role="fieldcontain">
-					<label for="select-choice-field" class="select">field:</label> <select
-						name="select-choice-field" id="select-choice-field">
-						<option value="field_1">Field 1</option>
-						<option value="field_2">Field 2</option>
-						<option value="field_3">Field 3</option>
-					</select>
-				</div>
+				<label for="container-page-form-products" class="select">Products : </label>
+				<select name="container-page-form-products" id="container-page-form-products" data-native-menu="false"></select>
 
 			</form>
 		</div>
 		
-		<div data-role="footer" class="ui-bar">
-			<div data-role="controlgroup" data-type="horizontal">
-				<a href="#" data-icon="delete">Cancel</a> 
-				<a href="#" data-icon="check">Save</a>
+		<div data-role="footer">
+			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left" style="margin: 1px">
+				<a href="#" id="container-page-save" data-role="button" data-icon="check">Save</a>
+				<a href="#" id="container-page-delete" data-role="button" data-icon="delete">Delete</a> 
 			</div>
+			<h4>&nbsp;</h4>
 		</div>
 
 	</div>
@@ -117,13 +94,16 @@
 				<label for="setup-page-form-name">Worker Name : </label> 
 				<input type="text" name="setup-page-form-name" id="setup-page-form-name" value=""/>
 				<label for="setup-page-form-producer">Producer : </label>
-				<select name="setup-page-form-producer" id="setup-page-form-producer"></select>
+				<select name="setup-page-form-producer" id="setup-page-form-producer" data-native-menu="false"></select>
 			</form>
-			<a id="setup-page-save" href="" data-role="button" data-icon="check">Save</a>
 		</div>
 
 		<div data-role="footer">
-			<h4>Page Footer</h4>
+			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left" style="margin: 1px">
+				<a id="setup-page-save" href="" data-role="button" data-icon="check">Save</a>
+				<a id="setup-page-reset" href="#" data-role="button" data-icon="delete">Reset</a>
+			</div>
+			<h4>&nbsp;</h4>
 		</div>
 
 	</div>
