@@ -523,6 +523,36 @@ function onDeviceReady() {
 		uag.field.Controller.init();
 	});
 	
+	/*
+	window.requestFileSystem(
+			LocalFileSystem.PERSISTENT, 
+			0, 
+			function(fileSystem) {
+				console.log("fileSystem : " + fileSystem.name);
+				console.log("fileSystem : " + fileSystem.root.name);
+				console.log("fileSystem : " + fileSystem.root.fullpath);
+				
+			}, 
+			function(error) {
+				console.log("error : " + error.code);				
+			});
+	*/
+	
+	// 
+	var encodeText = function() {
+	    window.plugins.barcodeScanner.encode(
+	            BarcodeScanner.Encode.TEXT_TYPE,
+	            "http://www.mobiledevelopersolutions.com",
+	            function(success) {
+	                alert("Encode success: " + success);
+	            }, function(fail) {
+	                alert("Encoding failed: " + fail);
+	            });
+	};
+	
+	encodeText();
+	
+
 };
 
 // on mobile phone  
