@@ -1,7 +1,7 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-08-30
+    Version: 2012-08-31
 -->
 <!DOCTYPE html>
 <html>
@@ -164,10 +164,18 @@
     <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="js/cordova-2.0.0.js"></script>
     <script type="text/javascript" src="js/barcodescanner.js"></script>
+    <script type="text/javascript" src="js/uri.js"></script>
+    <script type="text/javascript" src="js/jsv.js"></script>
+    <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
     <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
     <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" src="js/uag-basket-controller.js"></script>
     <script>
+        'use strict'; // enforcing strict JS
+        //TMP
+        //uag = uag || {};
+        //uag.basket = uag.basket || {};
+        //
         // jQuery Mobile
         $(document).on('mobileinit', uag.basket.controller.onMobileInit);
         $(document).on('pageinit', uag.basket.controller.onPageInit);
@@ -187,7 +195,8 @@
             uag.basket.controller.setAboutView($('#device-platform'),
                                                $('#device-version'),
                                                $('#device-uuid'));
-            uag.basket.controller.setExplorerView($('#file-explorer-div'));
+            uag.basket.controller.setExplorerView($('#open'),
+                                                  $('#file-explorer-div'));
         });
     </script>
     <!-- jQuery Mobile is called after registering callback for mobileinit event -->

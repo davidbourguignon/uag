@@ -5,10 +5,10 @@
 /**
  * @fileOverview uAg Utils File Explorer
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-30
+ * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document, fileSystem) {
+var uag = (function(parent, $, window, document) {
     'use strict'; // enforcing strict JS
     var uAgUtils = parent.utils = parent.utils || {};
 
@@ -32,6 +32,10 @@ var uag = (function(parent, $, window, document, fileSystem) {
         var currentDir = null;
         var parentDir = null;
         var activeEntry = null;
+
+        // callbacks from caller
+        var onFileCheck = null;
+        var onClose = null;
 
         // other vars
         var directoryEntries = [];
@@ -141,7 +145,13 @@ var uag = (function(parent, $, window, document, fileSystem) {
             fileReadStr = event.target.result;
             console.info('Info: > file content is');
             console.info(fileReadStr);
-            // callback
+            if (onFileCheck(fileReadStr)) {
+                onClose();
+            } else {
+                // use also jQuery Mobile 1.2.0 popup?
+                // TODO
+                throw new Error('Error: file format is not recognized');
+            }
         }
 
         function onFileSuccess(file) {
@@ -182,17 +192,24 @@ var uag = (function(parent, $, window, document, fileSystem) {
          * @lends uag.utils.FileExplorer
          */
         return {
-            setView: function($gridDiv) {
+            /**
+             *  @param {object} $gridDiv jQuery object containing the DOM reference to the div with the grid class
+             *  @param {function} fileCheckCb function callback invoked for checking the chosen file (param: string as fileStr; returns: boolean)
+             *  @param {function} closeCb function callback invoked for closing the explorer view (param: object as event; returns: void)
+             **/
+            run: function($gridDiv, fileCheckCb, closeCb) {
+                // how to make sure this is called after onDeviceReady has fired?
+                // TODO
+                // set params
                 if ($gridDiv instanceof jQuery &&
                     $gridDiv.is('div[class="ui-grid-b"]')) {
                     gridDiv = $gridDiv;
                 } else {
                     throw new TypeError('Error: expecting explorer view objects');
                 }
-            },
-            explore: function() {
-                // how to make sure this is called after onDeviceReady has fired?
-                // TODO
+                onFileCheck = fileCheckCb;
+                onClose = closeCb;
+                // get root directory of the local file system
                 if (gridDiv !== null) {
                     if (rootDir !== null) {
                         if (currentDir.name !== rootDir.name) {
@@ -201,7 +218,7 @@ var uag = (function(parent, $, window, document, fileSystem) {
                             showDirectory(rootDir);
                         }
                     } else {
-                        window.requestFileSystem(fileSystem.PERSISTENT, 0,
+                        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
                                                  onRequestFileSystemSuccess,
                                                  onFileError);
                     }
@@ -213,4 +230,4 @@ var uag = (function(parent, $, window, document, fileSystem) {
     };
 
     return parent;
-}(uag || {}, jQuery, this, this.document, LocalFileSystem));
+}(uag || {}, jQuery, this, this.document));

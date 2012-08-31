@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "basket": {
+            "type": "object",
+            "properties": {
+                "distribDate": {
+                    "type": "date"
+                },
+                "approxWeight": {
+                    "type": "number"
+                },
+                "item": {
+                    "type": "array"
+                }
+            }
+        }
+    }
+}

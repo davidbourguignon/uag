@@ -64,12 +64,13 @@
 /home/db/src/uag/basket/assets/www \
 /home/db/src/uag/basket/assets/www/barcodescanner-demo.html \
 /home/db/src/uag/basket/assets/www/js \
-/home/db/src/uag/basket/assets/www/basket-example.json \
+/home/db/src/uag/basket/assets/www/basket-schema.json \
 /home/db/src/uag/basket/assets/www/css \
 /home/db/src/uag/basket/assets/www/file-explorer-demo.html \
 /home/db/src/uag/basket/assets/www/uag-basket-view.html \
 /home/db/src/uag/basket/assets/www/images \
 /home/db/src/uag/basket/assets/www/test.html \
+/home/db/src/uag/basket/assets/www/basket-2012-09-18.json \
 /home/db/src/uag/basket/assets/www/js/jquery.mobile-1.1.1.js \
 /home/db/src/uag/basket/assets/www/js/barcodescanner.js \
 /home/db/src/uag/basket/assets/www/js/file-explorer-demo.js \
@@ -82,7 +83,10 @@
 /home/db/src/uag/basket/assets/www/js/doc \
 /home/db/src/uag/basket/assets/www/js/uag-basket-controller.js \
 /home/db/src/uag/basket/assets/www/js/jquery-1.7.1.min.js \
+/home/db/src/uag/basket/assets/www/js/jsv.js \
 /home/db/src/uag/basket/assets/www/js/cordova-2.0.0.js \
+/home/db/src/uag/basket/assets/www/js/json-schema-draft-03.js \
+/home/db/src/uag/basket/assets/www/js/uri.js \
 /home/db/src/uag/basket/assets/www/js/test/jasmine \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/spec \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/lib \

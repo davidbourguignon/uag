@@ -6,15 +6,35 @@
 /**
  * @fileOverview uAg Basket Model
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-30
+ * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent) {
+var uag = (function(parent, $, window, document) {
     'use strict'; // enforcing strict JS
     var uAgBasket = parent.Basket = parent.Basket || {};
-    uAgBasket.Model = (function() {
+
+    /**
+     * @class
+     * @exports uAgBasket.model as uag.basket.model
+     * @description Model module of the Basket app (implements the module pattern).
+     */
+    uAgBasket.model = (function() {
+        /**
+         * @private
+         */
+        // sth?
+
+        /**
+         * @public
+         * @lends uag.basket.model
+         */
         return {
+            jsonSchema: {
+                // TODO
+            },
+            //other things?
         };
     }());
+
     return parent;
-}(uag || {}));
+}(uag || {}, jQuery, this, this.document));
