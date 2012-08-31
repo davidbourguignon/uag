@@ -8,7 +8,7 @@
  * @version 2012-08-30
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document) { // LocalFileSystem ?
+var uag = (function(parent, $, window, document, fileSystem) {
     'use strict'; // enforcing strict JS
     var uAgUtils = parent.utils = parent.utils || {};
 
@@ -31,9 +31,11 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
         var rootDir = null;
         var currentDir = null;
         var parentDir = null;
+        var activeEntry = null;
+
+        // other vars
         var directoryEntries = [];
         var fileEntries = [];
-        var activeEntry = null;
         var fileReadStr = '';
 
         // callback functions
@@ -139,6 +141,7 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
             fileReadStr = event.target.result;
             console.info('Info: > file content is');
             console.info(fileReadStr);
+            // callback
         }
 
         function onFileSuccess(file) {
@@ -184,10 +187,10 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
                     $gridDiv.is('div[class="ui-grid-b"]')) {
                     gridDiv = $gridDiv;
                 } else {
-                    throw new TypeError('Error: FileExplorer.setView() expecting view info');
+                    throw new TypeError('Error: expecting explorer view objects');
                 }
             },
-            start: function() {
+            explore: function() {
                 // how to make sure this is called after onDeviceReady has fired?
                 // TODO
                 if (gridDiv !== null) {
@@ -198,16 +201,16 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
                             showDirectory(rootDir);
                         }
                     } else {
-                        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+                        window.requestFileSystem(fileSystem.PERSISTENT, 0,
                                                  onRequestFileSystemSuccess,
                                                  onFileError);
                     }
                 } else {
-                    throw new Error('Error: explorer view is not set');
+                    throw new Error('Error: explorer view objects are not set');
                 }
             },
         };
     };
 
     return parent;
-}(uag || {}, jQuery, this, this.document)); // this.LocalFileSystem ?
+}(uag || {}, jQuery, this, this.document, LocalFileSystem));
