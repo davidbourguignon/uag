@@ -64,6 +64,7 @@
 /home/db/src/uag/basket/assets/www \
 /home/db/src/uag/basket/assets/www/barcodescanner-demo.html \
 /home/db/src/uag/basket/assets/www/js \
+/home/db/src/uag/basket/assets/www/basket-example.json \
 /home/db/src/uag/basket/assets/www/css \
 /home/db/src/uag/basket/assets/www/file-explorer-demo.html \
 /home/db/src/uag/basket/assets/www/uag-basket-view.html \

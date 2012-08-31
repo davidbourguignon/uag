@@ -8,7 +8,7 @@
  * @version 2012-08-30
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document) { // LocalFileSystem ?
+var uag = (function(parent, $, window, document, fileSystem) {
     'use strict'; // enforcing strict JS
     var uAgUtils = parent.utils = parent.utils || {};
 
@@ -31,10 +31,12 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
         var rootDir = null;
         var currentDir = null;
         var parentDir = null;
+        var activeEntry = null;
+
+        // other vars
         var directoryEntries = [];
         var fileEntries = [];
-        var activeEntry = null;
-        var lastFileRead = null;
+        var fileReadStr = '';
 
         // callback functions
         function onFileError(fileError) {
@@ -43,22 +45,19 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
 
         function onRequestFileSystemSuccess(fileSystem) {
             rootDir = fileSystem.root;
-            console.log('ROOT DIR');//TMP
-            console.log(rootDir.name);
+            console.info('Info: root directory name is ' + rootDir.name);
             showDirectory(rootDir);
         }
 
         function onGetParentSuccess(parent) {
             parentDir = parent;
-            console.log('PARENT AND ROOT DIR');//TMP
-            console.log(parentDir.name);
-            console.log(rootDir.name);
+            console.info('Info: parent directory name is ' + parentDir.name);
         }
 
         function onReadEntriesSuccess(entries) {
-            directoryEntries.length = 0; // empty arrays
+            directoryEntries.length = 0; // emptying arrays
             fileEntries.length = 0;
-            var i, len; // for loops
+            var i, len; // vars for loops
             for (i = 0, len = entries.length; i < len; i++) {
                 var entry = entries[i];
                 if (entry.isDirectory && entry.name[0] !== '.') { // removing hidden files
@@ -93,46 +92,19 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
             folderDiv.on('click', onFolderDivClick);
             fileDiv.on('click', onFileDivClick);
             if (currentDir !== null && currentDir.name !== rootDir.name) {
-                gridDiv.append('<div class="ui-block-a"><div id="back-div" class="folder">' +
-                               '<p style="font-weight:bolder;border:1px solid black;">..</p>' +
-                               '</div></div>');
-                backDiv = $('#back-div');
+                gridDiv.append('<div class="ui-block-a"><div class="folder back"><p>..</p></div></div>');
+                backDiv = $('.folder.back');
                 backDiv.on('click', onBackDivClick);
             }
         }
 
         function onGetDirectorySuccess(directoryEntry) {
             activeEntry = directoryEntry;
-            console.log('ACTIVE ENTRY NAME '+activeEntry.name);//TMP
             showDirectory(activeEntry);
         }
 
-        function onGetFileSuccess(fileEntry) {
-            activeEntry = fileEntry;
-            console.log('ACTIVE ENTRY FILE '+activeEntry.isFile);//TMP
-            console.log('ACTIVE ENTRY NAME '+activeEntry.name);//TMP
-            readFile(activeEntry);
-        }
-
-        function onFileSuccess(file) {
-            lastFileRead = file;
-            console.log('LAST FILE READ DETAILS');//TMP
-            console.log('file name '+file.name);//TMP
-            console.log('file type '+file.type);//TMP
-            console.log('file date '+new Date(file.lastModifiedDate));//TMP
-            console.log('file size '+file.size);//TMP
-            var reader = new FileReader();
-            reader.onloadend = function(event) {
-                console.log("Read as text");//TMP
-                console.log(event.target.result); // show data from file into console
-            };
-            reader.readAsText(file);
-        }
-
         function onFolderDivClick(event) {
-            console.log('CLICK FOLDERDIV');//TMP
             var name = $(event.target).text();
-            console.log('NAME '+name);//TMP
             if (currentDir !== null) {
                 currentDir.getDirectory(name, {create:false},
                                         onGetDirectorySuccess,
@@ -143,10 +115,13 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
 
         }
 
+        function onGetFileSuccess(fileEntry) {
+            activeEntry = fileEntry;
+            readFile(activeEntry);
+        }
+
         function onFileDivClick(event) {
-            console.log('CLICK FILEDIV');//TMP
             var name = $(event.target).text();
-            console.log('NAME '+name);//TMP
             if (currentDir !== null) {
                 currentDir.getFile(name, {create:false},
                                    onGetFileSuccess,
@@ -157,19 +132,34 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
         }
 
         function onBackDivClick(event) {
-            console.log('CLICK BACKBTN');//TMP
             if (parentDir !== null) {
                 showDirectory(parentDir);
             }
+        }
+
+        function onFileReaderLoadEnd(event) {
+            fileReadStr = event.target.result;
+            console.info('Info: > file content is');
+            console.info(fileReadStr);
+            // callback
+        }
+
+        function onFileSuccess(file) {
+            console.info('Info: file details');
+            console.info('Info: > file name is ' + file.name);
+            console.info('Info: > file type is ' + file.type);
+            console.info('Info: > file date is ' + new Date(file.lastModifiedDate));
+            console.info('Info: > file size is ' + file.size + ' bytes');
+            var reader = new FileReader();
+            reader.onloadend = onFileReaderLoadEnd;
+            reader.readAsText(file);
         }
 
         // other functions
         function showDirectory(directoryEntry) {
             if (directoryEntry.isDirectory) {
                 currentDir = directoryEntry;
-                console.log('CURRENT AND ROOT DIR');//TMP
-                console.log(currentDir.name);//TMP
-                console.log(rootDir.name);//TMP
+                console.info('Info: current directory name is ' + currentDir.name);
                 directoryEntry.getParent(onGetParentSuccess, onFileError);
             } else {
                 throw new TypeError('Error: expecting directory object');
@@ -197,10 +187,10 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
                     $gridDiv.is('div[class="ui-grid-b"]')) {
                     gridDiv = $gridDiv;
                 } else {
-                    throw new TypeError('Error: FileExplorer.setView() expecting view info');
+                    throw new TypeError('Error: expecting explorer view objects');
                 }
             },
-            start: function() {
+            explore: function() {
                 // how to make sure this is called after onDeviceReady has fired?
                 // TODO
                 if (gridDiv !== null) {
@@ -211,16 +201,16 @@ var uag = (function(parent, $, window, document) { // LocalFileSystem ?
                             showDirectory(rootDir);
                         }
                     } else {
-                        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+                        window.requestFileSystem(fileSystem.PERSISTENT, 0,
                                                  onRequestFileSystemSuccess,
                                                  onFileError);
                     }
                 } else {
-                    throw new Error('Error: explorer view is not set');
+                    throw new Error('Error: explorer view objects are not set');
                 }
             },
         };
     };
 
     return parent;
-}(uag || {}, jQuery, this, this.document)); // this.LocalFileSystem ?
+}(uag || {}, jQuery, this, this.document, LocalFileSystem));

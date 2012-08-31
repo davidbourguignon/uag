@@ -8,7 +8,7 @@
  * @version 2012-08-30
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document, makeFileExplorer) { // device ?
+var uag = (function(parent, $, window, document, makeFileExplorer) {
     'use strict'; // enforcing strict JS
     var uAgBasket = parent.basket = parent.basket || {};
 
@@ -21,6 +21,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer) { // device ?
         /**
          * @private
          */
+        var isJQueryMobileReady = false;
         var isCordovaReady = false;
         var platformSpan = null;
         var versionSpan = null;
@@ -32,13 +33,20 @@ var uag = (function(parent, $, window, document, makeFileExplorer) { // device ?
          * @lends uag.basket.controller
          */
         return {
+            onMobileInit: function(event) {
+                // when jQuery Mobile starts
+                console.info('Info: mobileinit event fired');
+                isJQueryMobileReady = true;
+                // add page loading symbol in jQuery Mobile 1.2
+                // TODO
+            },
             onDeviceReady: function(event) {
                 // when a Cordova application is ready
                 console.info('Info: deviceready event fired');
                 isCordovaReady = true;
-                platformSpan.text(device.platform);
-                versionSpan.text(device.version);
-                uuidSpan.text(device.uuid);
+                platformSpan.text(window.device.platform);
+                versionSpan.text(window.device.version);
+                uuidSpan.text(window.device.uuid);
             },
             onPageInit: function(event) {
                 // when a new page is loaded and created by jQuery Mobile
@@ -62,14 +70,13 @@ var uag = (function(parent, $, window, document, makeFileExplorer) { // device ?
                 if (isCordovaReady) {
                     console.info('Info: uag.basket.controller ready');
                     try {
-                        fileExplorer.start();
+                        fileExplorer.explore();
                     } catch (e) {
                         console.error(e.message);
                     }
                 } else {
                     console.error('Error: uag.basket.controller NOT READY');
                 }
-                // TODO
             },
             saveBasket: function(event) {
                 // TODO
@@ -91,7 +98,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer) { // device ?
                     versionSpan = $versionSpan;
                     uuidSpan = $uuidSpan;
                 } else {
-                    console.error('Error: FileExplorer.setView() expecting view info');
+                    console.error('Error: wrong about view info');
                 }
             },
             setExplorerView: function($gridDiv) {
@@ -100,10 +107,16 @@ var uag = (function(parent, $, window, document, makeFileExplorer) { // device ?
                 } catch (e) {
                     console.error(e.message);
                 }
+                /*callback onFileCheck, onFileExplorerSuccess, onFileExplorerFailure
+                 * if (dialogDiv !== null) {
+                dialogDiv.dialog('close');
+            } else {
+                throw new Error('Error: explorer view objects are not set');
+            }*/
             },
         };
     }());
     Object.freeze(uAgBasket.controller); // final
 
     return parent;
-}(uag || {}, jQuery, this, this.document, uag.utils.makeFileExplorer)); // device
+}(uag || {}, jQuery, this, this.document, uag.utils.makeFileExplorer));

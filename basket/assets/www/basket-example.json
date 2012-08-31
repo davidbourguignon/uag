@@ -1,0 +1,12 @@
+{"basket": {
+    "distribDate": "December 17, 1995 03:24:00",
+    "approxWeight": 6.5,
+    "item": [
+        {"description": "sand carrots", "approxWeight": 0.8, "in": true},
+        {"description": "white cabbage", "approxWeight": 1.0, "in": false},
+        {"description": "queen of reinette apples", "approxWeight": 1.5, "in": true},
+        {"description": "charlotte potatoes", "approxWeight": 1.2, "in": true},
+        {"description": "frisee salad", "approxWeight": 0.3, "in": false},
+        {"description": "pink turnips", "approxWeight": 1.7, "in": true}
+    ]
+}}
