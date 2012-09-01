@@ -206,10 +206,10 @@ var uag = (function(parent, $, window, document, undefined) {
          */
         return {
             /**
-             *  @param {object} $gridDiv JQuery object containing the DOM reference to the div with the grid class.
-             *  @param {function} fileCheckCb Function callback invoked for checking the chosen file (param: string as fileStr; returns: boolean).
-             *  @param {function} closeCb Function callback invoked for closing the explorer view (param: object as event; returns: void).
-             *  @throws {TypeError} If the jQuery Mobile object type is not a div[class="ui-grid-b"].
+             *  @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
+             *  @param {function} fileCheckCb Function callback invoked when checking the chosen file (param: string as fileStr; returns: boolean).
+             *  @param {function} closeCb Function callback invoked when closing the explorer view (param: object as event; returns: void).
+             *  @throws {TypeError} If $gridDiv type is not div[class="ui-grid-b"].
              **/
             run: function($gridDiv, fileCheckCb, closeCb) {
                 // how to make sure this is called after onDeviceReady has fired?

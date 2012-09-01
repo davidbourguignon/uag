@@ -84,6 +84,7 @@
 /home/db/src/uag/basket/assets/www/js/uag-basket-controller.js \
 /home/db/src/uag/basket/assets/www/js/jquery-1.7.1.min.js \
 /home/db/src/uag/basket/assets/www/js/jsv.js \
+/home/db/src/uag/basket/assets/www/js/uag-basket-view.js \
 /home/db/src/uag/basket/assets/www/js/cordova-2.0.0.js \
 /home/db/src/uag/basket/assets/www/js/json-schema-draft-03.js \
 /home/db/src/uag/basket/assets/www/js/uri.js \
@@ -101,6 +102,19 @@
 /home/db/src/uag/basket/assets/www/js/test/jasmine/images/jasmine_favicon.png \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc.sh \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/files.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/index.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.basket.model.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.utils.FileExplorer.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/_global_.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.basket.Controller.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-utils-file-explorer.js.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-basket-controller.js.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-basket-model.js.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-basket-view.js.html \
 /home/db/src/uag/basket/assets/www/css/jquery.mobile-1.1.1.css \
 /home/db/src/uag/basket/assets/www/css/barcodescanner-demo.css \
 /home/db/src/uag/basket/assets/www/css/jquery.mobile.theme-1.1.1.css \

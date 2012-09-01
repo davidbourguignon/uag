@@ -12,28 +12,30 @@ var uag = (function(parent, $, window, document, undefined) {
     'use strict'; // enforcing strict JS
     var uAgBasket = parent.basket = parent.basket || {}; // namespace
 
+    var controller = uAgBasket.Controller.getInstance();
+
     // jQuery Mobile bindings
-    $(document).on('mobileinit', uAgBasket.controller.onMobileInit);
-    $(document).on('pageinit', uAgBasket.controller.onPageInit);
+    $(document).on('mobileinit', controller.onMobileInit);
+    $(document).on('pageinit', controller.onPageInit);
 
     // Cordova bindings
-    $(document).on('deviceready', uAgBasket.controller.onDeviceReady);
-    $(document).on('pause', uAgBasket.controller.onPause);
-    $(document).on("resume", uAgBasket.controller.onResume);
+    $(document).on('deviceready', controller.onDeviceReady);
+    $(document).on('pause', controller.onPause);
+    $(document).on("resume", controller.onResume);
 
     // other bindings, when DOM is ready
     $(document).ready(function() {
-        $('#home-opt-btn').on('click', uAgBasket.controller.options);
-        $('#home-opt-btn').on('click', uAgBasket.controller.info);
-        $('#home-new-btn').on('click', uAgBasket.controller.newBasket);
-        $('#home-open-btn').on('click', uAgBasket.controller.openBasket);
-        $('#new-save-btn').on('click', uAgBasket.controller.saveBasket);
-        $('#new-tag-btn').on('click', uAgBasket.controller.captureTag);
-        $('#new-add-btn').on('click', uAgBasket.controller.addNewBasketItem);
-        uAgBasket.controller.setAboutView($('#device-platform'),
-                                          $('#device-version'),
-                                          $('#device-uuid'));
-        uAgBasket.controller.setExplorerView($('#open'),
-                                             $('#file-explorer-div'));
+        $('#home-opt-btn').on('click', controller.options);
+        $('#home-opt-btn').on('click', controller.info);
+        $('#home-new-btn').on('click', controller.newBasket);
+        $('#home-open-btn').on('click', controller.openBasket);
+        $('#new-save-btn').on('click', controller.saveBasket);
+        $('#new-tag-btn').on('click', controller.captureTag);
+        $('#new-add-btn').on('click', controller.addNewBasketItem);
+        controller.setAboutView($('#device-platform'),
+                                $('#device-version'),
+                                $('#device-uuid'));
+        controller.setExplorerView($('#open'),
+                                   $('#file-explorer-div'));
     });
 }(uag || {}, jQuery, this, this.document));

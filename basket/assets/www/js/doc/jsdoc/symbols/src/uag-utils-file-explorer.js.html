@@ -213,10 +213,10 @@
 <span class='line'>206</span>          */</span><span class="WHIT">
 <span class='line'>207</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>208</span> </span><span class="WHIT">            </span><span class="COMM">/**
-<span class='line'>209</span>              *  @param {object} $gridDiv jQuery object containing the DOM reference to the div with the grid class.
-<span class='line'>210</span>              *  @param {function} fileCheckCb function callback invoked for checking the chosen file (param: string as fileStr; returns: boolean).
-<span class='line'>211</span>              *  @param {function} closeCb function callback invoked for closing the explorer view (param: object as event; returns: void).
-<span class='line'>212</span>              *  @throws {TypeError} If the jQuery Mobile object type is not a div[class="ui-grid-b"].
+<span class='line'>209</span>              *  @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
+<span class='line'>210</span>              *  @param {function} fileCheckCb Function callback invoked when checking the chosen file (param: string as fileStr; returns: boolean).
+<span class='line'>211</span>              *  @param {function} closeCb Function callback invoked when closing the explorer view (param: object as event; returns: void).
+<span class='line'>212</span>              *  @throws {TypeError} If $gridDiv type is not div[class="ui-grid-b"].
 <span class='line'>213</span>              **/</span><span class="WHIT">
 <span class='line'>214</span> </span><span class="WHIT">            </span><span class="NAME">run</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">$gridDiv</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fileCheckCb</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">closeCb</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>215</span> </span><span class="WHIT">                </span><span class="COMM">// how to make sure this is called after onDeviceReady has fired?</span><span class="WHIT">
