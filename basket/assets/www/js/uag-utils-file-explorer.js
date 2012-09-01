@@ -8,9 +8,9 @@
  * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document) {
+var uag = (function(parent, $, window, document, undefined) {
     'use strict'; // enforcing strict JS
-    var uAgUtils = parent.utils = parent.utils || {};
+    var uAgUtils = parent.utils = parent.utils || {}; // namespace
 
     /**
      * @constructor
@@ -43,21 +43,25 @@ var uag = (function(parent, $, window, document) {
         var fileReadStr = '';
 
         // callback functions
+        /** @ignore */
         function onFileError(fileError) {
             throw new Error('Error: failed with code ' + fileError.code);
         }
 
+        /** @ignore */
         function onRequestFileSystemSuccess(fileSystem) {
             rootDir = fileSystem.root;
             console.info('Info: root directory name is ' + rootDir.name);
             showDirectory(rootDir);
         }
 
+        /** @ignore */
         function onGetParentSuccess(parent) {
             parentDir = parent;
             console.info('Info: parent directory name is ' + parentDir.name);
         }
 
+        /** @ignore */
         function onReadEntriesSuccess(entries) {
             directoryEntries.length = 0; // emptying arrays
             fileEntries.length = 0;
@@ -102,11 +106,13 @@ var uag = (function(parent, $, window, document) {
             }
         }
 
+        /** @ignore */
         function onGetDirectorySuccess(directoryEntry) {
             activeEntry = directoryEntry;
             showDirectory(activeEntry);
         }
 
+        /** @ignore */
         function onFolderDivClick(event) {
             var name = $(event.target).text();
             if (currentDir !== null) {
@@ -119,11 +125,13 @@ var uag = (function(parent, $, window, document) {
 
         }
 
+        /** @ignore */
         function onGetFileSuccess(fileEntry) {
             activeEntry = fileEntry;
             readFile(activeEntry);
         }
 
+        /** @ignore */
         function onFileDivClick(event) {
             var name = $(event.target).text();
             if (currentDir !== null) {
@@ -135,12 +143,14 @@ var uag = (function(parent, $, window, document) {
             }
         }
 
+        /** @ignore */
         function onBackDivClick(event) {
             if (parentDir !== null) {
                 showDirectory(parentDir);
             }
         }
 
+        /** @ignore */
         function onFileReaderLoadEnd(event) {
             fileReadStr = event.target.result;
             console.info('Info: > file content is');
@@ -154,6 +164,7 @@ var uag = (function(parent, $, window, document) {
             }
         }
 
+        /** @ignore */
         function onFileSuccess(file) {
             console.info('Info: file details');
             console.info('Info: > file name is ' + file.name);
@@ -166,6 +177,7 @@ var uag = (function(parent, $, window, document) {
         }
 
         // other functions
+        /** @ignore */
         function showDirectory(directoryEntry) {
             if (directoryEntry.isDirectory) {
                 currentDir = directoryEntry;
@@ -179,6 +191,7 @@ var uag = (function(parent, $, window, document) {
                                         onFileError);
         }
 
+        /** @ignore */
         function readFile(fileEntry){
             if (fileEntry.isFile) {
                 fileEntry.file(onFileSuccess, onFileError);
@@ -193,9 +206,10 @@ var uag = (function(parent, $, window, document) {
          */
         return {
             /**
-             *  @param {object} $gridDiv jQuery object containing the DOM reference to the div with the grid class
-             *  @param {function} fileCheckCb function callback invoked for checking the chosen file (param: string as fileStr; returns: boolean)
-             *  @param {function} closeCb function callback invoked for closing the explorer view (param: object as event; returns: void)
+             *  @param {object} $gridDiv JQuery object containing the DOM reference to the div with the grid class.
+             *  @param {function} fileCheckCb Function callback invoked for checking the chosen file (param: string as fileStr; returns: boolean).
+             *  @param {function} closeCb Function callback invoked for closing the explorer view (param: object as event; returns: void).
+             *  @throws {TypeError} If the jQuery Mobile object type is not a div[class="ui-grid-b"].
              **/
             run: function($gridDiv, fileCheckCb, closeCb) {
                 // how to make sure this is called after onDeviceReady has fired?

@@ -168,37 +168,9 @@
     <script type="text/javascript" src="js/jsv.js"></script>
     <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
     <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
-    <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" src="js/uag-basket-controller.js"></script>
-    <script>
-        'use strict'; // enforcing strict JS
-        //TMP
-        //uag = uag || {};
-        //uag.basket = uag.basket || {};
-        //
-        // jQuery Mobile
-        $(document).on('mobileinit', uag.basket.controller.onMobileInit);
-        $(document).on('pageinit', uag.basket.controller.onPageInit);
-        // Cordova
-        $(document).on('deviceready', uag.basket.controller.onDeviceReady);
-        $(document).on('pause', uag.basket.controller.onPause);
-        $(document).on("resume", uag.basket.controller.onResume);
-        // other bindings when DOM is ready
-        $(document).ready(function() {
-            $('#home-opt-btn').on('click', uag.basket.controller.options);
-            $('#home-opt-btn').on('click', uag.basket.controller.info);
-            $('#home-new-btn').on('click', uag.basket.controller.newBasket);
-            $('#home-open-btn').on('click', uag.basket.controller.openBasket);
-            $('#new-save-btn').on('click', uag.basket.controller.saveBasket);
-            $('#new-tag-btn').on('click', uag.basket.controller.captureTag);
-            $('#new-add-btn').on('click', uag.basket.controller.addNewBasketItem);
-            uag.basket.controller.setAboutView($('#device-platform'),
-                                               $('#device-version'),
-                                               $('#device-uuid'));
-            uag.basket.controller.setExplorerView($('#open'),
-                                                  $('#file-explorer-div'));
-        });
-    </script>
+    <script type="text/javascript" src="js/uag-basket-view.js"></script>
+    <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <!-- jQuery Mobile is called after registering callback for mobileinit event -->
     <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
 

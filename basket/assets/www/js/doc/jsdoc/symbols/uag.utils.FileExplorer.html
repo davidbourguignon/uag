@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag</title>
+		<title>JsDoc Reference - uag.utils.FileExplorer</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -208,7 +208,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace uag
+				Class uag.utils.FileExplorer
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -216,17 +216,17 @@ ul.inheritsList
 				
 				
 			
-				uAg project
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-model.js.html">uag-basket-model.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/uag-utils-file-explorer.js.html">uag-utils-file-explorer.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.utils.FileExplorer.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -238,9 +238,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.html#constructor">uag</a></b>
+								<b><a href="../symbols/uag.utils.FileExplorer.html#constructor">uag.utils.FileExplorer</a></b>()
 							</div>
-							<div class="description"></div>
+							<div class="description">File explorer utility for enhancing controllers</div>
 						</td>
 					</tr>
 				</tbody>
@@ -252,6 +252,33 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.utils.FileExplorer.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.utils.FileExplorer.<b><a href="../symbols/uag.utils.FileExplorer.html#.run">run</a></b>($gridDiv, fileCheckCb, closeCb)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -259,38 +286,21 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag</b>
+						<b>uag.utils.FileExplorer</b>()
 				</div>
 				
 				<div class="description">
-					
+					File explorer utility for enhancing controllers
 					
 				</div>
 				
 				
 				
 				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								 <b>parent</b>
-								
-							</dt>
-								<dd></dd>
-						
-							<dt>
-								 <b>undefined</b>
-								
-							</dt>
-								<dd></dd>
-						
-						</dl>
 					
 					
 					
@@ -306,6 +316,69 @@ ul.inheritsList
 			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name=".run"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.utils.FileExplorer.</span><b>run</b>($gridDiv, fileCheckCb, closeCb)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{object}</span> <b>$gridDiv</b>
+									
+								</dt>
+								<dd>jQuery object containing the DOM reference to the div with the grid class.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{function}</span> <b>fileCheckCb</b>
+									
+								</dt>
+								<dd>function callback invoked for checking the chosen file (param: string as fileStr; returns: boolean).</dd>
+							
+								<dt>
+									<span class="light fixedFont">{function}</span> <b>closeCb</b>
+									
+								</dt>
+								<dd>function callback invoked for closing the explorer view (param: object as event; returns: void).</dd>
+							
+							</dl>
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{TypeError}</span>  <b></b>
+								</dt>
+								<dd>If the jQuery Mobile object type is not a div[class="ui-grid-b"].</dd>
+							
+							</dl>
+						
+						
+						
+						
+
+					
+				
 			
 			
 <!-- ============================== event details ========================= -->		

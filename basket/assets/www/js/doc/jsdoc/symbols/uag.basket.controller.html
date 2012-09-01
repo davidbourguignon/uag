@@ -195,7 +195,9 @@ ul.inheritsList
 	
 	<li><a href="../symbols/uag.basket.controller.html">uag.basket.controller</a></li>
 	
-	<li><a href="../symbols/uag.utils.fileExplorer.html">uag.utils.fileExplorer</a></li>
+	<li><a href="../symbols/uag.basket.model.html">uag.basket.model</a></li>
+	
+	<li><a href="../symbols/uag.utils.FileExplorer.html">uag.utils.FileExplorer</a></li>
 	
 </ul>
 <hr />
@@ -238,7 +240,7 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/uag.basket.controller.html#constructor">uag.basket.controller</a></b>()
 							</div>
-							<div class="description">Controller of the Basket app</div>
+							<div class="description">Controller module of the Basket app (implements the module pattern).</div>
 						</td>
 					</tr>
 				</tbody>
@@ -265,7 +267,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.checkState">checkState</a></b>()
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.addNewBasketItem">addNewBasketItem</a></b>(event)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -274,7 +276,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.init">init</a></b>()
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.captureTag">captureTag</a></b>(event)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -283,7 +285,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.isReady">isReady</a></b>()
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.loadBasketFile">loadBasketFile</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.newBasket">newBasket</a></b>(event)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -301,7 +312,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onLoad">onLoad</a></b>(event)
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onMobileInit">onMobileInit</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onPageInit">onPageInit</a></b>(event)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -319,7 +339,52 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.pageInit">pageInit</a></b>(event)
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onResume">onResume</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.openBasket">openBasket</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.options">options</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.saveBasket">saveBasket</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.setAboutView">setAboutView</a></b>($platformSpan, $versionSpan, $uuidSpan)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.setExplorerView">setExplorerView</a></b>($pageDiv, $gridDiv)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -346,7 +411,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					Controller of the Basket app
+					Controller module of the Basket app (implements the module pattern).
 					
 				</div>
 				
@@ -373,11 +438,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".checkState"> </a>
+					<a name=".addNewBasketItem"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>checkState</b>()
+					<span class="light">uag.basket.controller.</span><b>addNewBasketItem</b>(event)
 					
 					</div>
 					<div class="description">
@@ -388,6 +453,17 @@ ul.inheritsList
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -398,11 +474,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".init"> </a>
+					<a name=".captureTag"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>init</b>()
+					<span class="light">uag.basket.controller.</span><b>captureTag</b>(event)
 					
 					</div>
 					<div class="description">
@@ -413,6 +489,17 @@ ul.inheritsList
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -423,11 +510,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".isReady"> </a>
+					<a name=".loadBasketFile"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>isReady</b>()
+					<span class="light">uag.basket.controller.</span><b>loadBasketFile</b>(event)
 					
 					</div>
 					<div class="description">
@@ -438,6 +525,53 @@ ul.inheritsList
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".newBasket"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>newBasket</b>(event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -484,11 +618,47 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".onLoad"> </a>
+					<a name=".onMobileInit"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>onLoad</b>(event)
+					<span class="light">uag.basket.controller.</span><b>onMobileInit</b>(event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".onPageInit"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>onPageInit</b>(event)
 					
 					</div>
 					<div class="description">
@@ -556,11 +726,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".pageInit"> </a>
+					<a name=".onResume"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>pageInit</b>(event)
+					<span class="light">uag.basket.controller.</span><b>onResume</b>(event)
 					
 					</div>
 					<div class="description">
@@ -590,6 +760,204 @@ ul.inheritsList
 						
 						
 
+					<hr />
+				
+					<a name=".openBasket"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>openBasket</b>(event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".options"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>options</b>(event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".saveBasket"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>saveBasket</b>(event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setAboutView"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>setAboutView</b>($platformSpan, $versionSpan, $uuidSpan)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>$platformSpan</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>$versionSpan</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>$uuidSpan</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setExplorerView"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">uag.basket.controller.</span><b>setExplorerView</b>($pageDiv, $gridDiv)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>$pageDiv</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>$gridDiv</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
 					
 				
 			
@@ -604,7 +972,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Aug 26 2012 18:31:36 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Sep 01 2012 14:30:34 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

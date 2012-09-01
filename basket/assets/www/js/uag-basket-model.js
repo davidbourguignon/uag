@@ -9,32 +9,27 @@
  * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document) {
+var uag = (function(parent, undefined) {
     'use strict'; // enforcing strict JS
-    var uAgBasket = parent.Basket = parent.Basket || {};
+    var uAgBasket = parent.basket = parent.basket || {}; // namespace
 
     /**
      * @class
      * @exports uAgBasket.model as uag.basket.model
-     * @description Model module of the Basket app (implements the module pattern).
+     * @description Model of the Basket app (module pattern)
      */
     uAgBasket.model = (function() {
-        /**
-         * @private
-         */
-        // sth?
-
         /**
          * @public
          * @lends uag.basket.model
          */
         return {
+            /**
+             * @description JSON schema of the basket model.
+             */
             jsonSchema: {
                 // TODO
             },
-            //other things?
         };
     }());
-
-    return parent;
-}(uag || {}, jQuery, this, this.document));
+}(uag || {}));

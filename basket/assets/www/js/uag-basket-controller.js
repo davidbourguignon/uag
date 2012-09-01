@@ -1,3 +1,75 @@
+/*
+ *var mySingleton = (function () {
+02
+03    // Instance stores a reference to the Singleton
+04    var instance;
+05
+06    function init() {
+07
+08      // Singleton
+09
+10      // Private methods and variables
+11      function privateMethod(){
+12          console.log( "I am private" );
+13      }
+14
+15      var privateVariable = "Im also private";
+16
+17      return {
+18
+19        // Public methods and variables
+20        publicMethod: function () {
+21          console.log( "The public can see me!" );
+22        },
+23
+24        publicProperty: "I am also public"
+25      };
+26
+27    };
+28
+29    return {
+30
+31      // Get the Singleton instance if one exists
+32      // or create one if it doesn't
+33      getInstance: function () {
+34
+35        if ( !instance ) {
+36          instance = init();
+37        }
+38
+39        return instance;
+40      }
+41
+42    };
+43
+44  })();
+ */
+
+        /**
+         * @private
+         */
+        /*var instance = null;*/
+        /**
+         * @description Get the Singleton instance if one exists or create one if it doesn't.
+         */
+        /*getInstance: function() {
+            if (instance === null) {
+                instance = init();
+            }
+            return instance;
+        },*/
+
+
+
+
+
+
+
+
+
+
+
+
 /** jshint forin:true, noarg:true, noempty:true, eqeqeq:true,
  *  bitwise:true, strict:true, undef:true, unused:true, curly:true,
  *  browser:true, devel:true, jquery:true, es5:true, indent:4, maxerr:50
@@ -8,9 +80,9 @@
  * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*/) {
+var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*/, undefined) {
     'use strict'; // enforcing strict JS
-    var uAgBasket = parent.basket = parent.basket || {};
+    var uAgBasket = parent.basket = parent.basket || {}; // namespace
 
     /**
      * @class
@@ -34,6 +106,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
         var fileExplorer = makeFileExplorer();
         var fileObj = null;
 
+        /** @ignore */
         function onFileExplorerCheck(fileStr) {
             try {
                 fileObj = JSON.parse(fileStr);
@@ -57,6 +130,8 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
             }*/
             return true;
         }
+
+        /** @ignore */
         function onFileExplorerClose(event) {
             if (pageDiv !== null) {
                 pageDiv.dialog('close');
