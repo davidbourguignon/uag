@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag.basket.controller</title>
+		<title>JsDoc Reference - uag.field.dataContext.Producers</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,11 +193,21 @@ ul.inheritsList
 	
 	<li><a href="../symbols/uag.html">uag</a></li>
 	
-	<li><a href="../symbols/uag.basket.controller.html">uag.basket.controller</a></li>
+	<li><a href="../symbols/uag.field.html">uag.field</a></li>
 	
-	<li><a href="../symbols/uag.basket.model.html">uag.basket.model</a></li>
+	<li><a href="../symbols/uag.field.dataContext.html">uag.field.dataContext</a></li>
 	
-	<li><a href="../symbols/uag.utils.FileExplorer.html">uag.utils.FileExplorer</a></li>
+	<li><a href="../symbols/uag.field.dataContext.Export.html">uag.field.dataContext.Export</a></li>
+	
+	<li><a href="../symbols/uag.field.dataContext.Import.html">uag.field.dataContext.Import</a></li>
+	
+	<li><a href="../symbols/uag.field.dataContext.Producers.html">uag.field.dataContext.Producers</a></li>
+	
+	<li><a href="../symbols/uag.field.dataContext.WorkerContainers.html">uag.field.dataContext.WorkerContainers</a></li>
+	
+	<li><a href="../symbols/uag.util.html">uag.util</a></li>
+	
+	<li><a href="../symbols/uag.util.Storage.html">uag.util.Storage</a></li>
 	
 </ul>
 <hr />
@@ -208,7 +218,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class uag.basket.controller
+				Class uag.field.dataContext.Producers
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -216,16 +226,16 @@ ul.inheritsList
 				
 				
 			
+				Producers
 				
 				
-				
-					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-controller.js.html">uag-basket-controller.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__Users_Sebstien_git_Field_Field_assets_www_js_uag_uagFieldDataContext.js.html">uagFieldDataContext.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.controller.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.field.dataContext.Producers.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -238,9 +248,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.basket.controller.html#constructor">uag.basket.controller</a></b>()
+								<b><a href="../symbols/uag.field.dataContext.Producers.html#constructor">uag.field.dataContext.Producers</a></b>()
 							</div>
-							<div class="description">Controller module of the Basket app (implements the module pattern).</div>
+							<div class="description"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -254,7 +264,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.controller.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.field.dataContext.Producers.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -267,126 +277,99 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.addNewBasketItem">addNewBasketItem</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.clear">clear</a></b>(producerId)
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>clear method</b>, clear all producers</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.captureTag">captureTag</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.find">find</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>findById method</b>, find current setup producer</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.loadBasketFile">loadBasketFile</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.findField">findField</a></b>(fieldId)
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>findField method</b>, find a field (for current setup producer)</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.newBasket">newBasket</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.findFieldProduct">findFieldProduct</a></b>(fieldId, productId)
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>findProductsByIdForField method</b>, find product for a field (and current setup producer)</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onDeviceReady">onDeviceReady</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.get">get</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>getAll method</b>, fetch all producers</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onMobileInit">onMobileInit</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.getFieldProducts">getFieldProducts</a></b>(fieldId)
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>getProductsForField method</b>, fetch products for a field (and current setup producer)</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onPageInit">onPageInit</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.getFields">getFields</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>getFields method</b>, fetch fields (for current setup producer)</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onPause">onPause</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.getLocalStorageKey">getLocalStorageKey</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>getLocalStorageKey method</b>, producers local storage key getter method</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.onResume">onResume</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.getProducts">getProducts</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>getProducts method</b>, fetch products (for current setup producer)</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.openBasket">openBasket</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.getQualities">getQualities</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description"><b>getQualities method</b>, fetch producer's qualities list</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.options">options</a></b>(event)
+								<div class="fixedFont">uag.field.dataContext.Producers.<b><a href="../symbols/uag.field.dataContext.Producers.html#.remove">remove</a></b>(producerId)
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.saveBasket">saveBasket</a></b>(event)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.setAboutView">setAboutView</a></b>($platformSpan, $versionSpan, $uuidSpan)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.controller.<b><a href="../symbols/uag.basket.controller.html#.setExplorerView">setExplorerView</a></b>($pageDiv, $gridDiv)
-								</div>
-								<div class="description"></div>
+								<div class="description"><b>remove method</b>, remove a producer</div>
 							</td>
 						</tr>
 					
@@ -407,11 +390,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag.basket.controller</b>()
+						<b>uag.field.dataContext.Producers</b>()
 				</div>
 				
 				<div class="description">
-					Controller module of the Basket app (implements the module pattern).
+					
 					
 				</div>
 				
@@ -438,15 +421,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".addNewBasketItem"> </a>
+					<a name=".clear"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>addNewBasketItem</b>(event)
+					<span class="light">uag.field.dataContext.Producers.</span><b>clear</b>(producerId)
 					
 					</div>
 					<div class="description">
-						
+						<b>clear method</b>, clear all producers
 						
 						
 					</div>
@@ -458,10 +441,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>event</b>
+									<b>producerId</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>producer's id</dd>
 							
 							</dl>
 						
@@ -474,15 +457,47 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".captureTag"> </a>
+					<a name=".find"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>captureTag</b>(event)
+					<span class="light">{Object}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>find</b>()
 					
 					</div>
 					<div class="description">
+						<b>findById method</b>, find current setup producer
 						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> producer json local storage data</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".findField"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Object}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>findField</b>(fieldId)
+					
+					</div>
+					<div class="description">
+						<b>findField method</b>, find a field (for current setup producer)
 						
 						
 					</div>
@@ -494,10 +509,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>event</b>
+									<b>fieldId</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>field's id</dd>
 							
 							</dl>
 						
@@ -505,20 +520,27 @@ ul.inheritsList
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> field</dd>
+							
+							</dl>
+						
 						
 						
 
 					<hr />
 				
-					<a name=".loadBasketFile"> </a>
+					<a name=".findFieldProduct"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>loadBasketFile</b>(event)
+					<span class="light">{Object}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>findFieldProduct</b>(fieldId, productId)
 					
 					</div>
 					<div class="description">
-						
+						<b>findProductsByIdForField method</b>, find product for a field (and current setup producer)
 						
 						
 					</div>
@@ -530,10 +552,16 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>event</b>
+									<b>fieldId</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>field's id</dd>
+							
+								<dt>
+									<b>productId</b>
+									
+								</dt>
+								<dd>product's id</dd>
 							
 							</dl>
 						
@@ -541,20 +569,59 @@ ul.inheritsList
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> product</dd>
+							
+							</dl>
+						
 						
 						
 
 					<hr />
 				
-					<a name=".newBasket"> </a>
+					<a name=".get"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>newBasket</b>(event)
+					<span class="light">{Array}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>get</b>()
 					
 					</div>
 					<div class="description">
+						<b>getAll method</b>, fetch all producers
 						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Array}</span> producers list</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getFieldProducts"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Array}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>getFieldProducts</b>(fieldId)
+					
+					</div>
+					<div class="description">
+						<b>getProductsForField method</b>, fetch products for a field (and current setup producer)
 						
 						
 					</div>
@@ -566,10 +633,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>event</b>
+									<b>fieldId</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>field's id</dd>
 							
 							</dl>
 						
@@ -577,56 +644,27 @@ ul.inheritsList
 						
 						
 						
-						
-						
-
-					<hr />
-				
-					<a name=".onDeviceReady"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.controller.</span><b>onDeviceReady</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
 							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
+								<dd><span class="light fixedFont">{Array}</span> products list</dd>
 							
 							</dl>
 						
 						
 						
-						
-						
-						
-						
 
 					<hr />
 				
-					<a name=".onMobileInit"> </a>
+					<a name=".getFields"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>onMobileInit</b>(event)
+					<span class="light">{Array}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>getFields</b>()
 					
 					</div>
 					<div class="description">
-						
+						<b>getFields method</b>, fetch fields (for current setup producer)
 						
 						
 					</div>
@@ -634,35 +672,31 @@ ul.inheritsList
 					
 					
 						
+						
+						
+						
+						
 							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
+								<dd><span class="light fixedFont">{Array}</span> fields list</dd>
 							
 							</dl>
 						
 						
 						
-						
-						
-						
-						
 
 					<hr />
 				
-					<a name=".onPageInit"> </a>
+					<a name=".getLocalStorageKey"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>onPageInit</b>(event)
+					<span class="light">{String}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>getLocalStorageKey</b>()
 					
 					</div>
 					<div class="description">
-						
+						<b>getLocalStorageKey method</b>, producers local storage key getter method
 						
 						
 					</div>
@@ -670,35 +704,31 @@ ul.inheritsList
 					
 					
 						
+						
+						
+						
+						
 							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
+								<dd><span class="light fixedFont">{String}</span> key</dd>
 							
 							</dl>
 						
 						
 						
-						
-						
-						
-						
 
 					<hr />
 				
-					<a name=".onPause"> </a>
+					<a name=".getProducts"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>onPause</b>(event)
+					<span class="light">{Array}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>getProducts</b>()
 					
 					</div>
 					<div class="description">
-						
+						<b>getProducts method</b>, fetch products (for current setup producer)
 						
 						
 					</div>
@@ -706,35 +736,31 @@ ul.inheritsList
 					
 					
 						
+						
+						
+						
+						
 							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
+								<dd><span class="light fixedFont">{Array}</span> producer's products list</dd>
 							
 							</dl>
 						
 						
 						
-						
-						
-						
-						
 
 					<hr />
 				
-					<a name=".onResume"> </a>
+					<a name=".getQualities"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.controller.</span><b>onResume</b>(event)
+					<span class="light">{Array}</span>
+					<span class="light">uag.field.dataContext.Producers.</span><b>getQualities</b>()
 					
 					</div>
 					<div class="description">
-						
+						<b>getQualities method</b>, fetch producer's qualities list
 						
 						
 					</div>
@@ -742,35 +768,31 @@ ul.inheritsList
 					
 					
 						
+						
+						
+						
+						
 							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
+								<dd><span class="light fixedFont">{Array}</span> quality objects list</dd>
 							
 							</dl>
 						
 						
 						
-						
-						
-						
-						
 
 					<hr />
 				
-					<a name=".openBasket"> </a>
+					<a name=".remove"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">uag.basket.controller.</span><b>openBasket</b>(event)
+					<span class="light">uag.field.dataContext.Producers.</span><b>remove</b>(producerId)
 					
 					</div>
 					<div class="description">
-						
+						<b>remove method</b>, remove a producer
 						
 						
 					</div>
@@ -782,172 +804,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>event</b>
+									<b>producerId</b>
 									
 								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".options"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.controller.</span><b>options</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".saveBasket"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.controller.</span><b>saveBasket</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setAboutView"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.controller.</span><b>setAboutView</b>($platformSpan, $versionSpan, $uuidSpan)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>$platformSpan</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>$versionSpan</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>$uuidSpan</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setExplorerView"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.controller.</span><b>setExplorerView</b>($pageDiv, $gridDiv)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>$pageDiv</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>$gridDiv</b>
-									
-								</dt>
-								<dd></dd>
+								<dd>producer's id</dd>
 							
 							</dl>
 						
@@ -972,7 +832,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Sep 01 2012 14:30:34 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Sep 02 2012 18:29:53 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

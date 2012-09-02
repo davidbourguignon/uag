@@ -114,10 +114,11 @@ var uag = (function (parent) {
 		var worker = WorkerContainers.getWorker();
 		if (worker.isAvailable) {
 			// get producer's list 
-			var producers = Storage.Retrieve(Producers.getLocalStorageKey()) || [];
+			var producers = Producers.get();
 			// filter producers 
 			for ( var int = 0; int < producers.length; int++) {
 				// if ids match, 
+				alert(worker.producerId + " - " + producers[int].id);
 				if (worker.producerId === producers[int].id) {
 					// then return it
 					return producers[int];
