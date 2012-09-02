@@ -1,7 +1,7 @@
 #!/bin/bash
 jsdoc --allfunctions --multiples \
 --directory=jsdoc \
-../uag-utils-file-explorer.js \
+../uag-basket-model.js \
+../uag-basket-view.js \
 ../uag-basket-controller.js \
-../uag-basket-model.js
-
+../uag-utils-file-explorer.js

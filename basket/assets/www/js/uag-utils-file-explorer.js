@@ -5,17 +5,19 @@
 /**
  * @fileOverview uAg Utils File Explorer
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-30
+ * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document, fileSystem) {
-    'use strict'; // enforcing strict JS
+var uag = (function(parent, $, window, document, undefined) {
+    'use strict';
+    // namespace declaration
     var uAgUtils = parent.utils = parent.utils || {};
 
     /**
-     * @constructor
-     * @exports uAgUtils.makeFileExplorer as uag.utils.FileExplorer
-     * @description File explorer utility for enhancing controllers
+     * @class
+     * @returns File explorer object
+     * @exports uAgUtils.makeFileExplorer as uag.utils.makeFileExplorer
+     * @description File explorer class constructor
      */
     uAgUtils.makeFileExplorer = function() {
         /**
@@ -33,27 +35,35 @@ var uag = (function(parent, $, window, document, fileSystem) {
         var parentDir = null;
         var activeEntry = null;
 
+        // callbacks from caller
+        var onFileCheck = null;
+        var onClose = null;
+
         // other vars
         var directoryEntries = [];
         var fileEntries = [];
         var fileReadStr = '';
 
         // callback functions
+        /** @ignore */
         function onFileError(fileError) {
             throw new Error('Error: failed with code ' + fileError.code);
         }
 
+        /** @ignore */
         function onRequestFileSystemSuccess(fileSystem) {
             rootDir = fileSystem.root;
             console.info('Info: root directory name is ' + rootDir.name);
             showDirectory(rootDir);
         }
 
+        /** @ignore */
         function onGetParentSuccess(parent) {
             parentDir = parent;
             console.info('Info: parent directory name is ' + parentDir.name);
         }
 
+        /** @ignore */
         function onReadEntriesSuccess(entries) {
             directoryEntries.length = 0; // emptying arrays
             fileEntries.length = 0;
@@ -98,11 +108,13 @@ var uag = (function(parent, $, window, document, fileSystem) {
             }
         }
 
+        /** @ignore */
         function onGetDirectorySuccess(directoryEntry) {
             activeEntry = directoryEntry;
             showDirectory(activeEntry);
         }
 
+        /** @ignore */
         function onFolderDivClick(event) {
             var name = $(event.target).text();
             if (currentDir !== null) {
@@ -115,11 +127,13 @@ var uag = (function(parent, $, window, document, fileSystem) {
 
         }
 
+        /** @ignore */
         function onGetFileSuccess(fileEntry) {
             activeEntry = fileEntry;
             readFile(activeEntry);
         }
 
+        /** @ignore */
         function onFileDivClick(event) {
             var name = $(event.target).text();
             if (currentDir !== null) {
@@ -131,31 +145,45 @@ var uag = (function(parent, $, window, document, fileSystem) {
             }
         }
 
+        /** @ignore */
         function onBackDivClick(event) {
             if (parentDir !== null) {
                 showDirectory(parentDir);
             }
         }
 
+        /** @ignore */
         function onFileReaderLoadEnd(event) {
+            // store in the local storage instead?
+            // use a combination of file name and date as key?
+            // no!  we should use basket info (distrib date) instead
+            // TODO
             fileReadStr = event.target.result;
             console.info('Info: > file content is');
             console.info(fileReadStr);
-            // callback
+            if (onFileCheck(fileReadStr)) {
+                onClose();
+            } else {
+                // use also jQuery Mobile 1.2.0 popup?
+                // TODO
+                throw new Error('Error: file format is not recognized');
+            }
         }
 
+        /** @ignore */
         function onFileSuccess(file) {
-            console.info('Info: file details');
-            console.info('Info: > file name is ' + file.name);
-            console.info('Info: > file type is ' + file.type);
-            console.info('Info: > file date is ' + new Date(file.lastModifiedDate));
-            console.info('Info: > file size is ' + file.size + ' bytes');
+            console.info('Info: file details\n' +
+                         'Info: > file name is ' + file.name + '\n' +
+                         'Info: > file type is ' + file.type + '\n' +
+                         'Info: > file date is ' + new Date(file.lastModifiedDate) + '\n' +
+                         'Info: > file size is ' + file.size + ' bytes');
             var reader = new FileReader();
             reader.onloadend = onFileReaderLoadEnd;
             reader.readAsText(file);
         }
 
         // other functions
+        /** @ignore */
         function showDirectory(directoryEntry) {
             if (directoryEntry.isDirectory) {
                 currentDir = directoryEntry;
@@ -169,6 +197,7 @@ var uag = (function(parent, $, window, document, fileSystem) {
                                         onFileError);
         }
 
+        /** @ignore */
         function readFile(fileEntry){
             if (fileEntry.isFile) {
                 fileEntry.file(onFileSuccess, onFileError);
@@ -179,20 +208,28 @@ var uag = (function(parent, $, window, document, fileSystem) {
 
         /**
          * @public
-         * @lends uag.utils.FileExplorer
+         * @lends uag.utils.makeFileExplorer
          */
         return {
-            setView: function($gridDiv) {
+            /**
+             *  @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
+             *  @param {function} fileCheckCb Function callback invoked when checking the chosen file (param: string as fileStr; returns: boolean).
+             *  @param {function} closeCb Function callback invoked when closing the explorer view (param: object as event; returns: void).
+             *  @throws {TypeError} If $gridDiv type is not div[class="ui-grid-b"].
+             **/
+            run: function($gridDiv, fileCheckCb, closeCb) {
+                // how to make sure this is called after onDeviceReady has fired?
+                // TODO
+                // set params
                 if ($gridDiv instanceof jQuery &&
                     $gridDiv.is('div[class="ui-grid-b"]')) {
                     gridDiv = $gridDiv;
                 } else {
                     throw new TypeError('Error: expecting explorer view objects');
                 }
-            },
-            explore: function() {
-                // how to make sure this is called after onDeviceReady has fired?
-                // TODO
+                onFileCheck = fileCheckCb;
+                onClose = closeCb;
+                // get root directory of the local file system
                 if (gridDiv !== null) {
                     if (rootDir !== null) {
                         if (currentDir.name !== rootDir.name) {
@@ -201,7 +238,7 @@ var uag = (function(parent, $, window, document, fileSystem) {
                             showDirectory(rootDir);
                         }
                     } else {
-                        window.requestFileSystem(fileSystem.PERSISTENT, 0,
+                        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
                                                  onRequestFileSystemSuccess,
                                                  onFileError);
                     }
@@ -213,4 +250,4 @@ var uag = (function(parent, $, window, document, fileSystem) {
     };
 
     return parent;
-}(uag || {}, jQuery, this, this.document, LocalFileSystem));
+}(uag || {}, jQuery, this, this.document));
