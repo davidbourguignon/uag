@@ -64,7 +64,6 @@
 /home/db/src/uag/basket/assets/www \
 /home/db/src/uag/basket/assets/www/barcodescanner-demo.html \
 /home/db/src/uag/basket/assets/www/js \
-/home/db/src/uag/basket/assets/www/basket-schema.json \
 /home/db/src/uag/basket/assets/www/css \
 /home/db/src/uag/basket/assets/www/file-explorer-demo.html \
 /home/db/src/uag/basket/assets/www/uag-basket-view.html \
@@ -105,9 +104,9 @@
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/files.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/index.html \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.utils.makeFileExplorer.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.basket.model.html \
-/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.utils.FileExplorer.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/_global_.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.basket.Controller.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src \

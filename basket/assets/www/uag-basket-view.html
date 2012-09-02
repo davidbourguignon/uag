@@ -3,7 +3,7 @@
     Author: www.davidbourguignon.net
     Version: 2012-08-31
 -->
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,21 +16,14 @@
 
     <div id="home" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
-            <a id="home-about-btn"
-               href="#about"
+            <a href="#info"
                data-role="button"
                data-icon="info"
                data-iconpos="notext"
                data-rel="dialog"
                data-transition="pop"
-               class="ui-btn-left">About</a>
+               class="ui-btn-left">Info</a>
             <h1>uAg Basket</h1>
-<!-- TODO
-            <a id="home-opt-btn"
-               data-role="button"
-               data-corners="false"
-               class="ui-btn-right">Options</a>
--->
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <img src="images/basket-650x650.jpg" alt="basket"
@@ -38,26 +31,40 @@
                         margin-left: auto;
                         margin-right: auto;
                         width: 99%" />
+            <!-- Source: http://www.dicocitations.com/citation.php?mot=panier -->
+            <!-- TODO: same in english? -->
+            <p style="text-align:center"><small>
+                L'été remplit sa grange, affaisse ses greniers&nbsp;;<br />
+                L'automne d'un doux poids fait gémir ses paniers&nbsp;;<br />
+                Et les derniers soleils, sur les côtes vineuses,<br />
+                Achèvent de mûrir les grappes paresseuses.<br />
+                &#150;&nbsp;Virgile, <em>Géorgiques</em><br />
+            </small></p>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
                     <li><a id ="home-new-btn"
-                           href="#edit"
+                           href="#new"
                            data-role="button">New</a></li>
                     <li><a id="home-open-btn"
                            href="#open"
                            data-role="button"
                            data-rel="dialog"
                            data-transition="pop">Open</a></li>
+                    <li><a id="home-import-btn"
+                           href="#import"
+                           data-role="button"
+                           data-rel="dialog"
+                           data-transition="pop">Import</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="about" data-role="page">
+    <div id="info" data-role="page"><!-- dialog -->
         <div data-role="header" data-theme="a">
-            <h1>About</h1>
+            <h1>About uAg Basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <p>
@@ -76,15 +83,15 @@
             <p>
                 Device info:<br />
                 <small>
-                    - Platform: <span id="device-platform"></span><br />
-                    - Version: <span id="device-version"></span><br />
-                    - UUID: <span id="device-uuid"></span><br />
+                    -&nbsp;Platform: <span id="device-platform"></span><br />
+                    -&nbsp;Version: <span id="device-version"></span><br />
+                    -&nbsp;UUID: <span id="device-uuid"></span><br />
                 </small>
             </p>
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <div id="edit" data-role="page">
+    <div id="new" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
             <a href="#home"
                data-role="button"
@@ -92,11 +99,7 @@
                data-iconpos="notext"
                data-rel="back"
                class="ui-btn-left">Cancel</a>
-            <h1>Edit basket</h1>
-<!-- TODO
-            <a id="new-save-btn"
-               data-role="button">Save</a>
--->
+            <h1>Create new basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <div data-role="fieldcontain">
@@ -146,18 +149,32 @@
                     data-icon="add"
                     data-theme="b">Add new item</button>
         </div><!-- /content -->
-        <div data-role="footer" data-position="fixed" data-theme="d">
-            <h4><small><a href="http://github.com/davidbourguignon/uag/"
-                          data-rel="external">uAg Project</a></small></h4>
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a id ="new-save-btn"
+                           href="#home"
+                           data-role="button">Save</a></li>
+                </ul>
+            </div><!-- /navbar -->
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="open" data-role="page">
+    <div id="open" data-role="page"><!-- dialog -->
         <div data-role="header" data-position="fixed" data-theme="a">
-            <h1>Open basket</h1>
+            <h1>Open existing basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <div id="file-explorer-div" class="ui-grid-b">
+            <!-- TODO basket explorer content -->
+        </div><!-- /content -->
+    </div><!-- /page -->
+
+    <div id="import" data-role="page"><!-- dialog -->
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <h1>Import basket data</h1>
+        </div><!-- /header -->
+        <div data-role="content" data-theme="c">
+            <div id="import-file-explorer-div" class="ui-grid-b">
                 <!-- file explorer content -->
             </div>
         </div><!-- /content -->
@@ -170,9 +187,9 @@
     <script type="text/javascript" src="js/jsv.js"></script>
     <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
     <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
+    <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" src="js/uag-basket-controller.js"></script>
     <script type="text/javascript" src="js/uag-basket-view.js"></script>
-    <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <!-- jQuery Mobile is called after registering callback for mobileinit event -->
     <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
 

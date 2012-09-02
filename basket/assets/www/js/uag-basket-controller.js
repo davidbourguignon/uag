@@ -8,9 +8,11 @@
  * @version 2012-08-31
  */
 /** @namespace uAg project */
-var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*/, undefined) {
-    'use strict'; // enforcing strict JS
-    var uAgBasket = parent.basket = parent.basket || {}; // namespace
+var uag = (function(parent, $, window, document, undefined) {
+    'use strict';
+    // namespace declarations
+    var uAgUtils = parent.utils = parent.utils || {};
+    var uAgBasket = parent.basket = parent.basket || {};
 
     /**
      * @class
@@ -32,32 +34,30 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
             // other vars
             var isJQueryMobileReady = false;
             var isCordovaReady = false;
-            var fileExplorer = makeFileExplorer();
+            var fileExplorer = uAgUtils.makeFileExplorer();
             var fileObj = null;
 
             /** @ignore */
             function onFileExplorerCheck(fileStr) {
                 try {
                     fileObj = JSON.parse(fileStr);
+                    console.info('Info: file object is valid JSON');
                 } catch (e) {
                     console.error(e.message);
                     return false;
                 }
-                // is schema ?
-                // TMP
-                /*
-                var env = JSV.createEnvironment("json-schema-draft-03");
-                var result = env.validate(fileObj, jsonSchema);
+                var env = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
+                var result = env.validate(fileObj, uAgBasket.model.JSON_SCHEMA);
                 if (result.errors.length === 0) { // success
-                    console.info('Info: file object is valid');
+                    console.info('Info: file object follows JSON schema for basket data');
                     return true;
                 } else { // failure
                     var errorArr = result.errors;
-                    console.error('Error:\nuri: ' + errorArr[0].uri +
-                                        '\nmessage: ' + errorArr[0].message);
+                    console.error('Error: file object does not follow JSON schema for basket data\n' +
+                                  'Error: > uri: ' + errorArr[0].uri + '\n' +
+                                  'Error: > message: ' + errorArr[0].message);
                     return false;
-                }*/
-                return true;
+                }
             }
 
             /** @ignore */
@@ -107,15 +107,15 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
                 },
 
                 /** @description TODO */
-                options: function(event) {
-                },
-
-                /** @description TODO */
                 newBasket: function(event) {
                 },
 
                 /** @description TODO */
                 openBasket: function(event) {
+                },
+
+                /** @description TODO */
+                importBasket: function(event) {
                     if (isCordovaReady) {
                         console.info('Info: uag.basket.controller ready');
                         try {
@@ -139,11 +139,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
                 },
 
                 /** @description TODO */
-                addNewBasketItem: function(event) {
-                },
-
-                /** @description TODO */
-                loadBasketFile: function(event) {
+                addBasketItem: function(event) {
                 },
 
                 /**
@@ -152,7 +148,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
                  * @param {object} $uuidSpan JQuery Mobile object containing the DOM reference to a span.
                  * @description Set the jQuery Mobile objects of the about dialog view.
                  */
-                setAboutView: function($platformSpan, $versionSpan, $uuidSpan) {
+                setInfoView: function($platformSpan, $versionSpan, $uuidSpan) {
                     if ($platformSpan instanceof jQuery && $platformSpan.is('span') &&
                         $versionSpan instanceof jQuery && $versionSpan.is('span') &&
                         $uuidSpan instanceof jQuery && $uuidSpan.is('span')) {
@@ -160,7 +156,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
                         versionSpan = $versionSpan;
                         uuidSpan = $uuidSpan;
                     } else {
-                        console.error('Error: wrong about view info');
+                        console.error('Error: wrong info view objects');
                     }
                 },
 
@@ -169,7 +165,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
                  * @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
                  * @description Set the jQuery Mobile objects of the file explorer view.
                  */
-                setExplorerView: function($pageDiv, $gridDiv) {
+                setFileExplorerView: function($pageDiv, $gridDiv) {
                     // how to make sure the page div has been opened as a dialog?
                     // TODO
                     if ($pageDiv instanceof jQuery &&
@@ -179,7 +175,7 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
                         pageDiv = $pageDiv;
                         gridDiv = $gridDiv;
                     } else {
-                        console.error('Error: wrong about view info');
+                        console.error('Error: wrong file explorer view objects');
                     }
                 },
             }; // return {}
@@ -205,4 +201,4 @@ var uag = (function(parent, $, window, document, makeFileExplorer/*, jsonSchema*
     }()); // immediately-invoked function expression (IIFE)
 
     return parent;
-}(uag || {}, jQuery, this, this.document, uag.utils.makeFileExplorer/*, uag.basket.model.jsonSchema*/));
+}(uag || {}, jQuery, this, this.document));

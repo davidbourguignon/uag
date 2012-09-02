@@ -9,13 +9,15 @@
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
-    'use strict'; // enforcing strict JS
-    var uAgUtils = parent.utils = parent.utils || {}; // namespace
+    'use strict';
+    // namespace declaration
+    var uAgUtils = parent.utils = parent.utils || {};
 
     /**
-     * @constructor
-     * @exports uAgUtils.makeFileExplorer as uag.utils.FileExplorer
-     * @description File explorer utility for enhancing controllers
+     * @class
+     * @returns File explorer object
+     * @exports uAgUtils.makeFileExplorer as uag.utils.makeFileExplorer
+     * @description File explorer class constructor
      */
     uAgUtils.makeFileExplorer = function() {
         /**
@@ -152,6 +154,10 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileReaderLoadEnd(event) {
+            // store in the local storage instead?
+            // use a combination of file name and date as key?
+            // no!  we should use basket info (distrib date) instead
+            // TODO
             fileReadStr = event.target.result;
             console.info('Info: > file content is');
             console.info(fileReadStr);
@@ -166,11 +172,11 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileSuccess(file) {
-            console.info('Info: file details');
-            console.info('Info: > file name is ' + file.name);
-            console.info('Info: > file type is ' + file.type);
-            console.info('Info: > file date is ' + new Date(file.lastModifiedDate));
-            console.info('Info: > file size is ' + file.size + ' bytes');
+            console.info('Info: file details\n' +
+                         'Info: > file name is ' + file.name + '\n' +
+                         'Info: > file type is ' + file.type + '\n' +
+                         'Info: > file date is ' + new Date(file.lastModifiedDate) + '\n' +
+                         'Info: > file size is ' + file.size + ' bytes');
             var reader = new FileReader();
             reader.onloadend = onFileReaderLoadEnd;
             reader.readAsText(file);
@@ -202,7 +208,7 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /**
          * @public
-         * @lends uag.utils.FileExplorer
+         * @lends uag.utils.makeFileExplorer
          */
         return {
             /**

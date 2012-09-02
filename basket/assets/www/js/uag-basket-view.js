@@ -9,33 +9,40 @@
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
-    'use strict'; // enforcing strict JS
-    var uAgBasket = parent.basket = parent.basket || {}; // namespace
+    'use strict';
+    // namespace declaration
+    var uAgBasket = parent.basket = parent.basket || {};
 
-    var controller = uAgBasket.Controller.getInstance();
+    var ctrler = uAgBasket.Controller.getInstance();
 
     // jQuery Mobile bindings
-    $(document).on('mobileinit', controller.onMobileInit);
-    $(document).on('pageinit', controller.onPageInit);
+    $(document).on('mobileinit', ctrler.onMobileInit);
+    $(document).on('pageinit', ctrler.onPageInit);
 
     // Cordova bindings
-    $(document).on('deviceready', controller.onDeviceReady);
-    $(document).on('pause', controller.onPause);
-    $(document).on("resume", controller.onResume);
+    $(document).on('deviceready', ctrler.onDeviceReady);
+    $(document).on('pause', ctrler.onPause);
+    $(document).on("resume", ctrler.onResume);
 
     // other bindings, when DOM is ready
     $(document).ready(function() {
-        $('#home-opt-btn').on('click', controller.options);
-        $('#home-opt-btn').on('click', controller.info);
-        $('#home-new-btn').on('click', controller.newBasket);
-        $('#home-open-btn').on('click', controller.openBasket);
-        $('#new-save-btn').on('click', controller.saveBasket);
-        $('#new-tag-btn').on('click', controller.captureTag);
-        $('#new-add-btn').on('click', controller.addNewBasketItem);
-        controller.setAboutView($('#device-platform'),
-                                $('#device-version'),
-                                $('#device-uuid'));
-        controller.setExplorerView($('#open'),
-                                   $('#file-explorer-div'));
+        $('#home-new-btn').on('click', ctrler.newBasket);
+        $('#home-open-btn').on('click', ctrler.openBasket);
+        $('#home-import-btn').on('click', ctrler.importBasket);
+        $('#new-save-btn').on('click', ctrler.saveBasket);
+        $('#new-tag-btn').on('click', ctrler.captureTag);
+        $('#new-add-btn').on('click', ctrler.addBasketItem);
+        // managing open save/tag btn differently from new?
+        // TODO
+        ctrler.setInfoView($('#device-platform'),
+                           $('#device-version'),
+                           $('#device-uuid'));
+        ctrler.setFileExplorerView($('#import'),
+                                   $('#import-file-explorer-div'));
+        // managing two file explorers, one for open, one for import?
+        // normally, no! since we are using local storage, not files for storing our baskets long-term
+        // TODO
     });
+
+    return parent;
 }(uag || {}, jQuery, this, this.document));
