@@ -154,7 +154,7 @@ describe("workerContainers basic", function() {
 	
 	it("Should do WorkerContainers add container action ",function() {
 		
-		var workerId = uag.field.dataContext.WorkerContainers.setWorker("fakeWorker");
+		var workerId = uag.field.dataContext.WorkerContainers.setWorker("uuid","fakeWorker", _producerId1);
 		
 		worker = uag.field.dataContext.WorkerContainers.getWorker();
 		
@@ -275,7 +275,7 @@ describe("Field app uses cases", function() {
 		var workerName = "workerName1";
 		
 		// set worker  
-		var workerId = uag.field.dataContext.WorkerContainers.setWorker(workerName, _producerId1);
+		var workerId = uag.field.dataContext.WorkerContainers.setWorker("uuid", workerName, _producerId1);
 		
 		// fetch data 
 		var worker = uag.field.dataContext.WorkerContainers.getWorker();
@@ -298,7 +298,9 @@ describe("Field app uses cases", function() {
 		expect(producers.length).toEqual(1);
 		
 		var producer = uag.field.dataContext.Producers.find();
+		//alert(uag.field.dataContext.Producers.get().length);
 		
+		expect(producer).not.toEqual(undefined || null);
 		expect(producer.id).toEqual(producers[0].id);
 		
 		var fields = uag.field.dataContext.Producers.getFields();
