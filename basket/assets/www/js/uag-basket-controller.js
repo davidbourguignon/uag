@@ -35,10 +35,12 @@ var uag = (function(parent, $, window, document, undefined) {
             var isJQueryMobileReady = false;
             var isCordovaReady = false;
             var fileExplorer = uAgUtils.makeFileExplorer();
-            var fileObj = null;
 
             /** @ignore */
             function onFileExplorerCheck(fileStr) {
+                var fileObj = null;
+
+                // checking if it is valid JSON
                 try {
                     fileObj = JSON.parse(fileStr);
                     console.info('Info: file object is valid JSON');
@@ -46,10 +48,14 @@ var uag = (function(parent, $, window, document, undefined) {
                     console.error(e.message);
                     return false;
                 }
-                var env = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
-                var result = env.validate(fileObj, uAgBasket.model.JSON_SCHEMA);
+
+                // checking if it follows basket JSON schema
+                var envt = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
+                var model = uAgBasket.Model.getInstance();
+                var result = envt.validate(fileObj, model.getJsonSchema());
                 if (result.errors.length === 0) { // success
                     console.info('Info: file object follows JSON schema for basket data');
+                    model.addBasket(fileStr, fileObj);
                     return true;
                 } else { // failure
                     var errorArr = result.errors;
@@ -178,8 +184,8 @@ var uag = (function(parent, $, window, document, undefined) {
                         console.error('Error: wrong file explorer view objects');
                     }
                 },
-            }; // return {}
-        }; // function init()
+            }; // return
+        }; // private function init()
 
         /**
          * @public
@@ -197,7 +203,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 }
                 return instance;
             },
-        }; // return {}
+        }; // return
     }()); // immediately-invoked function expression (IIFE)
 
     return parent;

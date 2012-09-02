@@ -154,19 +154,15 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileReaderLoadEnd(event) {
-            // store in the local storage instead?
-            // use a combination of file name and date as key?
-            // no!  we should use basket info (distrib date) instead
-            // TODO
             fileReadStr = event.target.result;
             console.info('Info: > file content is');
             console.info(fileReadStr);
-            if (onFileCheck(fileReadStr)) {
+            var fileChecked = onFileCheck(fileReadStr);
+            if (fileChecked) {
                 onClose();
             } else {
-                // use also jQuery Mobile 1.2.0 popup?
+                // use jQuery Mobile 1.2.0 popup
                 // TODO
-                throw new Error('Error: file format is not recognized');
             }
         }
 

@@ -16,20 +16,16 @@ var uag = (function(parent, $, window, document, undefined) {
 
     /**
      * @class
-     * @exports uAgBasket.model as uag.basket.model
-     * @description Model of the Basket app (module pattern)
+     * @exports uAgBasket.Model as uag.basket.Model
+     * @description Model of the Basket app (singleton pattern)
      */
-    uAgBasket.model = (function() {
-        /**
-         * @public
-         * @lends uag.basket.model
-         */
-        return {
-            /**
-             * @const
-             * @description JSON schema of the basket model according to <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03">IETF JSON Schema Draft 03</a>.
-             */
-            JSON_SCHEMA: {
+    uAgBasket.Model = (function() {
+        var instance = null;
+
+        /** @ignore */
+        function init() {
+            // basket JSON Schema
+            var JSON_SCHEMA = {
                 "$schema": "http://json-schema.org/draft-03/schema",
                 "description": "JSON schema describing basket data for the uAg Basket app",
                 "type": "object",
@@ -38,7 +34,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     "distribDate": {
                         "description": "basket distribution date in ISO 8601 format",
                         "type": "string",
-                        "required": false,
+                        "required": true,
                         "format": "date-time"
                     },
                     "products": {
@@ -103,8 +99,50 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 }
             }
-        };
-    }());
+
+            // basket array storing basket keys in localStorage
+            var basketLocalStorageKeys = [];
+
+            /**
+             * @public
+             * @lends uag.basket.Model
+             */
+            return {
+                /**
+                 * @returns JSON schema of the basket model according to <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03">IETF JSON Schema Draft 03</a>.
+                 */
+                getJsonSchema: function() {
+                    return JSON_SCHEMA;
+                },
+                /**
+                 * @description Add basket to local storage: key is distribution date string, value is file string.
+                 */
+                addBasket: function(basketStr, basketObj) {
+                    var key = 'basket-' + basketObj.distribDate;
+                    window.localStorage(key, basketStr);
+                    basketLocalStorageKeys.push(key);
+                },
+            }; // return
+        } // private function init()
+
+        /**
+         * @public
+         * @lends uag.basket.Model
+         */
+        return {
+            /**
+             * @returns {object} Model singleton instance.
+             * @description Get the Singleton instance if one exists or create one if it doesn't.
+             */
+            getInstance: function() {
+                if (instance === null) {
+                    instance = init();
+                    Object.freeze(instance);
+                }
+                return instance;
+            },
+        }; // return
+    }()); // immediately-invoked function expression (IIFE)
 
     return parent;
 }(uag || {}, jQuery, this, this.document));
