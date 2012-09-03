@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Utils File Explorer
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-31
+ * @version 2012-09-03
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -17,7 +17,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @class
      * @returns File explorer object
      * @exports uAgUtils.makeFileExplorer as uag.utils.makeFileExplorer
-     * @description File explorer class constructor
+     * @description File explorer is a view component containing a small model and controller inside.
      */
     uAgUtils.makeFileExplorer = function() {
         /**
@@ -37,12 +37,10 @@ var uag = (function(parent, $, window, document, undefined) {
 
         // callbacks from caller
         var onFileCheck = null;
-        var onClose = null;
 
         // other vars
         var directoryEntries = [];
         var fileEntries = [];
-        var fileReadStr = '';
 
         // callback functions
         /** @ignore */
@@ -154,15 +152,14 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileReaderLoadEnd(event) {
-            fileReadStr = event.target.result;
+            var fileReadStr = event.target.result;
             console.info('Info: > file content is');
             console.info(fileReadStr);
-            var fileChecked = onFileCheck(fileReadStr);
-            if (fileChecked) {
-                onClose();
-            } else {
+            var isFileChecked = onFileCheck(fileReadStr);
+            if (!isFileChecked) {
                 // use jQuery Mobile 1.2.0 popup
                 // TODO
+                console.warning('Warning: file is not checked');
             }
         }
 
@@ -208,14 +205,14 @@ var uag = (function(parent, $, window, document, undefined) {
          */
         return {
             /**
-             *  @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
-             *  @param {function} fileCheckCb Function callback invoked when checking the chosen file (param: string as fileStr; returns: boolean).
-             *  @param {function} closeCb Function callback invoked when closing the explorer view (param: object as event; returns: void).
+             *  @param {object} $gridDiv JQuery Mobile object refering to a div with a 3-row grid class.
+             *  @param {function} fileCheckCb Callback invoked when checking the chosen file. <em>Params: fileStr (string). Returns: boolean.</em>
              *  @throws {TypeError} If $gridDiv type is not div[class="ui-grid-b"].
              **/
-            run: function($gridDiv, fileCheckCb, closeCb) {
+            run: function($gridDiv, fileCheckCb) {
                 // how to make sure this is called after onDeviceReady has fired?
                 // TODO
+
                 // set params
                 if ($gridDiv instanceof jQuery &&
                     $gridDiv.is('div[class="ui-grid-b"]')) {
@@ -224,7 +221,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     throw new TypeError('Error: expecting explorer view objects');
                 }
                 onFileCheck = fileCheckCb;
-                onClose = closeCb;
+
                 // get root directory of the local file system
                 if (gridDiv !== null) {
                     if (rootDir !== null) {

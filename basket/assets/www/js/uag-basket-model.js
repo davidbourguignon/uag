@@ -6,7 +6,7 @@
 /**
  * @fileOverview uAg Basket Model
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-31
+ * @version 2012-09-03
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -99,9 +99,20 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 }
             }
-
             // basket array storing basket keys in localStorage
             var basketLocalStorageKeys = [];
+
+            /** @ignore */
+            function storeBasket(basketObj, basketStr) {
+                var key = 'uag-basket-' + basketObj.distribDate;
+                if (window.localStorage.getItem(key) === null) { // checking for existing key
+                    window.localStorage.setItem(key, basketStr);
+                } else {
+                    console.error('Error: key already exists in localStorage');
+                }
+                window.localStorage.removeItem(key);////////////////////////////TMP for testing/////////////////////////////
+                basketLocalStorageKeys.push(key);
+            }
 
             /**
              * @public
@@ -109,18 +120,34 @@ var uag = (function(parent, $, window, document, undefined) {
              */
             return {
                 /**
-                 * @returns JSON schema of the basket model according to <a href="http://tools.ietf.org/html/draft-zyp-json-schema-03">IETF JSON Schema Draft 03</a>.
+                 * @description Add basket to local storage: key is the distribution date string, value is the file string.
+                 * @param {string} basketStr string representation of basket data in JSON format.
+                 * @returns {boolean} Success.
                  */
-                getJsonSchema: function() {
-                    return JSON_SCHEMA;
-                },
-                /**
-                 * @description Add basket to local storage: key is distribution date string, value is file string.
-                 */
-                addBasket: function(basketStr, basketObj) {
-                    var key = 'basket-' + basketObj.distribDate;
-                    window.localStorage(key, basketStr);
-                    basketLocalStorageKeys.push(key);
+                addBasket: function(basketStr) {
+                    try {
+                        // checking if basket string is valid JSON
+                        var basketObj = JSON.parse(basketStr);
+                        console.info('Info: basket string is valid JSON');
+
+                        // checking if basket object follows basket JSON schema
+                        var envt = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
+                        var result = envt.validate(basketObj, JSON_SCHEMA);
+                        if (result.errors.length === 0) { // success
+                            console.info('Info: file object follows JSON schema for basket data');
+                            storeBasket(basketObj, basketStr);
+                            return true;
+                        } else { // failure
+                            var errorArr = result.errors;
+                            console.error('Error: file object does not follow JSON schema for basket data\n' +
+                                          'Error: > uri: ' + errorArr[0].uri + '\n' +
+                                          'Error: > message: ' + errorArr[0].message);
+                            return false;
+                        }
+                    } catch (e) {
+                        console.error(e.message);
+                        return false;
+                    }
                 },
             }; // return
         } // private function init()

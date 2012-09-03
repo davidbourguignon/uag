@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag</title>
+		<title>JsDoc Reference - uag.basket.Model</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -210,7 +210,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace uag
+				Class uag.basket.Model
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -218,7 +218,7 @@ ul.inheritsList
 				
 				
 			
-				uAg project
+				
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-model.js.html">uag-basket-model.js</a>.
@@ -227,8 +227,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Model.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -240,9 +240,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.html#constructor">uag</a></b>
+								<b><a href="../symbols/uag.basket.Model.html#constructor">uag.basket.Model</a></b>()
 							</div>
-							<div class="description"></div>
+							<div class="description">Model of the Basket app (singleton pattern)</div>
 						</td>
 					</tr>
 				</tbody>
@@ -254,6 +254,42 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.Model.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.addBasket">addBasket</a></b>(basketStr)
+								</div>
+								<div class="description">Add basket to local storage: key is the distribution date string, value is the file string.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getInstance">getInstance</a></b>()
+								</div>
+								<div class="description">Get the Singleton instance if one exists or create one if it doesn't.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -261,56 +297,21 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag</b>
+						<b>uag.basket.Model</b>()
 				</div>
 				
 				<div class="description">
-					
+					Model of the Basket app (singleton pattern)
 					
 				</div>
 				
 				
 				
 				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								 <b>parent</b>
-								
-							</dt>
-								<dd></dd>
-						
-							<dt>
-								 <b>$</b>
-								
-							</dt>
-								<dd></dd>
-						
-							<dt>
-								 <b>window</b>
-								
-							</dt>
-								<dd></dd>
-						
-							<dt>
-								 <b>document</b>
-								
-							</dt>
-								<dd></dd>
-						
-							<dt>
-								 <b>undefined</b>
-								
-							</dt>
-								<dd></dd>
-						
-						</dl>
 					
 					
 					
@@ -327,6 +328,86 @@ ul.inheritsList
 
 <!-- ============================== method details ========================= -->		
 			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name=".addBasket"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{boolean}</span>
+					<span class="light">uag.basket.Model.</span><b>addBasket</b>(basketStr)
+					
+					</div>
+					<div class="description">
+						Add basket to local storage: key is the distribution date string, value is the file string.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>basketStr</b>
+									
+								</dt>
+								<dd>string representation of basket data in JSON format.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getInstance"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">uag.basket.Model.</span><b>getInstance</b>()
+					
+					</div>
+					<div class="description">
+						Get the Singleton instance if one exists or create one if it doesn't.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{object}</span> Model singleton instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
 			
 <!-- ============================== event details ========================= -->		
 			
@@ -338,7 +419,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Sep 03 2012 12:53:34 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Sep 03 2012 12:53:35 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

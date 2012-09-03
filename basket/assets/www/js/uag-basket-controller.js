@@ -5,13 +5,12 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-31
+ * @version 2012-09-03
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
-    // namespace declarations
-    var uAgUtils = parent.utils = parent.utils || {};
+    // namespace declaration
     var uAgBasket = parent.basket = parent.basket || {};
 
     /**
@@ -24,56 +23,8 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            // view objects
-            var platformSpan = null;
-            var versionSpan = null;
-            var uuidSpan = null;
-            var pageDiv = null;
-            var gridDiv = null;
-
-            // other vars
             var isJQueryMobileReady = false;
             var isCordovaReady = false;
-            var fileExplorer = uAgUtils.makeFileExplorer();
-
-            /** @ignore */
-            function onFileExplorerCheck(fileStr) {
-                var fileObj = null;
-
-                // checking if it is valid JSON
-                try {
-                    fileObj = JSON.parse(fileStr);
-                    console.info('Info: file object is valid JSON');
-                } catch (e) {
-                    console.error(e.message);
-                    return false;
-                }
-
-                // checking if it follows basket JSON schema
-                var envt = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
-                var model = uAgBasket.Model.getInstance();
-                var result = envt.validate(fileObj, model.getJsonSchema());
-                if (result.errors.length === 0) { // success
-                    console.info('Info: file object follows JSON schema for basket data');
-                    model.addBasket(fileStr, fileObj);
-                    return true;
-                } else { // failure
-                    var errorArr = result.errors;
-                    console.error('Error: file object does not follow JSON schema for basket data\n' +
-                                  'Error: > uri: ' + errorArr[0].uri + '\n' +
-                                  'Error: > message: ' + errorArr[0].message);
-                    return false;
-                }
-            }
-
-            /** @ignore */
-            function onFileExplorerClose(event) {
-                if (pageDiv !== null) {
-                    pageDiv.dialog('close');
-                } else {
-                    console.error('Error: explorer view objects are not set');
-                }
-            }
 
             /**
              * @public
@@ -82,19 +33,18 @@ var uag = (function(parent, $, window, document, undefined) {
             return {
                 /** @description Function callback invoked when jQuery Mobile starts. */
                 onMobileInit: function(event) {
-                    console.info('Info: mobileinit event fired');
-                    isJQueryMobileReady = true;
                     // add page loading symbol in jQuery Mobile 1.2
                     // TODO
+                    console.info('Info: mobileinit event fired');
+                    isJQueryMobileReady = true;
                 },
 
                 /** @description Function callback invoked when a Cordova application is ready. */
                 onDeviceReady: function(event) {
                     console.info('Info: deviceready event fired');
                     isCordovaReady = true;
-                    platformSpan.text(window.device.platform);
-                    versionSpan.text(window.device.version);
-                    uuidSpan.text(window.device.uuid);
+                    var view = uAgBasket.View.getInstance();
+                    view.setDeviceInfo();
                 },
 
                 /** @description Function callback invoked when a new page is loaded and created by jQuery Mobile. */
@@ -113,21 +63,20 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
-                newBasket: function(event) {
+                onNewBasketClick: function(event) {
                 },
 
                 /** @description TODO */
-                openBasket: function(event) {
+                onOpenBasketClick: function(event) {
                 },
 
                 /** @description TODO */
-                importBasket: function(event) {
+                onImportBasketClick: function(event) {
                     if (isCordovaReady) {
                         console.info('Info: uag.basket.controller ready');
+                        var view = uAgBasket.View.getInstance();
                         try {
-                            fileExplorer.run(gridDiv,
-                                             onFileExplorerCheck,
-                                             onFileExplorerClose);
+                            view.openImportFileExplorer();
                         } catch (e) {
                             console.error(e.message);
                         }
@@ -137,51 +86,30 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
-                saveBasket: function(event) {
+                onSaveBasketClick: function(event) {
                 },
 
                 /** @description TODO */
-                captureTag: function(event) {
+                onCaptureTagClick: function(event) {
                 },
 
                 /** @description TODO */
-                addBasketItem: function(event) {
+                onAddBasketItemClick: function(event) {
                 },
 
                 /**
-                 * @param {object} $platformSpan JQuery Mobile object containing the DOM reference to a span.
-                 * @param {object} $versionSpan JQuery Mobile object containing the DOM reference to a span.
-                 * @param {object} $uuidSpan JQuery Mobile object containing the DOM reference to a span.
-                 * @description Set the jQuery Mobile objects of the about dialog view.
+                 * @description TODO
+                 * @returns {boolean} Success.
                  */
-                setInfoView: function($platformSpan, $versionSpan, $uuidSpan) {
-                    if ($platformSpan instanceof jQuery && $platformSpan.is('span') &&
-                        $versionSpan instanceof jQuery && $versionSpan.is('span') &&
-                        $uuidSpan instanceof jQuery && $uuidSpan.is('span')) {
-                        platformSpan = $platformSpan;
-                        versionSpan = $versionSpan;
-                        uuidSpan = $uuidSpan;
-                    } else {
-                        console.error('Error: wrong info view objects');
-                    }
-                },
-
-                /**
-                 * @param {object} $pageDiv JQuery Mobile object containing the DOM reference to the div with the page role.
-                 * @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
-                 * @description Set the jQuery Mobile objects of the file explorer view.
-                 */
-                setFileExplorerView: function($pageDiv, $gridDiv) {
-                    // how to make sure the page div has been opened as a dialog?
-                    // TODO
-                    if ($pageDiv instanceof jQuery &&
-                        $pageDiv.is('div[data-role="page"]') &&
-                        $gridDiv instanceof jQuery &&
-                        $gridDiv.is('div[class="ui-grid-b"]')) {
-                        pageDiv = $pageDiv;
-                        gridDiv = $gridDiv;
-                    } else {
-                        console.error('Error: wrong file explorer view objects');
+                onFileExplorerCheck: function(fileStr) {
+                    var model = uAgBasket.Model.getInstance();
+                    var isBasketAdded = model.addBasket(fileStr);
+                    if (isBasketAdded) {
+                        var view = uAgBasket.View.getInstance();
+                        view.switchToEditPage();
+                        return true;
+                    } else  {
+                        return false;
                     }
                 },
             }; // return
