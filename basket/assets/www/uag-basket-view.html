@@ -22,11 +22,6 @@
     <script type="text/javascript" src="js/uag-basket-view.js"></script>
     <!-- jQuery Mobile is called after registering callback for mobileinit event -->
     <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
-    <script>
-        uag.basket.View.getInstance();
-        uag.basket.Controller.getInstance();
-        uag.basket.Model.getInstance();
-    </script>
 </head>
 <body>
 
@@ -61,7 +56,7 @@
             <div data-role="navbar">
                 <ul>
                     <li><a id ="home-new-btn"
-                           href="#new"
+                           href="#edit"
                            data-role="button">New</a></li>
                     <li><a id="home-open-btn"
                            href="#open"
@@ -105,7 +100,7 @@
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <div id="new" data-role="page">
+    <div id="edit" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
             <a href="#home"
                data-role="button"
@@ -113,24 +108,24 @@
                data-iconpos="notext"
                data-rel="back"
                class="ui-btn-left">Cancel</a>
-            <h1>New basket</h1>
+            <h1>Edit basket</h1>
         </div><!-- /header -->
-        <div data-role="content" data-theme="c">
+        <div id="edit-content" data-role="content" data-theme="c">
             <div data-role="fieldcontain">
-                <label for="basket-distrib-date">Distrib. date</label>
-                <input type="date"
-                       name="basket-distrib-date"
-                       id="basket-distrib-date"
+                <label for="edit-distrib-date">Distrib. date</label>
+                <input type="text"
+                       name="edit-distrib-date"
+                       id="edit-distrib-date"
                        value="" />
             </div>
             <div data-role="fieldcontain">
-                <label for="basket-approx-weight">Approx. weight</label>
+                <label for="edit-approx-weight">Approx. weight</label>
                 <input type="number"
-                       name="basket-approx-weight"
-                       id="basket-approx-weight"
+                       name="edit-approx-weight"
+                       id="edit-approx-weight"
                        value="" />
             </div>
-            <div data-role="collapsible"
+<!--            <div data-role="collapsible"
                  data-collapsed="false"
                  data-theme="c">
                 <h3>Basket item</h3>
@@ -157,16 +152,16 @@
                            id="basket-item-approx-weight"
                            value="" />
                 </div>
-                <button id="new-tag-btn">Capture tag</button>
-            </div>
-            <button id="new-add-btn"
+                <button id="edit-tag-btn">Capture tag</button>
+            </div>-->
+            <button id="edit-add-btn"
                     data-icon="add"
                     data-theme="b">Add new item</button>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a id ="new-save-btn"
+                    <li><a id ="edit-save-btn"
                            href="#home"
                            data-role="button">Save</a></li>
                 </ul>
@@ -194,30 +189,37 @@
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <div id="edit" data-role="page">
-        <div data-role="header" data-position="fixed" data-theme="a">
-            <a href="#home"
-               data-role="button"
-               data-icon="delete"
-               data-iconpos="notext"
-               data-rel="back"
-               class="ui-btn-left">Cancel</a>
-            <h1>Edit basket</h1>
-        </div><!-- /header -->
-        <div data-role="content" data-theme="c">
-            <div id="edit-basket-distrib-date"></div>
-            <div id="edit-basket-approx-weight"></div>
-        </div><!-- /content -->
-        <div data-role="footer" data-position="fixed" data-theme="a">
-            <div data-role="navbar">
-                <ul>
-                    <li><a id ="edit-save-btn"
-                           href="#home"
-                           data-role="button">Save</a></li>
-                </ul>
-            </div><!-- /navbar -->
-        </div><!-- /footer -->
-    </div><!-- /page -->
+    <script>
+        // when the Cordova application is ready
+        $(document).on('deviceready', function(event) {
+            console.info('Info: deviceready event fired');
+
+            // when the DOM is ready
+            $(document).ready(function() {
+                console.info('Info: document ready');
+
+                var view = uag.basket.View.getInstance();
+                view.setReady();
+
+                $(document).on('pageinit', view.onPageInit);
+                $(document).on('pagebeforechange', view.onPageBeforeChange);
+                $(document).on('pagechange', view.onPageChange);
+                $(document).on('pagechangefailed', view.onPageChangeFailed);
+            });
+        });
+
+        // when the Cordova application is put into the background: useful?
+        // TODO
+        $(document).on('onPause', function(event) {
+            console.info('Info: pause event fired');
+        });
+
+        // when the Cordova application is retrieved from the background: useful?
+        // TODO
+        $(document).on('onResume', function(event) {
+            console.info('Info: resume event fired');
+        });
+    </script>
 
 </body>
 </html>

@@ -27,33 +27,40 @@ var uag = (function(parent, $, window, document, undefined) {
             var importFileExplorer = uAgUtils.makeFileExplorer();
 
             /** @ignore */
-            function bindController() {
-                var controller = uAgBasket.Controller.getInstance();
-
-                // jQuery Mobile bindings
-                $(document).on('mobileinit', controller.onMobileInit); // never called: too late? TODO
-                $(document).on('pageinit', controller.onPageInit);
-
-                // Cordova bindings
-                $(document).on('deviceready', controller.onDeviceReady);
-                $(document).on('pause', controller.onPause);
-                $(document).on("resume", controller.onResume);
-
-                // other bindings, when DOM is ready
-                $(document).ready(function() {
-                    $('#home-new-btn').on('click', controller.onNewBasketClick);
-                    $('#home-open-btn').on('click', controller.onOpenBasketClick);
-                    $('#home-import-btn').on('click', controller.onImportBasketClick);
-                    // switch to #edit only?
-                    // TODO
-                    $('#new-save-btn').on('click', controller.onSaveBasketClick);
-                    $('#new-tag-btn').on('click', controller.onCaptureTagClick);
-                    $('#new-add-btn').on('click', controller.onAddBasketItemClick);
-                });
+            function onInfoPageInit(event) {
+                $('#device-platform').text(window.device.platform);
+                $('#device-version').text(window.device.version);
+                $('#device-uuid').text(window.device.uuid);
+                console.info('Info: pageinit event fired for info');
             }
 
-            // initial setup
-            bindController();
+            /** @ignore */
+            function pageDataToId(pageData) {
+                var pageId = '';
+                if (typeof pageData === 'object') {
+                    pageId = pageData.attr('id');
+                } else if (typeof pageData === 'string') {
+                    var urlObj = $.mobile.path.parseUrl(pageData);
+                    pageId = urlObj.hash;
+                    pageId = pageId.slice(1); // removing initial #
+                } else {
+                    console.error('Error: unknown type for data.toPage');
+                }
+                return pageId;
+            }
+
+            /** @ignore */
+            function renderEditPage(basketObj) {
+                for (var key in basketObj) {
+                    switch (key) {
+                        case 'distribDate':
+                            $('#edit-distrib-date').val(basketObj[key]);
+                            break;
+                        default:
+                            console.error('Error: unknown property in basket object');
+                    }
+                }
+            }
 
             /**
              * @public
@@ -63,13 +70,58 @@ var uag = (function(parent, $, window, document, undefined) {
                 /**
                  * @description TODO
                  */
-                setDeviceInfo: function() {
-                    // how to make sure this is called after onDeviceReady has fired?
-                    // TODO
-                    $('#device-platform').text(window.device.platform);
-                    $('#device-version').text(window.device.version);
-                    $('#device-uuid').text(window.device.uuid);
+                setReady: function() {
+                    var controller = uAgBasket.Controller.getInstance();
+                    controller.setReady();
+                    $('#home-new-btn').on('click', controller.onNewBasketClick);
+                    $('#home-open-btn').on('click', controller.onOpenBasketClick);
+                    $('#home-import-btn').on('click', controller.onImportBasketClick);
+                    $('#info').on('pageinit', onInfoPageInit);
+                    $('#edit-save-btn').on('click', controller.onSaveBasketClick);
+                    $('#edit-tag-btn').on('click', controller.onCaptureTagClick);
+                    $('#edit-add-btn').on('click', controller.onAddBasketItemClick);
                 },
+
+                /**
+                 * @description TODO
+                 */
+                onPageInit: function(event) {
+                    // use pageinit per page instead of $(document).ready() for all?
+                    // TODO
+                    var $obj = $(event.target);
+                    console.info('Info: pageinit event fired for ' + $obj.attr('id'));
+                },
+
+                /**
+                 * @description TODO
+                 */
+                onPageBeforeChange: function(event, data) {
+                    var pageId = pageDataToId(data.toPage);
+                    switch (pageId) {
+                        case 'edit':
+                            $('#edit-content').html('<h4>THIS IS IT</h4>');///////////////TMP///////////////////
+                            //renderEditPage();
+                            break;
+                        default:
+                            console.error('Error: unknown page id');
+                    }
+                    console.info('Info: pagebeforechange event fired for id = ' + pageId);
+                },
+
+                /**
+                 * @description TODO
+                 */
+                onPageChange: function(event, data) {
+                    console.info('Info: pagechange event fired for id = ' + pageDataToId(data.toPage));
+                },
+
+                /**
+                 * @description TODO
+                 */
+                onPageChangeFailed: function(event, data) {
+                    console.log('Info: pagechangefailed event fired for id = '  + pageDataToId(data.toPage));
+                },
+
                 /**
                  * @description TODO
                  */
@@ -78,14 +130,14 @@ var uag = (function(parent, $, window, document, undefined) {
                     importFileExplorer.run($('#import-file-explorer-div'),
                                            controller.onFileExplorerCheck);
                 },
+
                 /**
                  * @description TODO
                  */
                 switchToEditPage: function() {
-                    $.mobile.changePage($('#edit'), {transition:'fade'});
                     var model = uAgBasket.Model.getInstance();
-                    //request info from model to populate page
-                    //STOPPED HERE
+                    var basketObj = JSON.parse(model.retrieveLastBasket());
+                    $.mobile.changePage($('#edit'), {transition:'fade'});
                 },
             }; // return
         } // private function init()

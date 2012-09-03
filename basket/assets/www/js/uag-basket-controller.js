@@ -23,7 +23,6 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            var isJQueryMobileReady = false;
             var isCordovaReady = false;
 
             /**
@@ -31,35 +30,9 @@ var uag = (function(parent, $, window, document, undefined) {
              * @lends uag.basket.Controller
              */
             return {
-                /** @description Function callback invoked when jQuery Mobile starts. */
-                onMobileInit: function(event) {
-                    // add page loading symbol in jQuery Mobile 1.2
-                    // TODO
-                    console.info('Info: mobileinit event fired');
-                    isJQueryMobileReady = true;
-                },
-
-                /** @description Function callback invoked when a Cordova application is ready. */
-                onDeviceReady: function(event) {
-                    console.info('Info: deviceready event fired');
+                /** @description TODO */
+                setReady: function(event) {
                     isCordovaReady = true;
-                    var view = uAgBasket.View.getInstance();
-                    view.setDeviceInfo();
-                },
-
-                /** @description Function callback invoked when a new page is loaded and created by jQuery Mobile. */
-                onPageInit: function(event) {
-                    console.info('Info: pageinit event fired');
-                },
-
-                /** @description Function callback invoked when a Cordova application is put into the background. */
-                onPause: function(event) {
-                    console.info('Info: pause event fired');
-                },
-
-                /** @description Function callback invoked when a Cordova application is retrieved from the background. */
-                onResume: function(event) {
-                    console.info('Info: resume event fired');
                 },
 
                 /** @description TODO */
@@ -73,7 +46,6 @@ var uag = (function(parent, $, window, document, undefined) {
                 /** @description TODO */
                 onImportBasketClick: function(event) {
                     if (isCordovaReady) {
-                        console.info('Info: uag.basket.controller ready');
                         var view = uAgBasket.View.getInstance();
                         try {
                             view.openImportFileExplorer();
@@ -81,7 +53,7 @@ var uag = (function(parent, $, window, document, undefined) {
                             console.error(e.message);
                         }
                     } else {
-                        console.error('Error: uag.basket.controller NOT READY');
+                        console.error('Error: Cordova application is not ready');
                     }
                 },
 

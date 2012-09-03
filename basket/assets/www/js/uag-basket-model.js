@@ -100,7 +100,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 }
             }
             // basket array storing basket keys in localStorage
-            var basketLocalStorageKeys = [];
+            var basketKeys = [];
 
             /** @ignore */
             function storeBasket(basketObj, basketStr) {
@@ -110,8 +110,8 @@ var uag = (function(parent, $, window, document, undefined) {
                 } else {
                     console.error('Error: key already exists in localStorage');
                 }
-                window.localStorage.removeItem(key);////////////////////////////TMP for testing/////////////////////////////
-                basketLocalStorageKeys.push(key);
+                //window.localStorage.removeItem(key);////////////////////////////TMP for testing/////////////////////////////
+                basketKeys.push(key);
             }
 
             /**
@@ -147,6 +147,22 @@ var uag = (function(parent, $, window, document, undefined) {
                     } catch (e) {
                         console.error(e.message);
                         return false;
+                    }
+                },
+
+                /**
+                 * @description Get last basket entered in local storage.
+                 * @returns {string} Basket string representation.
+                 */
+                retrieveLastBasket: function() {
+                    if (basketKeys.length > 0) {
+                        var key = basketKeys.pop();
+                        var basketStr = window.localStorage.getItem(key);
+                        window.localStorage.removeItem(key);
+                        return basketStr;
+                    } else {
+                        console.error('Error: no more basket available');
+                        return '';
                     }
                 },
             }; // return

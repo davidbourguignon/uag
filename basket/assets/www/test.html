@@ -185,39 +185,27 @@
             document.addEventListener("touchmove", preventBehavior, false);
             document.addEventListener("deviceready", deviceInfo, true);
         });
+/*
+        // when the Cordova application is ready
+        $(document).on('deviceready', function(event) {
+            console.info('Info: deviceready event fired');
 
-        /*function init(){
-            console.log("GOT AN ONLOAD!!!")
-            document.addEventListener("touchmove", preventBehavior, false);
-            document.addEventListener("deviceready", deviceInfo, true);
-        }*/
-
+            // when the DOM is ready
+            $(document).ready(function() {
+                console.info('Info: document ready');
+                var view = uag.basket.View.getInstance();
+                view.setReady();
+                $(document).bind("pagebeforechange", view.onPageBeforeChange);
+                $(document).bind("pagechange", view.onPageChange);
+                //$(document).on('pagebeforechange', view.onPageBeforeChange);
+                //$(document).on('pagechange', view.onPageChange);
+                //$(document).on('pagechangefailed', view.onPageChangeFailed);
+            });
+        });
+*/
         var preventBehavior = function(e) {
           e.preventDefault();
         };
-
-        var deviceInfo = function(){
-          console.log("In deviceInfo!");
-          document.getElementById("platform").innerHTML = device.platform;
-          document.getElementById("version").innerHTML = device.version;
-          document.getElementById("uuid").innerHTML = device.uuid;
-
-          window.requestFileSystem (
-              LocalFileSystem.PERSISTENT,
-              0,
-              function (fileSystem) { // success
-                  $.extend(true, fileSystemRoot, fileSystem.root); // does not work!
-                  console.log('THIS IS IT\n');
-                  console.log(fileSystem.root.name);
-                  console.log(fileSystemRoot.name);
-              },
-              function (event) { // failure
-
-              }
-          );
-          console.log('THIS IS IT\n');
-          console.log(fileSystemRoot.name);
-        }
     </script>
 
 </body>
