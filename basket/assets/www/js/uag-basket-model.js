@@ -24,7 +24,7 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            // basket JSON Schema
+            // const vars
             var JSON_SCHEMA = {
                 "$schema": "http://json-schema.org/draft-03/schema",
                 "description": "JSON schema describing basket data for the uAg Basket app",
@@ -99,21 +99,28 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 }
             }
-            // array storing basket keys in localStorage
+            var KEY_PREFIX = 'uag-basket-'; // prefix to avoid key collision with other apps
+
+            // other vars
             var storedBasketKeys = [];
             var currentBasketObj = null;
 
             /** @ignore */
-            function Basket() {
-                this.distribDate = '';
+            // validate constructor with Model JSON SCHEMA
+            // TODO TEST
+            // basket object definition
+            function Basket(basketDate) {
+                this.distribDate = basketDate;
             }
 
             /** @ignore */
-            Basket.prototype.toString = function() { // debug
+            Basket.prototype.toString = JSON.stringify(this, null, '    '); // pretty print with 4 white spaces
+
+            /*function() { // debug only : use JSON.stringify with //TMP
                 return '{\n' +
                         '\tdistribDate: ' + this.distribDate +
                         '\n}';
-            }
+            }*/
 
             /**
              * @public
@@ -123,24 +130,29 @@ var uag = (function(parent, $, window, document, undefined) {
                 /**
                  * @description TODO
                  */
-                getStoredBasketKeys: function() {
-                    return storedBasketKeys;
-                }
+                getStoredBasketDates: function() {
+                    var dates = [];
+                    for (var i = 0, len = storedBasketKeys.length; i < len; i++) {
+                        var keyStr = storedBasketKeys[i];
+                        dates.push(keyStr.slice(KEY_PREFIX.length)); // removing initial prefix
+                    }
+                    return dates.sort(); // default: lexicographical sort (in dictionary order)
+                },
+
                 /**
-                 * @description Get the last basket stored in local storage.
+                 * @description Get current basket (or null if there is none).
                  * @returns {object} Basket object representation.
                  */
                 getCurrentBasket: function() {
-                    if (currentBasketObj !== null) {
-                        return currentBasketObj;
-                    } else {
-                        console.error('Error: no basket available');
+                    if (currentBasketObj === null) {
+                        console.info('Info: no current basket available');
                     }
+                    return currentBasketObj;
                 },
 
                 /**
                  * @description TODO
-                 * @param {string} basket string representation of basket data in JSON format.
+                 * @param {string} basketStr String representation of basket data in JSON format.
                  * @returns {boolean} Success.
                  */
                 setCurrentBasketStr: function(basketStr) {
@@ -172,33 +184,27 @@ var uag = (function(parent, $, window, document, undefined) {
 
                 /**
                  * @description TODO
-                 * @param {object} basket object representation.
+                 * @param {string} basketDate Basket distribution date.
                  * @returns {boolean} Success.
                  */
-                setCurrentBasketObj: function(basketObj) {
-                    /*if (storedBasketKeys.length > 0) { // sanity check
-                        // removing basket string from storage
-                        var key = storedBasketKeys.pop();
-                        var basketStr = window.localStorage.getItem(key);
-                        window.localStorage.removeItem(key);
-
+                setCurrentBasket: function(basketDate) {
+                    var key = KEY_PREFIX + basketDate;
+                    var basketStr = window.localStorage.getItem(key);
+                    if (basketStr !== undefined) {
                         // converting basket string to basket object
                         try { // sanity check
-                            basketObj = JSON.parse(basketStr);
+                            var basketObj = JSON.parse(basketStr);
+                            currentBasketObj = basketObj;
+                            return true;
                         } catch (e) {
                             console.error(e.message);
+                            return false;
                         }
                     } else {
-                        console.error('Error: no more basket available');
-                    }*/
-                    if (basketObj === null) {
-                        currentBasketObj = new Basket();
+                        currentBasketObj = new Basket(basketDate);
                         console.log('CURRENT BASKET NEW:\n' + currentBasketObj.toString());//TMP
-                    } else {
-                        currentBasketObj = basketObj;
-                        console.log('when selecting in list of stored baskets?');//TMP
+                        return true;
                     }
-                    return true;
                 },
 
                 /**
@@ -207,7 +213,7 @@ var uag = (function(parent, $, window, document, undefined) {
                  */
                 storeCurrentBasket: function() {
                     if (currentBasketObj !== null) {
-                        var key = 'uag-basket-' + currentBasketObj.distribDate;
+                        var key = KEY_PREFIX + currentBasketObj.distribDate;
                         if (window.localStorage.getItem(key) === null) { // success unique key
                             try {
                                 var basketStr = JSON.stringify(currentBasketObj);

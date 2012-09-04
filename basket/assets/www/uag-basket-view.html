@@ -31,8 +31,6 @@
                data-role="button"
                data-icon="info"
                data-iconpos="notext"
-               data-rel="dialog"
-               data-transition="pop"
                class="ui-btn-left">Info</a>
             <h1>uAg Basket</h1>
         </div><!-- /header -->
@@ -60,21 +58,23 @@
                            data-role="button">New</a></li>
                     <li><a id="home-open-btn"
                            href="#open"
-                           data-role="button"
-                           data-rel="dialog"
-                           data-transition="pop">Open</a></li>
+                           data-role="button">Open</a></li>
                     <li><a id="home-import-btn"
                            href="#import"
-                           data-role="button"
-                           data-rel="dialog"
-                           data-transition="pop">Import</a></li>
+                           data-role="button">Import</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="info" data-role="page"><!-- dialog -->
+    <div id="info" data-role="page">
         <div data-role="header" data-theme="a">
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
             <h1>About</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
@@ -169,20 +169,32 @@
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="open" data-role="page"><!-- dialog -->
+    <div id="open" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
             <h1>Open basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
+            <h4>Stored baskets sorted by date</h4>
             <ul id="open-basket-explorer-ul" data-role="listview" data-theme="g">
                 <!-- basket explorer content -->
-                <!--- <li><a href="#edit">basket.distribDate</a></li> -->
             </ul>
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <div id="import" data-role="page"><!-- dialog -->
+    <div id="import" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
             <h1>Import basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
@@ -209,7 +221,6 @@
         // when the Cordova application is ready
         function onDeviceReady() {
             console.info('Info: deviceready event fired');
-            uagBasketView.setOnDeviceReady();
         }
 
         // when the Cordova application is put into the background

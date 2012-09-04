@@ -24,6 +24,22 @@ var uag = (function(parent, $, window, document, undefined) {
         /** @ignore */
         function init() {
             /**
+             * @description Taken from <a href="from http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date">MDN JavaScript documentation</a>.
+             * @ignore
+             */
+            function ISODateString(d) {
+                function pad(n) {
+                    return (n < 10 ? '0' + n : n);
+                }
+                return d.getUTCFullYear() + '-' +
+                    pad(d.getUTCMonth()+1) + '-' +
+                    pad(d.getUTCDate()) + 'T' +
+                    pad(d.getUTCHours()) + ':' +
+                    pad(d.getUTCMinutes()) + ':' +
+                    pad(d.getUTCSeconds()) + 'Z';
+            }
+
+            /**
              * @public
              * @lends uag.basket.Controller
              */
@@ -33,7 +49,16 @@ var uag = (function(parent, $, window, document, undefined) {
                     var view = uAgBasket.View.getInstance();
                     view.resetEditPage();
                     var model =  uAgBasket.Model.getInstance();
-                    model.setBasketObj(null);
+                    if (Date.toISOString !== undefined) {
+                        model.setCurrentBasket(Date.toISOString()); // current date in ISO 8601 format
+                    } else {
+                        console.warn('Warning: Date.toISOString is undefined');
+                        var d = new Date();
+                        console.log('ISODateString(d) ' + ISODateString(d));//TMP
+                        model.setCurrentBasket(ISODateString(d));
+                        //STOPPED HERE
+                    }
+                    view.changeToEditPage();
                 },
 
                 /** @description TODO */
@@ -66,6 +91,20 @@ var uag = (function(parent, $, window, document, undefined) {
 
                 /** @description TODO */
                 onAddBasketItemClick: function(event) {
+                },
+
+                /**
+                 * @description TODO
+                 */
+                onBasketExplorerClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var isBasketSet = model.setCurrentBasket($(event.target).text());
+                    if (isBasketSet) {
+                        var view = uAgBasket.View.getInstance();
+                        view.changeToEditPage();
+                    } else  {
+                        console.error('Error: current basket not set');
+                    }
                 },
 
                 /**

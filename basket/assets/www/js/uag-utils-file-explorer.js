@@ -133,6 +133,8 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileDivClick(event) {
+            // put an effect with hover, then click down and click up (same for files)
+            // TODO
             var name = $(event.target).text();
             if (currentDir !== null) {
                 currentDir.getFile(name, {create:false},
@@ -145,6 +147,8 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onBackDivClick(event) {
+            // same idea: put an effect, this time a bit special
+            // TODO
             if (parentDir !== null) {
                 showDirectory(parentDir);
             }

@@ -52,12 +52,14 @@ var uag = (function(parent, $, window, document, undefined) {
             /** @ignore */
             function onOpenPageChange() {
                 var model = uAgBasket.Model.getInstance();
-                var keys = model.getStoredBasketKeys();
-                var $ul = $('open-basket-explorer-ul');
-                for (var i = 0, len = keys.len; i < len; i++) {
-                    $ul.append('<li><a href="#edit">' + keys[i] + '</a></li>');
+                var dates = model.getStoredBasketDates();
+                var $ul = $('#open-basket-explorer-ul');
+                $ul.empty();
+                for (var i = 0, len = dates.length; i < len; i++) {
+                    $ul.append('<li><a href="#edit">' + dates[i] + '</a></li>'); // list view syntax
                 }
-                //$ul.children('li').on('click', );
+                var controller = uAgBasket.Controller.getInstance();
+                $ul.find('a').on('click', controller.onBasketExplorerClick);
             }
 
             /** @ignore */
