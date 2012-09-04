@@ -99,19 +99,20 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 }
             }
-            // basket array storing basket keys in localStorage
-            var basketKeys = [];
+            // array storing basket keys in localStorage
+            var storedBasketKeys = [];
+            var currentBasketObj = null;
 
             /** @ignore */
-            function storeBasket(basketObj, basketStr) {
-                var key = 'uag-basket-' + basketObj.distribDate;
-                if (window.localStorage.getItem(key) === null) { // checking for existing key
-                    window.localStorage.setItem(key, basketStr);
-                } else {
-                    console.error('Error: key already exists in localStorage');
-                }
-                //window.localStorage.removeItem(key);////////////////////////////TMP for testing/////////////////////////////
-                basketKeys.push(key);
+            function Basket() {
+                this.distribDate = '';
+            }
+
+            /** @ignore */
+            Basket.prototype.toString = function() { // debug
+                return '{\n' +
+                        '\tdistribDate: ' + this.distribDate +
+                        '\n}';
             }
 
             /**
@@ -120,11 +121,29 @@ var uag = (function(parent, $, window, document, undefined) {
              */
             return {
                 /**
-                 * @description Add basket to local storage: key is the distribution date string, value is the file string.
-                 * @param {string} basketStr string representation of basket data in JSON format.
+                 * @description TODO
+                 */
+                getStoredBasketKeys: function() {
+                    return storedBasketKeys;
+                }
+                /**
+                 * @description Get the last basket stored in local storage.
+                 * @returns {object} Basket object representation.
+                 */
+                getCurrentBasket: function() {
+                    if (currentBasketObj !== null) {
+                        return currentBasketObj;
+                    } else {
+                        console.error('Error: no basket available');
+                    }
+                },
+
+                /**
+                 * @description TODO
+                 * @param {string} basket string representation of basket data in JSON format.
                  * @returns {boolean} Success.
                  */
-                addBasket: function(basketStr) {
+                setCurrentBasketStr: function(basketStr) {
                     try {
                         // checking if basket string is valid JSON
                         var basketObj = JSON.parse(basketStr);
@@ -133,36 +152,79 @@ var uag = (function(parent, $, window, document, undefined) {
                         // checking if basket object follows basket JSON schema
                         var envt = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
                         var result = envt.validate(basketObj, JSON_SCHEMA);
-                        if (result.errors.length === 0) { // success
+
+                        if (result.errors.length === 0) { // success JSON schema
                             console.info('Info: file object follows JSON schema for basket data');
-                            storeBasket(basketObj, basketStr);
+                            currentBasketObj = basketObj;
                             return true;
-                        } else { // failure
+                        } else { // failure JSON schema
                             var errorArr = result.errors;
                             console.error('Error: file object does not follow JSON schema for basket data\n' +
                                           'Error: > uri: ' + errorArr[0].uri + '\n' +
                                           'Error: > message: ' + errorArr[0].message);
                             return false;
                         }
-                    } catch (e) {
+                    } catch (e) { // failure JSON
                         console.error(e.message);
                         return false;
                     }
                 },
 
                 /**
-                 * @description Get last basket entered in local storage.
-                 * @returns {string} Basket string representation.
+                 * @description TODO
+                 * @param {object} basket object representation.
+                 * @returns {boolean} Success.
                  */
-                retrieveLastBasket: function() {
-                    if (basketKeys.length > 0) {
-                        var key = basketKeys.pop();
+                setCurrentBasketObj: function(basketObj) {
+                    /*if (storedBasketKeys.length > 0) { // sanity check
+                        // removing basket string from storage
+                        var key = storedBasketKeys.pop();
                         var basketStr = window.localStorage.getItem(key);
                         window.localStorage.removeItem(key);
-                        return basketStr;
+
+                        // converting basket string to basket object
+                        try { // sanity check
+                            basketObj = JSON.parse(basketStr);
+                        } catch (e) {
+                            console.error(e.message);
+                        }
                     } else {
                         console.error('Error: no more basket available');
-                        return '';
+                    }*/
+                    if (basketObj === null) {
+                        currentBasketObj = new Basket();
+                        console.log('CURRENT BASKET NEW:\n' + currentBasketObj.toString());//TMP
+                    } else {
+                        currentBasketObj = basketObj;
+                        console.log('when selecting in list of stored baskets?');//TMP
+                    }
+                    return true;
+                },
+
+                /**
+                 * @description Store basket in local storage: key is the distribution date string, value is the file string.
+                 * @returns {boolean} Success.
+                 */
+                storeCurrentBasket: function() {
+                    if (currentBasketObj !== null) {
+                        var key = 'uag-basket-' + currentBasketObj.distribDate;
+                        if (window.localStorage.getItem(key) === null) { // success unique key
+                            try {
+                                var basketStr = JSON.stringify(currentBasketObj);
+                                window.localStorage.setItem(key, basketStr);
+                                storedBasketKeys.push(key);
+                                return true;
+                            } catch (e) { // failure JSON
+                                console.error(e.message);
+                                return false;
+                            }
+                        } else { // failure unique key
+                            console.error('Error: key already exists in localStorage');
+                            return false;
+                        }
+                    } else {
+                        console.error('Error: no basket available');
+                        return false;
                     }
                 },
             }; // return

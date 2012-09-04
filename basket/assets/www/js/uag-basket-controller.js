@@ -23,42 +23,41 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            var isCordovaReady = false;
-
             /**
              * @public
              * @lends uag.basket.Controller
              */
             return {
                 /** @description TODO */
-                setReady: function(event) {
-                    isCordovaReady = true;
-                },
-
-                /** @description TODO */
                 onNewBasketClick: function(event) {
+                    var view = uAgBasket.View.getInstance();
+                    view.resetEditPage();
+                    var model =  uAgBasket.Model.getInstance();
+                    model.setBasketObj(null);
                 },
 
                 /** @description TODO */
-                onOpenBasketClick: function(event) {
-                },
+                /*onOpenBasketClick: function(event) {
+                    //apres selection
+                    var view = uAgBasket.View.getInstance();
+                    view.changeToOpenPage();
+                },*/
 
                 /** @description TODO */
                 onImportBasketClick: function(event) {
-                    if (isCordovaReady) {
-                        var view = uAgBasket.View.getInstance();
-                        try {
-                            view.openImportFileExplorer();
-                        } catch (e) {
-                            console.error(e.message);
-                        }
-                    } else {
-                        console.error('Error: Cordova application is not ready');
-                    }
+                    var view = uAgBasket.View.getInstance();
+                    view.changeToImportPage();
                 },
 
                 /** @description TODO */
                 onSaveBasketClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var isBasketStored = model.storeCurrentBasket();
+                    if (isBasketStored) {
+                        console.info('Info: basket stored');
+                    } else {
+                        console.error('Error: basket not stored');
+                    }
                 },
 
                 /** @description TODO */
@@ -75,10 +74,10 @@ var uag = (function(parent, $, window, document, undefined) {
                  */
                 onFileExplorerCheck: function(fileStr) {
                     var model = uAgBasket.Model.getInstance();
-                    var isBasketAdded = model.addBasket(fileStr);
-                    if (isBasketAdded) {
+                    var isBasketSet = model.setCurrentBasketStr(fileStr);
+                    if (isBasketSet) {
                         var view = uAgBasket.View.getInstance();
-                        view.switchToEditPage();
+                        view.changeToEditPage();
                         return true;
                     } else  {
                         return false;

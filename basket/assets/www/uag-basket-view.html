@@ -1,7 +1,7 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-09-03
+    Version: 2012-09-04
 -->
 <!DOCTYPE HTML>
 <html>
@@ -174,7 +174,10 @@
             <h1>Open basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <!-- TODO basket explorer content -->
+            <ul id="open-basket-explorer-ul" data-role="listview" data-theme="g">
+                <!-- basket explorer content -->
+                <!--- <li><a href="#edit">basket.distribDate</a></li> -->
+            </ul>
         </div><!-- /content -->
     </div><!-- /page -->
 
@@ -190,35 +193,34 @@
     </div><!-- /page -->
 
     <script>
+        var uagBasketView = uag.basket.View.getInstance();
+
+        // jQuery Mobile first
+        var $uagBasketViewDoc = $(document);
+        $uagBasketViewDoc.on('pageinit', uagBasketView.onPageInit);
+        $uagBasketViewDoc.on('pagechange', uagBasketView.onPageChange);
+        $uagBasketViewDoc.on('pagechangefailed', uagBasketView.onPageChangeFailed);
+
+        // Cordova second
+        document.addEventListener('deviceready', onDeviceReady, false);
+        document.addEventListener('pause', onPause, false);
+        document.addEventListener('resume', onResume, false);
+
         // when the Cordova application is ready
-        $(document).on('deviceready', function(event) {
+        function onDeviceReady() {
             console.info('Info: deviceready event fired');
+            uagBasketView.setOnDeviceReady();
+        }
 
-            // when the DOM is ready
-            $(document).ready(function() {
-                console.info('Info: document ready');
-
-                var view = uag.basket.View.getInstance();
-                view.setReady();
-
-                $(document).on('pageinit', view.onPageInit);
-                $(document).on('pagebeforechange', view.onPageBeforeChange);
-                $(document).on('pagechange', view.onPageChange);
-                $(document).on('pagechangefailed', view.onPageChangeFailed);
-            });
-        });
-
-        // when the Cordova application is put into the background: useful?
-        // TODO
-        $(document).on('onPause', function(event) {
+        // when the Cordova application is put into the background
+        function onPause() {
             console.info('Info: pause event fired');
-        });
+        }
 
-        // when the Cordova application is retrieved from the background: useful?
-        // TODO
-        $(document).on('onResume', function(event) {
+        // when the Cordova application is retrieved from the background
+        function onResume() {
             console.info('Info: resume event fired');
-        });
+        }
     </script>
 
 </body>

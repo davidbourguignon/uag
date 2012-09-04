@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Utils File Explorer
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-03
+ * @version 2012-09-04
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -17,7 +17,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @class
      * @returns File explorer object
      * @exports uAgUtils.makeFileExplorer as uag.utils.makeFileExplorer
-     * @description File explorer is a view component containing a small model and controller inside.
+     * @description File explorer is a full-fledged component containing a small model, view and controller inside.
      */
     uAgUtils.makeFileExplorer = function() {
         /**
@@ -153,8 +153,8 @@ var uag = (function(parent, $, window, document, undefined) {
         /** @ignore */
         function onFileReaderLoadEnd(event) {
             var fileReadStr = event.target.result;
-            console.info('Info: > file content is');
-            console.info(fileReadStr);
+            //console.info('Info: > file content is');
+            //console.info(fileReadStr);
             var isFileChecked = onFileCheck(fileReadStr);
             if (!isFileChecked) {
                 // use jQuery Mobile 1.2.0 popup
