@@ -31,7 +31,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 var controller = uAgBasket.Controller.getInstance();
                 $('#home-new-btn').on('click', controller.onNewBasketClick);
                 //$('#home-open-btn').on('click', controller.onOpenBasketClick);
-                $('#home-import-btn').on('click', controller.onImportBasketClick);
+                //$('#home-import-btn').on('click', controller.onImportBasketClick);
             }
 
             /** @ignore */
@@ -45,8 +45,8 @@ var uag = (function(parent, $, window, document, undefined) {
             function onEditPageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
                 $('#edit-save-btn').on('click', controller.onSaveBasketClick);
-                $('#edit-tag-btn').on('click', controller.onCaptureTagClick);
-                $('#edit-add-btn').on('click', controller.onAddBasketItemClick);
+                //$('#edit-tag-btn').on('click', controller.onCaptureTagClick);
+                //$('#edit-add-btn').on('click', controller.onAddBasketItemClick);
             }
 
             /** @ignore */
@@ -56,7 +56,8 @@ var uag = (function(parent, $, window, document, undefined) {
                 var $ul = $('#open-basket-explorer-ul');
                 $ul.empty();
                 for (var i = 0, len = dates.length; i < len; i++) {
-                    $ul.append('<li><a href="#edit">' + dates[i] + '</a></li>'); // list view syntax
+                    var isoDateStr = dates[i].toISOString();
+                    $ul.append('<li><a id="' + isoDateStr + '" href="#edit">' + isoDateStr + '</a></li>'); // list view syntax
                 }
                 var controller = uAgBasket.Controller.getInstance();
                 $ul.find('a').on('click', controller.onBasketExplorerClick);
@@ -64,12 +65,16 @@ var uag = (function(parent, $, window, document, undefined) {
 
             /** @ignore */
             function onEditPageChange() {
+                console.log("EDIT PAGE CHANGE");//////////TMP
                 var model = uAgBasket.Model.getInstance();
                 var basketObj = model.getCurrentBasket();
+                console.log('CURRENT BASK '  + basketObj.toString());///////////TMP
+                // TMP create a basket decorator
                 for (var key in basketObj) {
                     switch (key) {
-                        case 'distribDate':
-                            $('#edit-distrib-date').val(basketObj[key]); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
+                        case 'distribDateTime':
+                            console.log("OK there");/////////////TMP
+                            $('#basket-distrib-date').val(basketObj[key]); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
                             break;
                         default:
                             //console.error('Error: unknown property in basket object');
@@ -155,9 +160,9 @@ var uag = (function(parent, $, window, document, undefined) {
                 /**
                  * @description TODO
                  */
-                //changeToOpenPage: function() {
-
-                //},
+                changeToOpenPage: function() {
+                    // TODO
+                },
 
                 /**
                  * @description TODO
@@ -176,15 +181,17 @@ var uag = (function(parent, $, window, document, undefined) {
                  * @description TODO
                  */
                 changeToEditPage: function() {
-                    $.mobile.changePage($('#edit'), {transition:'fade'});
+                    console.log("CHANGE TO EDIT PAGE");//////////TMP
+                    $.mobile.changePage($('#edit'), {transition:'fade'}); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
                 },
 
                 /**
                  * @description TODO
                  */
-                resetEditPage: function() {
-                    $('#edit-distrib-date').val(''); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
-                },
+                //resetEditPage: function() {
+                    //console.log("RESET EDIT PAGE");//////////TMP
+                    //$('#edit-distrib-date').val(''); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
+                //},
             }; // return
         } // private function init()
 

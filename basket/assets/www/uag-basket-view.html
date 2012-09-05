@@ -16,6 +16,8 @@
     <script type="text/javascript" src="js/uri.js"></script>
     <script type="text/javascript" src="js/jsv.js"></script>
     <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
+    <script type="text/javascript" src="js/humane.js"></script>
+    <script type="text/javascript" src="js/uag-shims.js"></script>
     <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
     <script type="text/javascript" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" src="js/uag-basket-controller.js"></script>
@@ -112,45 +114,52 @@
         </div><!-- /header -->
         <div id="edit-content" data-role="content" data-theme="c">
             <div data-role="fieldcontain">
-                <label for="edit-distrib-date">Distrib. date</label>
+                <label for="basket-distrib-date">Distrib. date</label>
                 <input type="text"
-                       name="edit-distrib-date"
-                       id="edit-distrib-date"
+                       name="basket-distrib-date"
+                       id="basket-distrib-date"
                        value="" />
             </div>
             <div data-role="fieldcontain">
-                <label for="edit-approx-weight">Approx. weight</label>
+                <label for="basket-approx-weight">Approx. weight</label>
                 <input type="number"
-                       name="edit-approx-weight"
-                       id="edit-approx-weight"
-                       value="" />
+                       name="basket-approx-weight"
+                       id="basket-approx-weight"
+                       value="0" />
             </div>
 <!--            <div data-role="collapsible"
                  data-collapsed="false"
                  data-theme="c">
-                <h3>Basket item</h3>
+                <h3>Product</h3>
                 <div data-role="fieldcontain">
-                    <label for="is-basket-item-in">In</label>
-                    <select name="is-basket-item-in"
-                            id="is-basket-item-in"
+                    <label for="is-product-in">In</label>
+                    <select name="is-product-in"
+                            id="is-product-in"
                             data-role="slider">
                         <option value="off">No</option>
                         <option value="on">Yes</option>
                     </select>
                 </div>
                 <div data-role="fieldcontain">
-                    <label for="basket-item-desc">Desc.</label>
+                    <label for="product-name">Name</label>
                     <input type="text"
-                           name="basket-item-desc"
-                           id="basket-item-desc"
+                           name="product-name"
+                           id="product-name"
                            value="" />
                 </div>
                 <div data-role="fieldcontain">
-                    <label for="basket-item-approx-weight">Approx. weight</label>
-                    <input type="number"
-                           name="basket-item-approx-weight"
-                           id="basket-item-approx-weight"
+                    <label for="producer-name">Name</label>
+                    <input type="text"
+                           name="producer-name"
+                           id="producer-name"
                            value="" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="product-approx-weight">Approx. weight</label>
+                    <input type="number"
+                           name="product-approx-weight"
+                           id="product-approx-weight"
+                           value="0" />
                 </div>
                 <button id="edit-tag-btn">Capture tag</button>
             </div>-->
@@ -181,7 +190,7 @@
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <h4>Stored baskets sorted by date</h4>
-            <ul id="open-basket-explorer-ul" data-role="listview" data-theme="g">
+            <ul id="open-basket-explorer-ul" data-role="listview" data-theme="c">
                 <!-- basket explorer content -->
             </ul>
         </div><!-- /content -->
@@ -205,33 +214,36 @@
     </div><!-- /page -->
 
     <script>
-        var uagBasketView = uag.basket.View.getInstance();
+        (function() {
+            var view = uag.basket.View.getInstance();
 
-        // jQuery Mobile first
-        var $uagBasketViewDoc = $(document);
-        $uagBasketViewDoc.on('pageinit', uagBasketView.onPageInit);
-        $uagBasketViewDoc.on('pagechange', uagBasketView.onPageChange);
-        $uagBasketViewDoc.on('pagechangefailed', uagBasketView.onPageChangeFailed);
+            // jQuery Mobile first
+            var $doc = $(document);
+            $doc.on('pageinit', view.onPageInit);
+            $doc.on('pagechange', view.onPageChange);
+            $doc.on('pagechangefailed', view.onPageChangeFailed);
 
-        // Cordova second
-        document.addEventListener('deviceready', onDeviceReady, false);
-        document.addEventListener('pause', onPause, false);
-        document.addEventListener('resume', onResume, false);
+            // Cordova second
+            document.addEventListener('deviceready', onDeviceReady, false);
+            document.addEventListener('pause', onPause, false);
+            document.addEventListener('resume', onResume, false);
 
-        // when the Cordova application is ready
-        function onDeviceReady() {
-            console.info('Info: deviceready event fired');
-        }
+            // when the Cordova application is ready
+            function onDeviceReady() {
+                console.info('Info: deviceready event fired');
+                window.localStorage.clear(); // TMP
+            }
 
-        // when the Cordova application is put into the background
-        function onPause() {
-            console.info('Info: pause event fired');
-        }
+            // when the Cordova application is put into the background
+            function onPause() {
+                console.info('Info: pause event fired');
+            }
 
-        // when the Cordova application is retrieved from the background
-        function onResume() {
-            console.info('Info: resume event fired');
-        }
+            // when the Cordova application is retrieved from the background
+            function onResume() {
+                console.info('Info: resume event fired');
+            }
+        }());
     </script>
 
 </body>
