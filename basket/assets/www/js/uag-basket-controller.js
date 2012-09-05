@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-03
+ * @version 2012-09-05
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -44,7 +44,8 @@ var uag = (function(parent, $, window, document, undefined) {
 
                 /** @description TODO */
                 onImportBasketClick: function(event) {
-                    // TODO
+                    var view = uAgBasket.View.getInstance();
+                    view.switchToImportPage();
                 },
 
                 /** @description TODO */
@@ -53,6 +54,9 @@ var uag = (function(parent, $, window, document, undefined) {
                     var isBasketStored = model.storeCurrentBasket();
                     if (!isBasketStored) {
                         console.error('Error: current basket not stored');
+                    } else {
+                        // use jQuery Mobile 1.2.0 popup to acknowledge saved?
+                        // TODO
                     }
                 },
 
@@ -83,10 +87,10 @@ var uag = (function(parent, $, window, document, undefined) {
                  */
                 onFileExplorerCheck: function(fileStr) {
                     var model = uAgBasket.Model.getInstance();
-                    var isBasketSet = model.setCurrentBasketFromJson(fileStr);
+                    var isBasketSet = model.setCurrentBasketFromStr(fileStr);
                     if (isBasketSet) {
                         var view = uAgBasket.View.getInstance();
-                        view.changeToEditPage();
+                        view.switchToEditPage();
                         return true;
                     } else  {
                         console.error('Error: current basket not set');

@@ -1,7 +1,7 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-09-04
+    Version: 2012-09-05
 -->
 <!DOCTYPE HTML>
 <html>
@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/uri.js"></script>
     <script type="text/javascript" src="js/jsv.js"></script>
     <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
-    <script type="text/javascript" src="js/humane.js"></script>
+    <script type="text/javascript" src="js/humane.js"></script><!-- TODO useful? -->
     <script type="text/javascript" src="js/uag-shims.js"></script>
     <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
     <script type="text/javascript" src="js/uag-basket-model.js"></script>
@@ -108,18 +108,56 @@
                data-role="button"
                data-icon="delete"
                data-iconpos="notext"
-               data-rel="back"
                class="ui-btn-left">Cancel</a>
             <h1>Edit basket</h1>
         </div><!-- /header -->
         <div id="edit-content" data-role="content" data-theme="c">
-            <div data-role="fieldcontain">
-                <label for="basket-distrib-date">Distrib. date</label>
-                <input type="text"
-                       name="basket-distrib-date"
-                       id="basket-distrib-date"
-                       value="" />
+            <div id="products">
+                <div data-role="collapsible"
+                     data-collapsed="false"
+                     data-theme="c">
+                    <legend>Product name, Approx. weight</legend><!-- TODO automatically inserted from fields -->
+                    <div data-role="fieldcontain">
+                        <label for="product-is-in">Is in?</label>
+                        <select name="product-is-in"
+                                id="product-is-in"
+                                data-role="slider">
+                            <option value="off">No</option>
+                            <option value="on">Yes</option>
+                        </select>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="product-name">Name</label>
+                        <input type="text"
+                               name="product-name"
+                               id="product-name"
+                               value="" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="product-producer-name">Producer</label>
+                        <input type="text"
+                               name="product-producer-name"
+                               id="product-producer-name"
+                               value="" />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="product-approx-weight">Approx. weight</label>
+                        <input type="range"
+                               name="product-approx-weight"
+                               id="product-approx-weight"
+                               value="0"
+                               min="0"
+                               max="10"
+                               step="0.1"
+                               data-highlight="true" />
+                    </div>
+                    <div data-role="controlgroup">
+                        <a id="edit-tag-btn" href="#" data-role="button">Tag</a>
+                        <a id="edit-img-btn" href="#" data-role="button">Photos</a>
+                    </div>
+                </div>
             </div>
+<!-- TODO compute this field!
             <div data-role="fieldcontain">
                 <label for="basket-approx-weight">Approx. weight</label>
                 <input type="number"
@@ -127,52 +165,20 @@
                        id="basket-approx-weight"
                        value="0" />
             </div>
-<!--            <div data-role="collapsible"
-                 data-collapsed="false"
-                 data-theme="c">
-                <h3>Product</h3>
-                <div data-role="fieldcontain">
-                    <label for="is-product-in">In</label>
-                    <select name="is-product-in"
-                            id="is-product-in"
-                            data-role="slider">
-                        <option value="off">No</option>
-                        <option value="on">Yes</option>
-                    </select>
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="product-name">Name</label>
-                    <input type="text"
-                           name="product-name"
-                           id="product-name"
-                           value="" />
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="producer-name">Name</label>
-                    <input type="text"
-                           name="producer-name"
-                           id="producer-name"
-                           value="" />
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="product-approx-weight">Approx. weight</label>
-                    <input type="number"
-                           name="product-approx-weight"
-                           id="product-approx-weight"
-                           value="0" />
-                </div>
-                <button id="edit-tag-btn">Capture tag</button>
-            </div>-->
-            <button id="edit-add-btn"
-                    data-icon="add"
-                    data-theme="b">Add new item</button>
+-->
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
+                    <li><a id ="edit-add-btn"
+                           href="#"
+                           data-role="button">Add</a></li>
                     <li><a id ="edit-save-btn"
                            href="#home"
                            data-role="button">Save</a></li>
+                    <li><a id ="edit-remove-btn"
+                           href="#"
+                           data-role="button">Remove</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
@@ -189,8 +195,7 @@
             <h1>Open basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <h4>Stored baskets sorted by date</h4>
-            <ul id="open-basket-explorer-ul" data-role="listview" data-theme="c">
+            <ul id="open-basket-explorer-ul" data-role="listview">
                 <!-- basket explorer content -->
             </ul>
         </div><!-- /content -->
@@ -220,6 +225,7 @@
             // jQuery Mobile first
             var $doc = $(document);
             $doc.on('pageinit', view.onPageInit);
+            $doc.on('pagebeforechange', view.onPageBeforeChange);
             $doc.on('pagechange', view.onPageChange);
             $doc.on('pagechangefailed', view.onPageChangeFailed);
 
@@ -231,7 +237,7 @@
             // when the Cordova application is ready
             function onDeviceReady() {
                 console.info('Info: deviceready event fired');
-                window.localStorage.clear(); // TMP
+                window.localStorage.clear(); /////////////////////////// TMP//////////////////////////////////////////
             }
 
             // when the Cordova application is put into the background

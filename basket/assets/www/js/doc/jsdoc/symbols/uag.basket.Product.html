@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag.basket.View</title>
+		<title>JsDoc Reference - uag.basket.Product</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -214,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class uag.basket.View
+				Class uag.basket.Product
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -225,13 +225,13 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-view.js.html">uag-basket-view.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-model.js.html">uag-basket-model.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.View.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Product.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.basket.View.html#constructor">uag.basket.View</a></b>()
+								<b><a href="../symbols/uag.basket.Product.html#constructor">uag.basket.Product</a></b>()
 							</div>
-							<div class="description">View of the Basket app (singleton pattern)</div>
+							<div class="description">Product object constructor.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -255,12 +255,90 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class uag.basket.Product.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Product.html#approxWeight">approxWeight</a></b>
+								</div>
+								<div class="description">Product approximate weight in kilograms (in case of a single piece of vegetables, such as one salad, a best guess must be provided).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Product.html#images">images</a></b>
+								</div>
+								<div class="description">List of product images.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Product.html#isIn">isIn</a></b>
+								</div>
+								<div class="description">Is the product already in the basket? (Useful for a self-served distribution.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Product.html#name">name</a></b>
+								</div>
+								<div class="description">Product simple name or full description.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Product.html#producerName">producerName</a></b>
+								</div>
+								<div class="description">Product producer name.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Product.html#tag">tag</a></b>
+								</div>
+								<div class="description">Product info obtained from QR code scanning.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.View.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.Product.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -271,74 +349,11 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.changeToOpenPage">changeToOpenPage</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/uag.basket.Product.html#toString">toString</a></b>()
 								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.getInstance">getInstance</a></b>()
-								</div>
-								<div class="description">Get the Singleton instance if one exists or create one if it doesn't.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.onPageBeforeChange">onPageBeforeChange</a></b>(event, data)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.onPageChange">onPageChange</a></b>(event, data)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.onPageChangeFailed">onPageChangeFailed</a></b>(event, data)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.onPageInit">onPageInit</a></b>(event)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.switchToEditPage">switchToEditPage</a></b>()
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.View.<b><a href="../symbols/uag.basket.View.html#.switchToImportPage">switchToImportPage</a></b>()
-								</div>
-								<div class="description">TODO</div>
+								<div class="description">Using JSON stringification with pretty print (4 white spaces per indentation);</div>
 							</td>
 						</tr>
 					
@@ -359,11 +374,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag.basket.View</b>()
+						<b>uag.basket.Product</b>()
 				</div>
 				
 				<div class="description">
-					View of the Basket app (singleton pattern)
+					Product object constructor.
 					
 				</div>
 				
@@ -383,6 +398,143 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="approxWeight"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{number}</span>
+					<b>approxWeight</b>
+					
+					</div>
+					<div class="description">
+						Product approximate weight in kilograms (in case of a single piece of vegetables, such as one salad, a best guess must be provided).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="images"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{array}</span>
+					<b>images</b>
+					
+					</div>
+					<div class="description">
+						List of product images.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="isIn"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>isIn</b>
+					
+					</div>
+					<div class="description">
+						Is the product already in the basket? (Useful for a self-served distribution.)
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="name"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>name</b>
+					
+					</div>
+					<div class="description">
+						Product simple name or full description.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="producerName"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>producerName</b>
+					
+					</div>
+					<div class="description">
+						Product producer name.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="tag"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>tag</b>
+					
+					</div>
+					<div class="description">
+						Product info obtained from QR code scanning.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -390,259 +542,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".changeToOpenPage"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="toString"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">uag.basket.View.</span><b>changeToOpenPage</b>()
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getInstance"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{object}</span>
-					<span class="light">uag.basket.View.</span><b>getInstance</b>()
+					<b>toString</b>()
 					
 					</div>
 					<div class="description">
-						Get the Singleton instance if one exists or create one if it doesn't.
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{object}</span> View singleton instance.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onPageBeforeChange"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.View.</span><b>onPageBeforeChange</b>(event, data)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>data</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onPageChange"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.View.</span><b>onPageChange</b>(event, data)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>data</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onPageChangeFailed"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.View.</span><b>onPageChangeFailed</b>(event, data)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>data</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onPageInit"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.View.</span><b>onPageInit</b>(event)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".switchToEditPage"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.View.</span><b>switchToEditPage</b>()
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".switchToImportPage"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.View.</span><b>switchToImportPage</b>()
-					
-					</div>
-					<div class="description">
-						TODO
+						Using JSON stringification with pretty print (4 white spaces per indentation);
 						
 						
 					</div>

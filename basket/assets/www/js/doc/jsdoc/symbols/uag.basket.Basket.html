@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag.basket.Controller</title>
+		<title>JsDoc Reference - uag.basket.Basket</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -214,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class uag.basket.Controller
+				Class uag.basket.Basket
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -225,13 +225,13 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-controller.js.html">uag-basket-controller.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-model.js.html">uag-basket-model.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Controller.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Basket.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.basket.Controller.html#constructor">uag.basket.Controller</a></b>()
+								<b><a href="../symbols/uag.basket.Basket.html#constructor">uag.basket.Basket</a></b>(date)
 							</div>
-							<div class="description">Controller of the Basket app (singleton pattern)</div>
+							<div class="description">Basket object constructor.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -255,12 +255,50 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class uag.basket.Basket.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Basket.html#products">products</a></b>
+								</div>
+								<div class="description">List of products in the basket.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Basket.html#timestamp">timestamp</a></b>
+								</div>
+								<div class="description">Date-time info in ISO 8601 format.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.Controller.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.Basket.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -273,81 +311,45 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.getInstance">getInstance</a></b>()
+								<div class="fixedFont">uag.basket.Basket.<b><a href="../symbols/uag.basket.Basket.html#.decorate">decorate</a></b>(obj)
 								</div>
-								<div class="description">Get the Singleton instance if one exists or create one if it doesn't.</div>
+								<div class="description">Decorate a JSON data object following the basket JSON Schema with Basket prototype methods.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onAddBasketItemClick">onAddBasketItemClick</a></b>(event)
+								<div class="fixedFont">uag.basket.Basket.<b><a href="../symbols/uag.basket.Basket.html#.getDateFromKey">getDateFromKey</a></b>(keyStr)
 								</div>
-								<div class="description">TODO</div>
+								<div class="description">Generate dates from storage keys.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/uag.basket.Basket.html#getKey">getKey</a></b>()
+								</div>
+								<div class="description">Get the storage key of a basket object.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onBasketExplorerClick">onBasketExplorerClick</a></b>(event)
+								<div class="fixedFont">uag.basket.Basket.<b><a href="../symbols/uag.basket.Basket.html#.getKeyFromDate">getKeyFromDate</a></b>(date)
 								</div>
-								<div class="description">TODO</div>
+								<div class="description">Utility function to generate storage keys from dates.</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onCaptureTagClick">onCaptureTagClick</a></b>(event)
+								<div class="fixedFont"><b><a href="../symbols/uag.basket.Basket.html#toString">toString</a></b>()
 								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onFileExplorerCheck">onFileExplorerCheck</a></b>(fileStr)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onImportBasketClick">onImportBasketClick</a></b>(event)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onNewBasketClick">onNewBasketClick</a></b>(event)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onOpenBasketClick">onOpenBasketClick</a></b>(event)
-								</div>
-								<div class="description">TODO</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Controller.<b><a href="../symbols/uag.basket.Controller.html#.onSaveBasketClick">onSaveBasketClick</a></b>(event)
-								</div>
-								<div class="description">TODO</div>
+								<div class="description">Using JSON stringify method with pretty print (4 white spaces per indentation).</div>
 							</td>
 						</tr>
 					
@@ -368,17 +370,28 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag.basket.Controller</b>()
+						<b>uag.basket.Basket</b>(date)
 				</div>
 				
 				<div class="description">
-					Controller of the Basket app (singleton pattern)
+					Basket object constructor.
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{date}</span>  <b>date</b>
+								
+							</dt>
+								<dd>Date object defining basket timestamp.</dd>
+						
+						</dl>
 					
 					
 					
@@ -392,6 +405,55 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="products"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{array}</span>
+					<b>products</b>
+					
+					</div>
+					<div class="description">
+						List of products in the basket.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="timestamp"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>timestamp</b>
+					
+					</div>
+					<div class="description">
+						Date-time info in ISO 8601 format.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -399,15 +461,101 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".getInstance"> </a>
+					<a name=".decorate"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					<span class="light">{object}</span>
-					<span class="light">uag.basket.Controller.</span><b>getInstance</b>()
+					<span class="light">uag.basket.Basket.</span><b>decorate</b>(obj)
 					
 					</div>
 					<div class="description">
-						Get the Singleton instance if one exists or create one if it doesn't.
+						Decorate a JSON data object following the basket JSON Schema with Basket prototype methods.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{object}</span> <b>obj</b>
+									
+								</dt>
+								<dd>JSON data object.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{object}</span> Decorated JSON data object.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getDateFromKey"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{string}</span>
+					<span class="light">uag.basket.Basket.</span><b>getDateFromKey</b>(keyStr)
+					
+					</div>
+					<div class="description">
+						Generate dates from storage keys.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>keyStr</b>
+									
+								</dt>
+								<dd>Key string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{string}</span> Date object.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getKey"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>getKey</b>()
+					
+					</div>
+					<div class="description">
+						Get the storage key of a basket object.
 						
 						
 					</div>
@@ -422,7 +570,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{object}</span> Controller singleton instance.</dd>
+								<dd><span class="light fixedFont">{string}</span> Key string.</dd>
 							
 							</dl>
 						
@@ -431,15 +579,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".onAddBasketItemClick"> </a>
+					<a name=".getKeyFromDate"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.basket.Controller.</span><b>onAddBasketItemClick</b>(event)
+					<span class="light">{string}</span>
+					<span class="light">uag.basket.Basket.</span><b>getKeyFromDate</b>(date)
 					
 					</div>
 					<div class="description">
-						TODO
+						Utility function to generate storage keys from dates.
 						
 						
 					</div>
@@ -451,118 +599,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>event</b>
+									<span class="light fixedFont">{date}</span> <b>date</b>
 									
 								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onBasketExplorerClick"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.Controller.</span><b>onBasketExplorerClick</b>(event)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onCaptureTagClick"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.Controller.</span><b>onCaptureTagClick</b>(event)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onFileExplorerCheck"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{boolean}</span>
-					<span class="light">uag.basket.Controller.</span><b>onFileExplorerCheck</b>(fileStr)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>fileStr</b>
-									
-								</dt>
-								<dd></dd>
+								<dd>Date object.</dd>
 							
 							</dl>
 						
@@ -573,7 +613,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
+								<dd><span class="light fixedFont">{string}</span> Key string.</dd>
 							
 							</dl>
 						
@@ -582,144 +622,32 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".onImportBasketClick"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="toString"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">uag.basket.Controller.</span><b>onImportBasketClick</b>(event)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onNewBasketClick"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.Controller.</span><b>onNewBasketClick</b>(event)
+					<span class="light">{string}</span>
+					<b>toString</b>()
 					
 					</div>
 					<div class="description">
-						TODO
+						Using JSON stringify method with pretty print (4 white spaces per indentation).
 						
 						
 					</div>
 					
 					
 					
+						
+						
+						
+						
 						
 							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
+								<dd><span class="light fixedFont">{string}</span> String representation of the basket object.</dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onOpenBasketClick"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.Controller.</span><b>onOpenBasketClick</b>(event)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onSaveBasketClick"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.basket.Controller.</span><b>onSaveBasketClick</b>(event)
-					
-					</div>
-					<div class="description">
-						TODO
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
 						
 						
 						

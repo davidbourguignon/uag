@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Basket View
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-04
+ * @version 2012-09-05
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -30,8 +30,8 @@ var uag = (function(parent, $, window, document, undefined) {
             function onHomePageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
                 $('#home-new-btn').on('click', controller.onNewBasketClick);
-                //$('#home-open-btn').on('click', controller.onOpenBasketClick);
-                //$('#home-import-btn').on('click', controller.onImportBasketClick);
+                $('#home-open-btn').on('click', controller.onOpenBasketClick);
+                $('#home-import-btn').on('click', controller.onImportBasketClick);
             }
 
             /** @ignore */
@@ -45,8 +45,8 @@ var uag = (function(parent, $, window, document, undefined) {
             function onEditPageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
                 $('#edit-save-btn').on('click', controller.onSaveBasketClick);
-                //$('#edit-tag-btn').on('click', controller.onCaptureTagClick);
-                //$('#edit-add-btn').on('click', controller.onAddBasketItemClick);
+                $('#edit-tag-btn').on('click', controller.onCaptureTagClick);
+                $('#edit-add-btn').on('click', controller.onAddBasketItemClick);
             }
 
             /** @ignore */
@@ -56,24 +56,26 @@ var uag = (function(parent, $, window, document, undefined) {
                 var $ul = $('#open-basket-explorer-ul');
                 $ul.empty();
                 for (var i = 0, len = dates.length; i < len; i++) {
-                    var isoDateStr = dates[i].toISOString();
-                    $ul.append('<li><a id="' + isoDateStr + '" href="#edit">' + isoDateStr + '</a></li>'); // list view syntax
+                    var date = dates[i];
+                    $ul.append('<li><a id="' +
+                               date.toISOString() +
+                               '" href="#edit">' +
+                               date.toLocaleDateString() +
+                               '</a></li>'); // list view syntax
                 }
+                $ul.listview('refresh');
                 var controller = uAgBasket.Controller.getInstance();
                 $ul.find('a').on('click', controller.onBasketExplorerClick);
             }
 
             /** @ignore */
             function onEditPageChange() {
-                console.log("EDIT PAGE CHANGE");//////////TMP
                 var model = uAgBasket.Model.getInstance();
                 var basketObj = model.getCurrentBasket();
-                console.log('CURRENT BASK '  + basketObj.toString());///////////TMP
                 // TMP create a basket decorator
                 for (var key in basketObj) {
                     switch (key) {
-                        case 'distribDateTime':
-                            console.log("OK there");/////////////TMP
+                        case 'timestamp':///////////TMP
                             $('#basket-distrib-date').val(basketObj[key]); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
                             break;
                         default:
@@ -130,6 +132,24 @@ var uag = (function(parent, $, window, document, undefined) {
                 /**
                  * @description TODO
                  */
+                onPageBeforeChange: function(event, data) {
+                    var pageId = pageDataToId(data.toPage);
+                    console.info('Info: pagebeforechange event fired for ' + pageId);
+                    switch (pageId) {
+                        case 'home':
+                        case 'info':
+                        case 'open':
+                        case 'import':
+                        case 'edit':
+                            break;
+                        default:
+                            console.error('Error: unknown page id');
+                    }
+                },
+
+                /**
+                 * @description TODO
+                 */
                 onPageChange: function(event, data) {
                     var pageId = pageDataToId(data.toPage);
                     console.info('Info: pagechange event fired for ' + pageId);
@@ -167,7 +187,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 /**
                  * @description TODO
                  */
-                changeToImportPage: function() {
+                switchToImportPage: function() {
                     var controller = uAgBasket.Controller.getInstance();
                     try {
                         importFileExplorer.run($('#import-file-explorer-div'),
@@ -180,18 +200,9 @@ var uag = (function(parent, $, window, document, undefined) {
                 /**
                  * @description TODO
                  */
-                changeToEditPage: function() {
-                    console.log("CHANGE TO EDIT PAGE");//////////TMP
+                switchToEditPage: function() {
                     $.mobile.changePage($('#edit'), {transition:'fade'}); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
                 },
-
-                /**
-                 * @description TODO
-                 */
-                //resetEditPage: function() {
-                    //console.log("RESET EDIT PAGE");//////////TMP
-                    //$('#edit-distrib-date').val(''); //////////////// PUT EVERYTHING IN CONST VARS!!!!!!!!!!!!!!!!!!!
-                //},
             }; // return
         } // private function init()
 
