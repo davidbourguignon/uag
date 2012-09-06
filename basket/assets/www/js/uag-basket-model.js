@@ -209,6 +209,7 @@ var uag = (function(parent, $, window, document, undefined) {
             // other vars
             var storedBasketKeysArr = [];
             var currentBasketObj = null;
+            var currentProductObj = null;
 
             /**
              * @public
@@ -240,7 +241,15 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Get current product object.
+                 * @returns {object} Current product object representation (or null if it does not exist).
+                 */
+                getCurrentProduct: function() {
+                    return currentProductObj;
+                },
+
+                /**
+                 * @description Set current basket object using a JSON string input.
                  * @param {string} str String of data in JSON format following the basket JSON Schema.
                  * @returns {boolean} Success.
                  */
@@ -270,7 +279,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Set current basket object using a Date object input, as unique timestamp.
                  * @param {date} date Date object defining basket timestamp.
                  * @returns {boolean} Success.
                  */
@@ -290,6 +299,27 @@ var uag = (function(parent, $, window, document, undefined) {
                     } else {
                         currentBasketObj = new uAgBasket.Basket(date);
                         return true;
+                    }
+                },
+
+                /**
+                 * @description Set current product object using its index in the basket products array.
+                 * @param {number} nbr Index in the basket products array.
+                 * @returns {boolean} Success.
+                 */
+                setCurrentProduct: function(nbr) {
+                    if (currentBasketObj !== null) {
+                        var productsArr = currentBasketObj.products;
+                        if (nbr >= 0 && nbr < productsArr.length) { // take the empty array case into account
+                            currentProductObj = productsArr[nbr];
+                            return true;
+                        } else {
+                            console.error('Error: no current basket products available');
+                            return false;
+                        }
+                    } else {
+                        console.error('Error: no current basket available');
+                        return false;
                     }
                 },
 

@@ -23,7 +23,7 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            var productListItemNbr = 0;
+            var productNbr = 0;
 
             /** @ignore */
             function onTagScanSuccess(result) {
@@ -103,7 +103,9 @@ var uag = (function(parent, $, window, document, undefined) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.isIn = $(event.target).val();
+                        basketObj.products[productNbr].isIn
+                            = $(event.target).val();
+                        console.log('CHANGE IS IN ' + basketObj.products[productNbr].isIn.toString());/////TMP
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -114,7 +116,9 @@ var uag = (function(parent, $, window, document, undefined) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.name = $(event.target).val();
+                        basketObj.products[productNbr].name
+                            = $(event.target).val();
+                        console.log('CHANGE NAME ' + basketObj.products[productNbr].name);/////TMP
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -125,7 +129,9 @@ var uag = (function(parent, $, window, document, undefined) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.producerName = $(event.target).val();
+                        basketObj.products[productNbr].producerName
+                            = $(event.target).val();
+                        console.log('CHANGE PRODUCER ' + basketObj.products[productNbr].producerName);/////TMP
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -136,7 +142,9 @@ var uag = (function(parent, $, window, document, undefined) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.weight = $(event.target).val();
+                        basketObj.products[productNbr].weight
+                            = + $(event.target).val(); // + to avoid problems with string values
+                        console.log('CHANGE WEIGH ' + basketObj.products[productNbr].weight);/////TMP
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -166,13 +174,19 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
+                /*onUpdateCurrentProductClick: function(event) {
+                    var view = uAgBasket.View.getInstance();
+                    view.switchToEditPage();
+                },*/
+
+                /** @description TODO */
                 onRemoveCurrentProductClick: function(event) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.products.splice(productListItemNbr, 1);
+                        basketObj.products.splice(productNbr, 1);
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -198,10 +212,12 @@ var uag = (function(parent, $, window, document, undefined) {
                 onProductListClick: function(event) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
-                    var len = uAgBasket.Product.PREFIX_STR.length;
-                    var id = $(event.target).attr('id');
-                    productListItemNbr = id.slice(len);
-                    //update view with product reference
+                    var productId = $(event.target).attr('id');
+                    var model = uAgBasket.Model.getInstance();
+                    // removing prefix
+                    productNbr
+                        = productId.slice(uAgBasket.Product.PREFIX_STR.length);
+                    model.setCurrentProduct(productNbr);
                 },
 
                 /**

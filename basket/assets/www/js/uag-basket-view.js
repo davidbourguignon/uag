@@ -92,23 +92,32 @@ var uag = (function(parent, $, window, document, undefined) {
                 if (basketObj !== null) {
                     var $editTitle = $('#edit-basket-title'); // TODO CONST VAR
                     var $productList = $('#edit-basket-listview'); // TODO CONST VAR
-                    var productsNbr = basketObj.products.length;
-                    if (productsNbr === 0) {
+                    var productsLen = basketObj.products.length;
+                    console.log('PROD LEN ' + productsLen);///////////////////TMP
+                    if (productsLen === 0) {
                         $editTitle.text('No products in basket!');
                     } else {
                         var basketWeight = 0;
-                        for (var i = 0; i < productsNbr; i++) {
+                        console.log('TYPEOF BASK WEIG ' + typeof basketWeight);///////////TMP
+                        for (var i = 0; i < productsLen; i++) {
                             var productObj = basketObj.products[i];
+                            var isIn = productObj.isIn;
                             var name = productObj.name;
-                            var weight = productObj.weight;
-                            $productList.append('<li><a id="product-' +
-                                                i + '" href="#product">' +
+                            var weight = + productObj.weight; // + to avoid problems with string values
+                            console.log('TYPEOF WEIG ' + typeof weight);///////////TMP
+                            var id = uAgBasket.Product.PREFIX_STR + i;
+                            $productList.append('<li' +
+                                                (isIn ? ' data-theme="b"' : '') +
+                                                '><a id="' + id +
+                                                '" href="#product">' +
                                                 name + ', ' + weight +
-                                                'kg' + '</a></li>');
+                                                'kg</a></li>');
                             basketWeight += weight;
+                            console.log('PROD #' + i + ' has WEIGHT = ' + weight);////////////TMP
                         }
-                        $editTitle.text(productsNbr + ' product' +
-                                        (productsNbr > 1 ? 's, ' : ', ') +
+                        console.log('BASK WEIGHT = ' + basketWeight);////////////TMP
+                        $editTitle.text(productsLen + ' product' +
+                                        (productsLen > 1 ? 's, ' : ', ') +
                                         basketWeight + 'kg');
                         $productList.listview('refresh');
                         var controller = uAgBasket.Controller.getInstance();
@@ -122,26 +131,40 @@ var uag = (function(parent, $, window, document, undefined) {
             /** @ignore */
             function onProductPageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
-                $('#product-isIn').on('change', onProductIsInChange);
-                $('#product-name').on('change', onProductNameChange);
-                $('#product-producerName').on('change', onProductProducerNameChange);
-                $('#product-weight').on('change', onProductWeightChange);
+                $('#product-isIn').on('change', controller.onProductIsInChange);
+                $('#product-name').on('change', controller.onProductNameChange);
+                $('#product-producerName').on('change', controller.onProductProducerNameChange);
+                $('#product-weight').on('change', controller.onProductWeightChange);
                 $('#product-tag-btn').on('click', controller.onOpenScanTagClick);
                 $('#product-photos-btn').on('click', controller.onTakePhotosClick);
+                //$('#product-update-btn').on('click', controller.onUpdateCurrentProductClick);
                 $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
             }
 
             /** @ignore */
             function onProductPageBeforeChange() {
-                $('#product-isIn').val(false);
-                $('#product-name').val('');
-                $('#product-producerName').val('');
-                $('#product-weight').val(0);
+                $('#product-isIn').val(false);  // TODO CONST VAR
+                $('#product-name').val('');  // TODO CONST VAR
+                $('#product-producerName').val('');  // TODO CONST VAR
+                $('#product-weight').val(0);  // TODO CONST VAR
             }
 
             /** @ignore */
             function onProductPageChange() {
-                // TODO
+                var model = uAgBasket.Model.getInstance();
+                var productObj = model.getCurrentProduct();
+                if (productObj !== null) {
+                    // change values
+                    $('#product-isIn').val(productObj.isIn.toString());
+                    $('#product-name').val(productObj.name);
+                    $('#product-producerName').val(productObj.producerName);
+                    $('#product-weight').val(+ productObj.weight); // + to avoid problems with string values
+                    // refresh widgets
+                    $('#product-isIn').slider('refresh');
+                    $('#product-weight').slider('refresh');
+                } else {
+                    console.error('Error: no current product available');
+                }
             }
 
             /** @ignore */
