@@ -1,27 +1,27 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-09-05
+    Version: 2012-09-06
 -->
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="css/jquery.mobile-1.1.1.css" />
-    <link rel="stylesheet" href="css/uag-basket-view.css" />
-    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="js/cordova-2.0.0.js"></script>
-    <script type="text/javascript" src="js/barcodescanner.js"></script>
-    <script type="text/javascript" src="js/uri.js"></script>
-    <script type="text/javascript" src="js/jsv.js"></script>
-    <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
-    <script type="text/javascript" src="js/humane.js"></script><!-- TODO useful? -->
-    <script type="text/javascript" src="js/uag-shims.js"></script>
-    <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
-    <script type="text/javascript" src="js/uag-basket-model.js"></script>
-    <script type="text/javascript" src="js/uag-basket-controller.js"></script>
-    <script type="text/javascript" src="js/uag-basket-view.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>uAg Basket View</title>
+    <link type="text/css" charset="utf-8" href="css/jquery.mobile-1.1.1.css" rel="stylesheet" media="screen" title="no title" />
+    <link type="text/css" charset="utf-8" href="css/uag-basket-view.css" rel="stylesheet" media="screen" title="no title" />
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uri.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jsv.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/json-schema-draft-03.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-shims.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-utils-file-explorer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-basket-model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-basket-controller.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-basket-view.js"></script>
     <!-- jQuery Mobile is called after registering callback for mobileinit event -->
     <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
 </head>
@@ -42,8 +42,8 @@
                         margin-left: auto;
                         margin-right: auto;
                         width: 99%" />
-            <!-- Source: http://www.dicocitations.com/citation.php?mot=panier -->
             <!-- TODO: same in english? -->
+            <!-- Source: http://www.dicocitations.com/citation.php?mot=panier -->
             <p style="text-align:center;font-size:70%;">
                 L'été remplit sa grange, affaisse ses greniers&nbsp;;<br />
                 L'automne d'un doux poids fait gémir ses paniers&nbsp;;<br />
@@ -111,61 +111,15 @@
                class="ui-btn-left">Cancel</a>
             <h1>Edit basket</h1>
         </div><!-- /header -->
-        <div id="edit-content" data-role="content" data-theme="c">
-            <div id="products">
-                <div data-role="collapsible"
-                     data-collapsed="false"
-                     data-theme="c">
-                    <legend>Product name, Approx. weight</legend><!-- TODO automatically inserted from fields -->
-                    <div data-role="fieldcontain">
-                        <label for="product-is-in">Is in?</label>
-                        <select name="product-is-in"
-                                id="product-is-in"
-                                data-role="slider">
-                            <option value="off">No</option>
-                            <option value="on">Yes</option>
-                        </select>
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="product-name">Name</label>
-                        <input type="text"
-                               name="product-name"
-                               id="product-name"
-                               value="" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="product-producer-name">Producer</label>
-                        <input type="text"
-                               name="product-producer-name"
-                               id="product-producer-name"
-                               value="" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="product-approx-weight">Approx. weight</label>
-                        <input type="range"
-                               name="product-approx-weight"
-                               id="product-approx-weight"
-                               value="0"
-                               min="0"
-                               max="10"
-                               step="0.1"
-                               data-highlight="true" />
-                    </div>
-                    <div data-role="controlgroup">
-                        <a id="edit-tag-btn" href="#" data-role="button">Tag</a>
-                        <a id="edit-img-btn" href="#" data-role="button">Photos</a>
-                    </div>
-                </div>
+        <div data-role="content" data-theme="c">
+            <h3 id="basket-title"></h3>
+            <div id="products-div"
+                 data-role="collapsible-set"
+                 data-iconpos="right"
+                 data-theme="c"
+                 data-content-theme="d">
+                <!-- products content -->
             </div>
-<!-- TODO compute this field!
-            <div data-role="fieldcontain">
-                <label for="basket-approx-weight">Approx. weight</label>
-                <input type="number"
-                       name="basket-approx-weight"
-                       id="basket-approx-weight"
-                       value="0" />
-            </div>
--->
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="a">
             <div data-role="navbar">
@@ -195,7 +149,8 @@
             <h1>Open basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <ul id="open-basket-explorer-ul" data-role="listview">
+            <h3 id="open-basket-explorer-title"></h3>
+            <ul id="open-basket-explorer-listview" data-role="listview">
                 <!-- basket explorer content -->
             </ul>
         </div><!-- /content -->
@@ -237,6 +192,7 @@
             // when the Cordova application is ready
             function onDeviceReady() {
                 console.info('Info: deviceready event fired');
+                view.setOnDeviceReady();
                 window.localStorage.clear(); /////////////////////////// TMP//////////////////////////////////////////
             }
 
@@ -254,73 +210,3 @@
 
 </body>
 </html>
-
-<!-- BARCODE SCANNER DEMO
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <meta name="viewport" content="width=320; user-scalable=no" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>uAg Basket</title>
-      <link rel="stylesheet" href="css/barcodescanner-demo.css" type="text/css"
-            media="screen" title="no title" charset="utf-8">
-      <script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
-      <script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
-      <script type="text/javascript" charset="utf-8">
-
-    function init(){
-        console.log("GOT AN ONLOAD!!!")
-        document.addEventListener("touchmove", preventBehavior, false);
-        document.addEventListener("deviceready", deviceInfo, true);
-    }
-
-    var preventBehavior = function(e) {
-      e.preventDefault();
-    };
-
-    var deviceInfo = function(){
-      console.log("In deviceInfo!");
-      document.getElementById("platform").innerHTML = device.platform;
-      document.getElementById("version").innerHTML = device.version;
-      document.getElementById("uuid").innerHTML = device.uuid;
-    }
-
-    function scan() {
-        window.plugins.barcodeScanner.scan(function(result) {
-                alert("We got a barcode\n" +
-                      "Result: " + result.text + "\n" +
-                      "Format: " + result.format);
-            }, function(error) {
-                alert("Scanning failed: " + error);
-            });
-    }
-
-    function encode(type, data) {
-        window.plugins.barcodeScanner.encode(type, data, function(result) {
-                alert("encode success: " + result);
-            }, function(error) {
-                alert("encoding failed: " + error);
-            });
-    }
-
-  </script>
-  </head>
-  <body onload="init();" id="stage" class="theme">
-    <h1>Welcome to PhoneGap!</h1>
-    <h2>this file is located at assets/index.html</h2>
-    <div id="info">
-      <h4>Platform: <span id="platform">&nbsp;</span></h4>
-      <h4>Version: <span id="version">&nbsp;</span></h4>
-      <h4>UUID:   <span id="uuid">&nbsp;</span></h4>
-    </div>
-    <a href="#" class="btn large"
-       onclick="scan();">Scan</a>
-    <a href="#" class="btn large"
-       onclick="encode(BarcodeScanner.Encode.TEXT_TYPE, 'http://www.phonegap.com');">Encode Text</a>
-    <a href="#" class="btn large"
-       onclick="encode(BarcodeScanner.Encode.EMAIL_TYPE, 'someone@somewhere.com');">Encode Email</a>
-    <a href="#" class="btn large"
-       onclick="encode(BarcodeScanner.Encode.PHONE_TYPE, '1800551212');">Encode Phone</a>
-  </body>
-</html>
--->

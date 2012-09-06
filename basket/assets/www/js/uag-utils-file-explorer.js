@@ -5,13 +5,18 @@
 /**
  * @fileOverview uAg Utils File Explorer
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-04
+ * @version 2012-09-06
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declaration
     var uAgUtils = parent.utils = parent.utils || {};
+
+    // is there a better way to achieve this file exploring capability?
+    // ideally should be a subclass of controller?
+    // rename vars with type suffixes (arr, str, etc.) to make them more explicit
+    // TODO
 
     /**
      * @class
@@ -163,7 +168,7 @@ var uag = (function(parent, $, window, document, undefined) {
             if (!isFileChecked) {
                 // use jQuery Mobile 1.2.0 popup
                 // TODO
-                console.warning('Warning: file is not checked');
+                console.warn('Warning: file is not checked');
             }
         }
 

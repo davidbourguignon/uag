@@ -6,7 +6,7 @@
 /**
  * @fileOverview uAg Basket Model
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-05
+ * @version 2012-09-06
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -16,9 +16,9 @@ var uag = (function(parent, $, window, document, undefined) {
 
     /**
      * @const
-     * @exports uAgBasket.KEY_PREFIX as uag.basket.KEY_PREFIX
+     * @exports uAgBasket.PREFIX_STR as uag.basket.PREFIX_STR
      */
-    uAgBasket.KEY_PREFIX = 'uag-basket-'; // prefix to avoid storage key collision with other apps
+    uAgBasket.PREFIX_STR = 'uag-basket-'; // prefix to avoid storage key collision with other apps
 
     /**
      * @class
@@ -51,7 +51,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @returns {string} Key string.
      */
     uAgBasket.Basket.prototype.getKey = function() {
-        return uAgBasket.KEY_PREFIX + this.timestamp;
+        return uAgBasket.PREFIX_STR + this.timestamp;
     };
 
     /**
@@ -60,7 +60,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @returns {string} Key string.
      */
     uAgBasket.Basket.getKeyFromDate = function(date) {
-        return uAgBasket.KEY_PREFIX + date.toISOString();
+        return uAgBasket.PREFIX_STR + date.toISOString();
     };
 
     /**
@@ -69,7 +69,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @returns {string} Date object.
      */
     uAgBasket.Basket.getDateFromKey = function(keyStr) {
-        var isoDateStr = keyStr.slice(uAgBasket.KEY_PREFIX.length); // removing initial prefix
+        var isoDateStr = keyStr.slice(uAgBasket.PREFIX_STR.length); // removing initial prefix
         return new Date(isoDateStr);
     };
 
@@ -81,8 +81,8 @@ var uag = (function(parent, $, window, document, undefined) {
     uAgBasket.Basket.decorate = function(obj) {
         // Could do that with a loop over Basket prototype properties?
         // TODO
-        obj.toString = Basket.prototype.toString;
-        obj.getKey = Basket.prototype.getKey;
+        obj.toString = uAgBasket.Basket.prototype.toString;
+        obj.getKey = uAgBasket.Basket.prototype.getKey;
         return obj;
     };
 
@@ -106,10 +106,9 @@ var uag = (function(parent, $, window, document, undefined) {
         this.isIn = false;
         this.tag = '';
         this.images = []; // TODO storing data or filenames? check if what is the right idea
-
     };
 
-    /** @description Using JSON stringification with pretty print (4 white spaces per indentation); */
+    /** @description Using JSON stringification with pretty print (4 white spaces per indentation). */
     uAgBasket.Product.prototype.toString = function() {
         // TODO TEST
         var indentation = '    '; // 4 white spaces
@@ -127,7 +126,7 @@ var uag = (function(parent, $, window, document, undefined) {
         /** @ignore */
         function init() {
             // const vars
-            var JSON_SCHEMA = {
+            var JSON_SCHEMA_OBJ = {
                 "$schema": "http://json-schema.org/draft-03/schema",
                 "description": "JSON schema describing basket data for the uAg Basket app",
                 "type": "object",
@@ -198,10 +197,10 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 }
             }
-            var JSV_ENVIRONMENT = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
+            var JSV_ENVIRONMENT_OBJ = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
 
             // other vars
-            var storedBasketKeys = [];
+            var storedBasketKeysArr = [];
             var currentBasketObj = null;
 
             /**
@@ -210,15 +209,16 @@ var uag = (function(parent, $, window, document, undefined) {
              */
             return {
                 /**
-                 * @description TODO
+                 * @description Get a sorted list of stored baskets timestamps (older first).
+                 * @returns {array} Array of Date objects.
                  */
                 getStoredBasketDates: function() {
                     // tidying up: time-consuming?
                     // TODO
-                    storedBasketKeys.sort(); // default: lexicographical sort (in dictionary order)
+                    storedBasketKeysArr.sort(); // default: lexicographical sort (in dictionary order)
                     var dates = [];
-                    for (var i = 0, len = storedBasketKeys.length; i < len; i++) {
-                        var keyStr = storedBasketKeys[i];
+                    for (var i = 0, len = storedBasketKeysArr.length; i < len; i++) {
+                        var keyStr = storedBasketKeysArr[i];
                         dates.push(uAgBasket.Basket.getDateFromKey(keyStr));
                     }
                     return dates;
@@ -229,9 +229,6 @@ var uag = (function(parent, $, window, document, undefined) {
                  * @returns {object} Current basket object representation (or null if it does not exist).
                  */
                 getCurrentBasket: function() {
-                    if (currentBasketObj === null) {
-                        console.info('Info: no current basket available');
-                    }
                     return currentBasketObj;
                 },
 
@@ -247,7 +244,7 @@ var uag = (function(parent, $, window, document, undefined) {
                         console.info('Info: input string is valid JSON');
 
                         // checking if resulting JSON object follows basket JSON schema
-                        var result = JSV_ENVIRONMENT.validate(obj, JSON_SCHEMA);
+                        var result = JSV_ENVIRONMENT_OBJ.validate(obj, JSON_SCHEMA_OBJ);
                         if (result.errors.length === 0) { // success JSON schema
                             console.info('Info: input string follows JSON schema for basket data');
                             currentBasketObj = uAgBasket.Basket.decorate(obj);
@@ -300,13 +297,13 @@ var uag = (function(parent, $, window, document, undefined) {
                         var key = currentBasketObj.getKey();
                         if (window.localStorage.getItem(key) === null) { // success unique key
                             // sanity check with JSON schema
-                            var result = JSV_ENVIRONMENT.validate(currentBasketObj, JSON_SCHEMA);
+                            var result = JSV_ENVIRONMENT_OBJ.validate(currentBasketObj, JSON_SCHEMA_OBJ);
                             if (result.errors.length === 0) { // success JSON schema
                                 // sanity check with JSON
                                 try {
                                     var basketStr = JSON.stringify(currentBasketObj);
                                     window.localStorage.setItem(key, basketStr);
-                                    storedBasketKeys.push(key);
+                                    storedBasketKeysArr.push(key);
                                     return true;
                                 } catch (e) { // failure JSON
                                     console.error(e.message);

@@ -82,7 +82,6 @@
 /home/db/src/uag/basket/assets/www/js/uag-basket-model.js \
 /home/db/src/uag/basket/assets/www/js/doc \
 /home/db/src/uag/basket/assets/www/js/uag-basket-controller.js \
-/home/db/src/uag/basket/assets/www/js/humane.js \
 /home/db/src/uag/basket/assets/www/js/jquery-1.7.1.min.js \
 /home/db/src/uag/basket/assets/www/js/jsv.js \
 /home/db/src/uag/basket/assets/www/js/uag-basket-view.js \

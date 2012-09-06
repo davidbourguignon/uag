@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-05
+ * @version 2012-09-06
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -31,7 +31,8 @@ var uag = (function(parent, $, window, document, undefined) {
                 /** @description TODO */
                 onNewBasketClick: function(event) {
                     var model =  uAgBasket.Model.getInstance();
-                    var isBasketSet = model.setCurrentBasketFromDate(new Date()); // current date
+                    var date = new Date(); // current date
+                    var isBasketSet = model.setCurrentBasketFromDate(date);
                     if (!isBasketSet) {
                         console.error('Error: current basket not set');
                     }
@@ -49,6 +50,19 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
+                onAddNewProductClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products.push(new uAgBasket.Product());
+                        var view = uAgBasket.View.getInstance();
+                        view.addNewProductToEditPage(basketObj);
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
                 onSaveBasketClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var isBasketStored = model.storeCurrentBasket();
@@ -61,13 +75,30 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
-                onCaptureTagClick: function(event) {
-                    // TODO
+                onRemoveLastProductClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products.pop();
+                        var view = uAgBasket.View.getInstance();
+                        view.removeLastProductFromEditPage();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
                 },
 
                 /** @description TODO */
-                onAddBasketItemClick: function(event) {
+                onCaptureTagClick: function(event) {
                     // TODO
+                    /*function scan() {
+                        window.plugins.barcodeScanner.scan(function(result) {
+                                alert("We got a barcode\n" +
+                                      "Result: " + result.text + "\n" +
+                                      "Format: " + result.format);
+                            }, function(error) {
+                                alert("Scanning failed: " + error);
+                            });
+                    }*/
                 },
 
                 /**
@@ -75,7 +106,8 @@ var uag = (function(parent, $, window, document, undefined) {
                  */
                 onBasketExplorerClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
-                    var isBasketSet = model.setCurrentBasketFromDate(new Date($(event.target).attr('id')));
+                    var date = new Date($(event.target).attr('id')); // TODO VC tightly coupled: is there a better way?
+                    var isBasketSet = model.setCurrentBasketFromDate(date);
                     if (!isBasketSet) {
                         console.error('Error: current basket not set');
                     }
