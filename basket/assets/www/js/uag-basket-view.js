@@ -55,7 +55,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 var $basketList = $('#open-basket-explorer-listview'); // TODO CONST VAR
                 var datesNbr = dates.length;
                 if (datesNbr === 0) {
-                    $title.text('No baskets in store!');
+                    $openTitle.text('No baskets in store!');
                 } else {
                     for (var i = 0; i < datesNbr; i++) {
                         var date = dates[i];
@@ -101,7 +101,6 @@ var uag = (function(parent, $, window, document, undefined) {
                             var productObj = basketObj.products[i];
                             var name = productObj.name;
                             var weight = productObj.weight;
-                            //appendNewProductToDiv(productObj, i);
                             $productList.append('<li><a id="product-' +
                                                 i + '" href="#product">' +
                                                 name + ', ' + weight +
@@ -123,44 +122,27 @@ var uag = (function(parent, $, window, document, undefined) {
             /** @ignore */
             function onProductPageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
+                $('#product-isIn').on('change', onProductIsInChange);
+                $('#product-name').on('change', onProductNameChange);
+                $('#product-producerName').on('change', onProductProducerNameChange);
+                $('#product-weight').on('change', onProductWeightChange);
+                $('#product-tag-btn').on('click', controller.onOpenScanTagClick);
+                $('#product-photos-btn').on('click', controller.onTakePhotosClick);
                 $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
-                // other buttons? tag & images ?
-                // TODO
             }
 
             /** @ignore */
             function onProductPageBeforeChange() {
-                // TODO
+                $('#product-isIn').val(false);
+                $('#product-name').val('');
+                $('#product-producerName').val('');
+                $('#product-weight').val(0);
             }
 
             /** @ignore */
             function onProductPageChange() {
                 // TODO
             }
-
-            /**
-             * @description TODO
-             */
-            /*function appendNewProductToDiv(productObj, indexNbr) {
-                var $productsDiv = $('#products-div'); // TODO CONST VAR
-                // product properties objects
-                var name = productObj.name;
-                var producerName = productObj.producerName;
-                var weight = productObj.weight;
-                var isIn = productObj.isIn;
-                // product id string
-                var id  = 'product-' + indexNbr + '-';
-
-                // could use Handlebars templates instead?
-                // TODO
-                var htmlStr =
-                    '<div id="' + id + 'div" data-role="collapsible">' +
-                        '<h4><span id="' + id + 'name-title">' + name + '</span>, ' +
-                        '<span id="' + id + 'weight-title">' + weight + 'kg</span></h4>' +
-                        '<p>The collapsible content</p>' + //TMP
-                    '</div>';
-                $productsDiv.append(htmlStr).trigger('create');
-            }*/
 
             /** @ignore */
             function pageDataToId(pageData) {

@@ -192,7 +192,7 @@ var uag = (function(parent, $, window, document, undefined) {
                                         "required": true,
                                         "properties": {
                                             "data" : {
-                                                "description": "image data as string",
+                                                "description": "image data as string???",
                                                 "type": "string",
                                                 "required": true
                                             }

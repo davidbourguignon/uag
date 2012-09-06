@@ -54,6 +54,7 @@ var uag = (function(parent, $, window, document, undefined) {
 
                 /** @description TODO */
                 onOpenBasketClick: function(event) {
+                    // useful?
                     // TODO
                 },
 
@@ -98,20 +99,51 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
-                onRemoveCurrentProductClick: function(event) {
-                    // View-Controller tightly coupled: is there a better way?
-                    // TODO
+                onProductIsInChange: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.products.splice(productListItemNbr, 1);
+                        basketObj.isIn = $(event.target).val();
                     } else {
                         console.error('Error: no current basket available');
                     }
                 },
 
                 /** @description TODO */
-                onCaptureTagClick: function(event) {
+                onProductNameChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.name = $(event.target).val();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onProductProducerNameChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.producerName = $(event.target).val();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onProductWeightChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.weight = $(event.target).val();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onOpenScanTagClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
@@ -123,6 +155,24 @@ var uag = (function(parent, $, window, document, undefined) {
                             window.plugins.barcodeScanner.scan(onTagScanSuccess,
                                                                onTagScanFailure);
                         }
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onTakePhotosClick: function(event) {
+                    // TODO
+                },
+
+                /** @description TODO */
+                onRemoveCurrentProductClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products.splice(productListItemNbr, 1);
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -150,7 +200,8 @@ var uag = (function(parent, $, window, document, undefined) {
                     // TODO
                     var len = uAgBasket.Product.PREFIX_STR.length;
                     var id = $(event.target).attr('id');
-                    productListItemNbr = productListItemId.slice(len);
+                    productListItemNbr = id.slice(len);
+                    //update view with product reference
                 },
 
                 /**
