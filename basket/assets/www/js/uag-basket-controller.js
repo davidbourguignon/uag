@@ -23,6 +23,20 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
+            var productListItemNbr = 0;
+
+            /** @ignore */
+            function onTagScanSuccess(result) {
+                alert("We got a barcode\n" +
+                      "Result: " + result.text + "\n" +
+                      "Format: " + result.format);//TMP
+            }
+
+            /** @ignore */
+            function onTagScanFailure(error) {
+                alert("Scanning failed: " + error);//TMP
+            }
+
             /**
              * @public
              * @lends uag.basket.Controller
@@ -55,8 +69,6 @@ var uag = (function(parent, $, window, document, undefined) {
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
                         basketObj.products.push(new uAgBasket.Product());
-                        var view = uAgBasket.View.getInstance();
-                        view.addNewProductToEditPage(basketObj);
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -80,8 +92,19 @@ var uag = (function(parent, $, window, document, undefined) {
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
                         basketObj.products.pop();
-                        var view = uAgBasket.View.getInstance();
-                        view.removeLastProductFromEditPage();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onRemoveCurrentProductClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products.splice(productListItemNbr, 1);
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -89,28 +112,45 @@ var uag = (function(parent, $, window, document, undefined) {
 
                 /** @description TODO */
                 onCaptureTagClick: function(event) {
-                    // TODO
-                    /*function scan() {
-                        window.plugins.barcodeScanner.scan(function(result) {
-                                alert("We got a barcode\n" +
-                                      "Result: " + result.text + "\n" +
-                                      "Format: " + result.format);
-                            }, function(error) {
-                                alert("Scanning failed: " + error);
-                            });
-                    }*/
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        if (basketObj.tag !== '') {
+                            // tag is already there!
+                            // display tag as raw string in a text area (new page tag)
+                            // TODO
+                        } else {
+                            window.plugins.barcodeScanner.scan(onTagScanSuccess,
+                                                               onTagScanFailure);
+                        }
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
                 },
 
                 /**
                  * @description TODO
                  */
-                onBasketExplorerClick: function(event) {
+                onBasketListClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
                     var model = uAgBasket.Model.getInstance();
-                    var date = new Date($(event.target).attr('id')); // TODO VC tightly coupled: is there a better way?
+                    var date = new Date($(event.target).attr('id'));
                     var isBasketSet = model.setCurrentBasketFromDate(date);
                     if (!isBasketSet) {
                         console.error('Error: current basket not set');
                     }
+                },
+
+                /**
+                 * @description TODO
+                 */
+                onProductListClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
+                    var len = uAgBasket.Product.PREFIX_STR.length;
+                    var id = $(event.target).attr('id');
+                    productListItemNbr = productListItemId.slice(len);
                 },
 
                 /**

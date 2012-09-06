@@ -18,7 +18,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @const
      * @exports uAgBasket.PREFIX_STR as uag.basket.PREFIX_STR
      */
-    uAgBasket.PREFIX_STR = 'uag-basket-'; // prefix to avoid storage key collision with other apps
+    uAgBasket.PREFIX_STR = 'uag-basket-'; // useful to avoid storage key collision with other apps
 
     /**
      * @class
@@ -92,7 +92,7 @@ var uag = (function(parent, $, window, document, undefined) {
      * @description Product object constructor.
      * @property {string} name Product simple name or full description.
      * @property {string} producerName Product producer name.
-     * @property {number} approxWeight Product approximate weight in kilograms (in case of a single piece of vegetables, such as one salad, a best guess must be provided).
+     * @property {number} weight Product weight in kilograms (in case of a single piece of vegetables, such as one salad, a best guess must be provided).
      * @property {boolean} isIn Is the product already in the basket? (useful for a self-served distribution).
      * @property {string} tag Product info obtained from QR code scanning.
      * @property {array} images List of product images.
@@ -100,9 +100,9 @@ var uag = (function(parent, $, window, document, undefined) {
     uAgBasket.Product = function() {
         // validate constructor with Model JSON SCHEMA
         // TODO TEST
-        this.name = '';
-        this.producerName = '';
-        this.approxWeight = 0;
+        this.name = '?';
+        this.producerName = '?';
+        this.weight = 0;
         this.isIn = false;
         this.tag = '';
         this.images = []; // TODO storing data or filenames? check if what is the right idea
@@ -114,6 +114,9 @@ var uag = (function(parent, $, window, document, undefined) {
         var indentation = '    '; // 4 white spaces
         JSON.stringify(this, null, indentation);
     };
+
+    /** @const */
+    uAgBasket.Product.PREFIX_STR = 'product-'; // useful for building id string values in HTML elements
 
     /**
      * @class
@@ -136,7 +139,8 @@ var uag = (function(parent, $, window, document, undefined) {
                         "description": "date-time info in ISO 8601 format",
                         "type": "string",
                         "required": true,
-                        "format": "date-time"
+                        "format": "date-time",
+                        "minLength": 20
                     },
                     "products": {
                         "description": "list of products in the basket",
@@ -150,19 +154,21 @@ var uag = (function(parent, $, window, document, undefined) {
                                 "name": {
                                     "description": "product simple name or full description",
                                     "type": "string",
-                                    "required": true
+                                    "required": true,
+                                    "minLength": 1
                                 },
                                 "producerName": {
                                     "description": "product producer name",
                                     "type": "string",
-                                    "required": false
+                                    "required": false,
+                                    "minLength": 1
                                 },
-                                "approxWeight": {
-                                    "description": "product approximate weight in kilograms (in case of a single piece of vegetables, such as one salad, a best guess must be provided)",
+                                "weight": {
+                                    "description": "product weight in kilograms (in case of a single piece of vegetables, such as one salad, a best guess must be provided)",
                                     "type": "number",
                                     "required": true,
                                     "minimum": 0,
-                                    "maximum": 10,
+                                    "maximum": 100,
                                     "exclusiveMinimum": true
                                 },
                                 "isIn": {
@@ -173,7 +179,8 @@ var uag = (function(parent, $, window, document, undefined) {
                                 "tag": {
                                     "description": "product info obtained from QR code scanning",
                                     "type": "string",
-                                    "required": false
+                                    "required": false,
+                                    "minLength": 0
                                 },
                                 "photos": {
                                     "description": "list of product photos",
@@ -293,7 +300,6 @@ var uag = (function(parent, $, window, document, undefined) {
                 storeCurrentBasket: function() {
                     if (currentBasketObj !== null) {
                         // sanity check with key
-                        console.log('STORE CURRENT BASKET\n' + currentBasketObj.toString());////////////////////TMP
                         var key = currentBasketObj.getKey();
                         if (window.localStorage.getItem(key) === null) { // success unique key
                             // sanity check with JSON schema

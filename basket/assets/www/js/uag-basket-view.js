@@ -51,22 +51,23 @@ var uag = (function(parent, $, window, document, undefined) {
             function onOpenPageChange() {
                 var model = uAgBasket.Model.getInstance();
                 var dates = model.getStoredBasketDates();
-                var $title = $('#open-basket-explorer-title'); // TODO CONST VAR
-                var $list = $('#open-basket-explorer-listview'); // TODO CONST VAR
-                if (dates.length === 0) {
+                var $openTitle = $('#open-basket-explorer-title'); // TODO CONST VAR
+                var $basketList = $('#open-basket-explorer-listview'); // TODO CONST VAR
+                var datesNbr = dates.length;
+                if (datesNbr === 0) {
                     $title.text('No baskets in store!');
                 } else {
-                    for (var i = 0, len = dates.length; i < len; i++) {
+                    for (var i = 0; i < datesNbr; i++) {
                         var date = dates[i];
-                        $list.append('<li><a id="' +
-                                     date.toISOString() +
-                                     '" href="#edit">' +
-                                     date.toLocaleDateString() +
-                                     '</a></li>');
+                        $basketList.append('<li><a id="' +
+                                           date.toISOString() +
+                                           '" href="#edit">' +
+                                           date.toLocaleDateString() +
+                                           '</a></li>');
                     }
-                    $list.listview('refresh');
+                    $basketList.listview('refresh');
                     var controller = uAgBasket.Controller.getInstance();
-                    $list.find('a').on('click', controller.onBasketExplorerClick);
+                    $basketList.find('a').on('click', controller.onBasketListClick);
                 }
             }
 
@@ -80,19 +81,72 @@ var uag = (function(parent, $, window, document, undefined) {
 
             /** @ignore */
             function onEditPageBeforeChange() {
-                $('#basket-title').empty(); // TODO CONST VAR
-                $('#products-div').empty(); // TODO CONST VAR
+                $('#edit-basket-title').empty(); // TODO CONST VAR
+                $('#edit-basket-listview').empty(); // TODO CONST VAR
+            }
+
+            /** @ignore */
+            function onEditPageChange() {
+                var model = uAgBasket.Model.getInstance();
+                var basketObj = model.getCurrentBasket();
+                if (basketObj !== null) {
+                    var $editTitle = $('#edit-basket-title'); // TODO CONST VAR
+                    var $productList = $('#edit-basket-listview'); // TODO CONST VAR
+                    var productsNbr = basketObj.products.length;
+                    if (productsNbr === 0) {
+                        $editTitle.text('No products in basket!');
+                    } else {
+                        var basketWeight = 0;
+                        for (var i = 0; i < productsNbr; i++) {
+                            var productObj = basketObj.products[i];
+                            var name = productObj.name;
+                            var weight = productObj.weight;
+                            //appendNewProductToDiv(productObj, i);
+                            $productList.append('<li><a id="product-' +
+                                                i + '" href="#product">' +
+                                                name + ', ' + weight +
+                                                'kg' + '</a></li>');
+                            basketWeight += weight;
+                        }
+                        $editTitle.text(productsNbr + ' product' +
+                                        (productsNbr > 1 ? 's, ' : ', ') +
+                                        basketWeight + 'kg');
+                        $productList.listview('refresh');
+                        var controller = uAgBasket.Controller.getInstance();
+                        $productList.find('a').on('click', controller.onProductListClick);
+                    }
+                } else {
+                    console.error('Error: no current basket available');
+                }
+            }
+
+            /** @ignore */
+            function onProductPageInit(event) {
+                var controller = uAgBasket.Controller.getInstance();
+                $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
+                // other buttons? tag & images ?
+                // TODO
+            }
+
+            /** @ignore */
+            function onProductPageBeforeChange() {
+                // TODO
+            }
+
+            /** @ignore */
+            function onProductPageChange() {
+                // TODO
             }
 
             /**
              * @description TODO
              */
-            function appendNewProductToDiv(productObj, indexNbr) {
+            /*function appendNewProductToDiv(productObj, indexNbr) {
                 var $productsDiv = $('#products-div'); // TODO CONST VAR
                 // product properties objects
                 var name = productObj.name;
                 var producerName = productObj.producerName;
-                var approxWeight = productObj.approxWeight;
+                var weight = productObj.weight;
                 var isIn = productObj.isIn;
                 // product id string
                 var id  = 'product-' + indexNbr + '-';
@@ -102,82 +156,11 @@ var uag = (function(parent, $, window, document, undefined) {
                 var htmlStr =
                     '<div id="' + id + 'div" data-role="collapsible">' +
                         '<h4><span id="' + id + 'name-title">' + name + '</span>, ' +
-                        '<span id="' + id + 'approxWeight-title">' + approxWeight + 'kg</span></h4>' +
+                        '<span id="' + id + 'weight-title">' + weight + 'kg</span></h4>' +
                         '<p>The collapsible content</p>' + //TMP
                     '</div>';
-/*
-                <div id="product-6-div" data-role="collapsible"
-                     data-collapsed="false"
-                     data-theme="c">
-                    <h4 id="product-title">
-                        <span id="product-name-title"></span>,
-                        <span id="product-approx-weight-title"></span>
-                    </h4>
-//
-                    <div data-role="fieldcontain">
-                        <label for="product-is-in">Is in?</label>
-                        <select name="product-is-in"
-                                id="product-is-in"
-                                data-role="slider">
-                            <option value="off">No</option>
-                            <option value="on">Yes</option>
-                        </select>
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="product-name">Name</label>
-                        <input type="text"
-                               name="product-name"
-                               id="product-name"
-                               value="" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="product-producer-name">Producer</label>
-                        <input type="text"
-                               name="product-producer-name"
-                               id="product-producer-name"
-                               value="" />
-                    </div>
-                    <div data-role="fieldcontain">
-                        <label for="product-approx-weight">Approx. weight</label>
-                        <input type="range"
-                               name="product-approx-weight"
-                               id="product-approx-weight"
-                               value="0"
-                               min="0"
-                               max="10"
-                               step="0.1"
-                               data-highlight="true" />
-                    </div>
-                    <div data-role="controlgroup">
-                        <a id="edit-tag-btn" href="#" data-role="button">Tag</a>
-                        <a id="edit-img-btn" href="#" data-role="button">Photos</a>
-                    </div>
-//
-                </div>
-*/
                 $productsDiv.append(htmlStr).trigger('create');
-            }
-
-            /** @ignore */
-            function onEditPageChange() {
-                var model = uAgBasket.Model.getInstance();
-                var basketObj = model.getCurrentBasket();
-                if (basketObj !== null) {
-                    var len = basketObj.products.length;
-                    var basketApproxWeight = 0;
-                    for (var i = 0; i < len; i++) {
-                        var productObj = basketObj.products[i];
-                        basketApproxWeight += productObj.approxWeight;
-                        appendNewProductToDiv(productObj, i);
-                    }
-                    // TODO CONST VAR
-                    $('#basket-title').text(len + ' product' +
-                                            (len > 1 ? 's, ' : ', ') +
-                                            basketApproxWeight + 'kg');
-                } else {
-                    console.error('Error: no current basket available');
-                }
-            }
+            }*/
 
             /** @ignore */
             function pageDataToId(pageData) {
@@ -226,6 +209,9 @@ var uag = (function(parent, $, window, document, undefined) {
                         case 'edit':
                             onEditPageInit();
                             break;
+                        case 'product':
+                            onProductPageInit();
+                            break;
                         default:
                             console.error('Error: unknown page id');
                     }
@@ -249,6 +235,9 @@ var uag = (function(parent, $, window, document, undefined) {
                         case 'edit':
                             onEditPageBeforeChange();
                             break;
+                        case 'product':
+                            onProductPageBeforeChange();
+                            break;
                         default:
                             console.error('Error: unknown page id');
                     }
@@ -271,6 +260,9 @@ var uag = (function(parent, $, window, document, undefined) {
                             break;
                         case 'edit':
                             onEditPageChange();
+                            break;
+                        case 'product':
+                            onProductPageChange();
                             break;
                         default:
                             console.error('Error: unknown page id');
@@ -301,23 +293,9 @@ var uag = (function(parent, $, window, document, undefined) {
                  * @description TODO
                  */
                 switchToEditPage: function() {
-                    $.mobile.changePage($('#edit'), {transition:'fade'}); // TODO CONST VAR
-                },
-
-                /**
-                 * @description Add a basket product entry on the edit page.
-                 * @param {object} basketObj Basket object considered.
-                 */
-                addNewProductToEditPage: function(basketObj) {
-                    var lastProductNbr = basketObj.products.length - 1;
-                    var lastProductObj = basketObj.products[lastProductNbr];
-                    appendNewProductToDiv(lastProductObj, lastProductNbr);
-                },
-
-                /** @description TODO */
-                removeLastProductFromEditPage: function() {
-                    var $productsDiv = $('#products-div'); // TODO CONST VAR
-                    $productsDiv.children().filter(':last').remove();
+                    // check transition quality. try fade, pop, etc. if necessary
+                    // TODO
+                    $.mobile.changePage($('#edit'), {transition:'none'}); // TODO CONST VAR
                 },
             }; // return
         } // private function init()

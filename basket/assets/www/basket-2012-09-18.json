@@ -3,32 +3,32 @@
     "products": [
         {
             "name": "sand carrots",
-            "approxWeight": 0.8,
+            "weight": 0.8,
             "isIn": true
         },
         {
             "name": "white cabbage",
-            "approxWeight": 1,
+            "weight": 1,
             "isIn": false
         },
         {
             "name": "queen of reinette apples",
-            "approxWeight": 1.5,
+            "weight": 1.5,
             "isIn": true
         },
         {
             "name": "charlotte potatoes",
-            "approxWeight": 1.2,
+            "weight": 1.2,
             "isIn": true
         },
         {
             "name": "frisee salad",
-            "approxWeight": 0.3,
+            "weight": 0.3,
             "isIn": false
         },
         {
             "name": "pink turnips",
-            "approxWeight": 1.7,
+            "weight": 1.7,
             "isIn": true
         }
     ]

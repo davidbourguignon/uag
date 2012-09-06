@@ -112,26 +112,95 @@
             <h1>Edit basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <h3 id="basket-title"></h3>
-            <div id="products-div"
-                 data-role="collapsible-set"
-                 data-iconpos="right"
-                 data-theme="c"
-                 data-content-theme="d">
-                <!-- products content -->
-            </div>
+            <h3 id="edit-basket-title"></h3>
+            <ul id="edit-basket-listview" data-role="listview">
+                <!-- basket content -->
+            </ul>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
                     <li><a id ="edit-add-btn"
-                           href="#"
+                           href="#edit"
                            data-role="button">Add</a></li>
                     <li><a id ="edit-save-btn"
                            href="#home"
                            data-role="button">Save</a></li>
                     <li><a id ="edit-remove-btn"
-                           href="#"
+                           href="#edit"
+                           data-role="button">Remove</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <div id="product" data-role="page">
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               class="ui-btn-left">Cancel</a>
+            <h1>Edit product</h1>
+        </div><!-- /header -->
+        <div data-role="content" data-theme="c">
+<!--
+            <h4 id="product-title">
+                <span id="product-name-title"></span>,
+                <span id="product-weight-title"></span>
+            </h4>
+-->
+            <div data-role="fieldcontain">
+<!--
+                <label for="product-is-in">In?</label>
+-->
+                <select id="product-isIn"
+                        name="product-isIn"
+                        data-role="slider"
+                        data-mini="true">
+                    <option value="false">Out</option>
+                    <option value="true">In</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="product-name">Product name</label>
+                <input id="product-name"
+                       type="text"
+                       name="product-name"
+                       value="?"
+                       data-mini="true" />
+            </div>
+            <div data-role="fieldcontain">
+                <label for="product-producerName">Producer name</label>
+                <input id="product-producerName"
+                       type="text"
+                       name="product-producerName"
+                       value="?"
+                       data-mini="true" />
+            </div>
+            <div data-role="fieldcontain">
+                <!-- TODO set maximum weight 0 < w < 100 in options. Here 5. -->
+                <label for="product-weight">Product weight</label>
+                <input id="product-weight"
+                       type="range"
+                       name="product-weight"
+                       value="0"
+                       min="0"
+                       max="5"
+                       step="0.1"
+                       data-highlight="true"
+                       data-mini="true" />
+            </div>
+            <div data-role="controlgroup" data-mini="true">
+                <a id="product-tag-btn" href="#" data-role="button">Tag</a>
+                <a id="product-img-btn" href="#" data-role="button">Photos</a>
+            </div>
+        </div><!-- /content -->
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a id ="product-remove-btn"
+                           href="#edit"
                            data-role="button">Remove</a></li>
                 </ul>
             </div><!-- /navbar -->
