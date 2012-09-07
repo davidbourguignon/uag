@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Basket View
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-06
+ * @version 2012-09-07
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -30,7 +30,6 @@ var uag = (function(parent, $, window, document, undefined) {
             function onHomePageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
                 $('#home-new-btn').on('click', controller.onNewBasketClick);
-                $('#home-open-btn').on('click', controller.onOpenBasketClick);
                 $('#home-import-btn').on('click', controller.onImportBasketClick);
             }
 
@@ -93,18 +92,15 @@ var uag = (function(parent, $, window, document, undefined) {
                     var $editTitle = $('#edit-basket-title'); // TODO CONST VAR
                     var $productList = $('#edit-basket-listview'); // TODO CONST VAR
                     var productsLen = basketObj.products.length;
-                    console.log('PROD LEN ' + productsLen);///////////////////TMP
                     if (productsLen === 0) {
                         $editTitle.text('No products in basket!');
                     } else {
                         var basketWeight = 0;
-                        console.log('TYPEOF BASK WEIG ' + typeof basketWeight);///////////TMP
                         for (var i = 0; i < productsLen; i++) {
                             var productObj = basketObj.products[i];
                             var isIn = productObj.isIn;
                             var name = productObj.name;
-                            var weight = + productObj.weight; // + to avoid problems with string values
-                            console.log('TYPEOF WEIG ' + typeof weight);///////////TMP
+                            var weight = productObj.weight;
                             var id = uAgBasket.Product.PREFIX_STR + i;
                             $productList.append('<li' +
                                                 (isIn ? ' data-theme="b"' : '') +
@@ -113,9 +109,7 @@ var uag = (function(parent, $, window, document, undefined) {
                                                 name + ', ' + weight +
                                                 'kg</a></li>');
                             basketWeight += weight;
-                            console.log('PROD #' + i + ' has WEIGHT = ' + weight);////////////TMP
                         }
-                        console.log('BASK WEIGHT = ' + basketWeight);////////////TMP
                         $editTitle.text(productsLen + ' product' +
                                         (productsLen > 1 ? 's, ' : ', ') +
                                         basketWeight + 'kg');
@@ -137,16 +131,15 @@ var uag = (function(parent, $, window, document, undefined) {
                 $('#product-weight').on('change', controller.onProductWeightChange);
                 $('#product-tag-btn').on('click', controller.onOpenScanTagClick);
                 $('#product-photos-btn').on('click', controller.onTakePhotosClick);
-                //$('#product-update-btn').on('click', controller.onUpdateCurrentProductClick);
                 $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
             }
 
             /** @ignore */
             function onProductPageBeforeChange() {
-                $('#product-isIn').val(false);  // TODO CONST VAR
-                $('#product-name').val('');  // TODO CONST VAR
-                $('#product-producerName').val('');  // TODO CONST VAR
-                $('#product-weight').val(0);  // TODO CONST VAR
+                $('#product-isIn').val(false); // TODO CONST VAR
+                $('#product-name').val(''); // TODO CONST VAR
+                $('#product-producerName').val(''); // TODO CONST VAR
+                $('#product-weight').val(0); // TODO CONST VAR
             }
 
             /** @ignore */
@@ -158,12 +151,60 @@ var uag = (function(parent, $, window, document, undefined) {
                     $('#product-isIn').val(productObj.isIn.toString());
                     $('#product-name').val(productObj.name);
                     $('#product-producerName').val(productObj.producerName);
-                    $('#product-weight').val(+ productObj.weight); // + to avoid problems with string values
+                    $('#product-weight').val(productObj.weight);
                     // refresh widgets
                     $('#product-isIn').slider('refresh');
                     $('#product-weight').slider('refresh');
                 } else {
                     console.error('Error: no current product available');
+                }
+            }
+
+            /** @ignore */
+            function onTagPageBeforeChange() {
+                $('#tag-div').empty(); // TODO CONST VAR
+            }
+
+            /** @ignore */
+            function onTagPageChange() {
+                var model = uAgBasket.Model.getInstance();
+                var productObj = model.getCurrentProduct();
+                if (productObj !== null &&
+                    productObj.tag !== null &&
+                    productObj.tag.txt !== null) { // TODO useful? check
+                    var $tagDiv = $('#tag-div');
+                    var text = productObj.tag.text;
+                    if ($.mobile.path.isAbsoluteUrl(text)) {
+                        // display URL
+                        $tagDiv.append('<h3>URL</h3>');
+                        $tagDiv.append('<p><a href="' + text +
+                                       '" data-rel="external">' + text +
+                                       '</a></p>');
+                    } else if (uAgUtils.isRFC822ValidEmail(text)) {
+                        //display email address
+                        // TODO TEST
+                        $tagDiv.append('<h3>Email address</h3>');
+                        $tagDiv.append('<p><a href="mailto:' + text +
+                                       '?Subject=Your%20product%20barcode">' +
+                                       text + '</a></p>');
+                    } else if (uAgUtils.isValidPhoneNumber(text)) {
+                        //display email
+                        // TODO TEST
+                        $tagDiv.append('<h3>Phone number</h3>');
+                        $tagDiv.append('<p><a href="tel:' + text +
+                                       '">' + text + '</a></p>');
+                        /**
+                         * See http://tools.ietf.org/html/rfc5341 about the 'tel' Uniform Resource Identifier.
+                         * On desktop computers the non-standard <a href="callto: is used by Skype only.
+                         */
+                    } else {
+                        // display plain text
+                        // TODO TEST
+                        $tagDiv.append('<h3>Text</h3>');
+                        $tagDiv.append('<p>' + text + '</p>');
+                    }
+                } else {
+                    console.error('Error: no tag info available');
                 }
             }
 
@@ -217,6 +258,8 @@ var uag = (function(parent, $, window, document, undefined) {
                         case 'product':
                             onProductPageInit();
                             break;
+                        case 'tag':
+                            break;
                         default:
                             console.error('Error: unknown page id');
                     }
@@ -243,6 +286,9 @@ var uag = (function(parent, $, window, document, undefined) {
                         case 'product':
                             onProductPageBeforeChange();
                             break;
+                        case 'tag':
+                            onTagPageBeforeChange();
+                            break;
                         default:
                             console.error('Error: unknown page id');
                     }
@@ -268,6 +314,9 @@ var uag = (function(parent, $, window, document, undefined) {
                             break;
                         case 'product':
                             onProductPageChange();
+                            break;
+                        case 'tag':
+                            onTagPageChange();
                             break;
                         default:
                             console.error('Error: unknown page id');
@@ -301,6 +350,15 @@ var uag = (function(parent, $, window, document, undefined) {
                     // check transition quality. try fade, pop, etc. if necessary
                     // TODO
                     $.mobile.changePage($('#edit'), {transition:'none'}); // TODO CONST VAR
+                },
+
+                /**
+                 * @description TODO
+                 */
+                switchToTagPage: function() {
+                    // check transition quality. try fade, pop, etc. if necessary
+                    // TODO
+                    $.mobile.changePage($('#tag'), {transition:'none'}); // TODO CONST VAR
                 },
             }; // return
         } // private function init()

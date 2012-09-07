@@ -86,6 +86,7 @@
 /home/db/src/uag/basket/assets/www/js/jsv.js \
 /home/db/src/uag/basket/assets/www/js/uag-basket-view.js \
 /home/db/src/uag/basket/assets/www/js/cordova-2.0.0.js \
+/home/db/src/uag/basket/assets/www/js/uag-utils.js \
 /home/db/src/uag/basket/assets/www/js/json-schema-draft-03.js \
 /home/db/src/uag/basket/assets/www/js/uri.js \
 /home/db/src/uag/basket/assets/www/js/test/jasmine \

@@ -1,7 +1,7 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-09-06
+    Version: 2012-09-07
 -->
 <!DOCTYPE HTML>
 <html>
@@ -18,6 +18,7 @@
     <script type="text/javascript" charset="utf-8" src="js/jsv.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/json-schema-draft-03.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/uag-shims.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-utils.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/uag-utils-file-explorer.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/uag-basket-model.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/uag-basket-controller.js"></script>
@@ -144,16 +145,13 @@
             <h1>Edit product</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-<!--
+<!-- TODO add title
             <h4 id="product-title">
                 <span id="product-name-title"></span>,
                 <span id="product-weight-title"></span>
             </h4>
 -->
             <div data-role="fieldcontain">
-<!--
-                <label for="product-is-in">In?</label>
--->
                 <select id="product-isIn"
                         name="product-isIn"
                         data-role="slider"
@@ -191,7 +189,7 @@
                        data-highlight="true"
                        data-mini="true" />
             </div>
-            <div data-role="controlgroup" data-mini="true">
+            <div data-role="controlgroup">
                 <a id="product-tag-btn" href="#" data-role="button">Tag</a>
                 <a id="product-photos-btn" href="#" data-role="button">Photos</a>
             </div>
@@ -208,6 +206,24 @@
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <div id="tag" data-role="page">
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#product"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
+            <h1>Read tag</h1>
+        </div><!-- /header -->
+        <div data-role="content" data-theme="c">
+            <div id="tag-div" style="display: block;
+                                     margin: auto">
+                <!-- tag content -->
+            </div>
+        </div><!-- /content -->
     </div><!-- /page -->
 
     <div id="open" data-role="page">

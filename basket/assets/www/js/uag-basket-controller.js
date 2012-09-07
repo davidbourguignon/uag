@@ -5,13 +5,14 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-06
+ * @version 2012-09-07
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
-    // namespace declaration
+    // namespace declarations
     var uAgBasket = parent.basket = parent.basket || {};
+    var uAgUtils = parent.utils = parent.utils || {};
 
     /**
      * @class
@@ -27,14 +28,22 @@ var uag = (function(parent, $, window, document, undefined) {
 
             /** @ignore */
             function onTagScanSuccess(result) {
-                alert("We got a barcode\n" +
-                      "Result: " + result.text + "\n" +
-                      "Format: " + result.format);//TMP
+                console.info('Info: barcode scan successful');
+
+                // get barcode
+                var tag = new uAgUtils.Tag(result.text, result.format);
+                var model = uAgBasket.Model.getInstance();
+                var basketObj = model.getCurrentBasket();
+                basketObj.products[productNbr].tag = tag;
+
+                // display barcode
+                var view = uAgBasket.View.getInstance();
+                view.switchToTagPage();
             }
 
             /** @ignore */
             function onTagScanFailure(error) {
-                alert("Scanning failed: " + error);//TMP
+                console.error('Error: barcode scanning failed - ' + error);
             }
 
             /**
@@ -53,12 +62,6 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
-                onOpenBasketClick: function(event) {
-                    // useful?
-                    // TODO
-                },
-
-                /** @description TODO */
                 onImportBasketClick: function(event) {
                     var view = uAgBasket.View.getInstance();
                     view.switchToImportPage();
@@ -69,7 +72,8 @@ var uag = (function(parent, $, window, document, undefined) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        basketObj.products.push(new uAgBasket.Product());
+                        var productObj = new uAgBasket.Product();
+                        basketObj.products.push(productObj);
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -104,8 +108,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
                         basketObj.products[productNbr].isIn
-                            = $(event.target).val();
-                        console.log('CHANGE IS IN ' + basketObj.products[productNbr].isIn.toString());/////TMP
+                            = ($(event.target).val() === 'true'); // conversion of string value to boolean
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -118,7 +121,6 @@ var uag = (function(parent, $, window, document, undefined) {
                     if (basketObj !== null) {
                         basketObj.products[productNbr].name
                             = $(event.target).val();
-                        console.log('CHANGE NAME ' + basketObj.products[productNbr].name);/////TMP
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -131,7 +133,6 @@ var uag = (function(parent, $, window, document, undefined) {
                     if (basketObj !== null) {
                         basketObj.products[productNbr].producerName
                             = $(event.target).val();
-                        console.log('CHANGE PRODUCER ' + basketObj.products[productNbr].producerName);/////TMP
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -143,8 +144,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
                         basketObj.products[productNbr].weight
-                            = + $(event.target).val(); // + to avoid problems with string values
-                        console.log('CHANGE WEIGH ' + basketObj.products[productNbr].weight);/////TMP
+                            = (+ $(event.target).val()); // conversion of string value to number
                     } else {
                         console.error('Error: no current basket available');
                     }
@@ -155,13 +155,13 @@ var uag = (function(parent, $, window, document, undefined) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        if (basketObj.tag !== '') {
-                            // tag is already there!
-                            // display tag as raw string in a text area (new page tag)
-                            // TODO
-                        } else {
+                        if (basketObj.products[productNbr].tag === null) {
+                            console.info('Info: no product tag available, scanning barcode...');
                             window.plugins.barcodeScanner.scan(onTagScanSuccess,
                                                                onTagScanFailure);
+                        } else {
+                            var view = uAgBasket.View.getInstance();
+                            view.switchToTagPage();
                         }
                     } else {
                         console.error('Error: no current basket available');
@@ -172,12 +172,6 @@ var uag = (function(parent, $, window, document, undefined) {
                 onTakePhotosClick: function(event) {
                     // TODO
                 },
-
-                /** @description TODO */
-                /*onUpdateCurrentProductClick: function(event) {
-                    var view = uAgBasket.View.getInstance();
-                    view.switchToEditPage();
-                },*/
 
                 /** @description TODO */
                 onRemoveCurrentProductClick: function(event) {

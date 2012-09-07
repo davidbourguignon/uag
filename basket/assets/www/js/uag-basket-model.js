@@ -11,8 +11,9 @@
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
-    // namespace declaration
+    // namespace declarations
     var uAgBasket = parent.basket = parent.basket || {};
+    var uAgUtils = parent.utils = parent.utils || {};
 
     /**
      * @const
@@ -43,7 +44,6 @@ var uag = (function(parent, $, window, document, undefined) {
         // TODO TEST
         var indentation = '    '; // 4 white spaces
         return JSON.stringify(this, null, indentation);
-
     };
 
     /**
@@ -104,7 +104,7 @@ var uag = (function(parent, $, window, document, undefined) {
         this.producerName = '?';
         this.weight = 0;
         this.isIn = false;
-        this.tag = '';
+        this.tag = null;
         this.images = []; // TODO storing data or filenames? check if what is the right idea
     };
 
@@ -112,11 +112,30 @@ var uag = (function(parent, $, window, document, undefined) {
     uAgBasket.Product.prototype.toString = function() {
         // TODO TEST
         var indentation = '    '; // 4 white spaces
-        JSON.stringify(this, null, indentation);
+        return JSON.stringify(this, null, indentation);
     };
 
     /** @const */
     uAgBasket.Product.PREFIX_STR = 'product-'; // useful for building id string values in HTML elements
+
+    /**
+     * @class
+     * @exports uAgUtils.Tag as uag.utils.Tag
+     * @description Tag object constructor.
+     * @property {string} text Tag content, in general either plain text, email address, phone number, SMS content.
+     * @property {string} format Barcode types supported by <a href="http://github.com/phonegap/phonegap-plugins/tree/master/Android/BarcodeScanner">Barcode Scanner plugin for Cordova</a>.
+     */
+    uAgUtils.Tag = function(text, format) {
+        this.text = text || ''; // sanity assignement
+        this.format = format || ''; // sanity assignement
+    };
+
+    /** @description Using JSON stringification with pretty print (4 white spaces per indentation). */
+    uAgUtils.Tag.prototype.toString = function() {
+        // TODO TEST
+        var indentation = '    '; // 4 white spaces
+        return JSON.stringify(this, null, indentation);
+    };
 
     /**
      * @class
@@ -128,7 +147,10 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            // const vars
+            /**
+             * @const
+             * @description JSON Schema for basket object following IETF Draft 03 specification (and using "" instead of usual '', since we are using JSON format).
+             */
             var JSON_SCHEMA_OBJ = {
                 "$schema": "http://json-schema.org/draft-03/schema",
                 "description": "JSON schema describing basket data for the uAg Basket app",
@@ -169,7 +191,7 @@ var uag = (function(parent, $, window, document, undefined) {
                                     "required": true,
                                     "minimum": 0,
                                     "maximum": 100,
-                                    "exclusiveMinimum": true
+                                    "exclusiveMinimum": false
                                 },
                                 "isIn": {
                                     "description": "is the product already in the basket? (useful for a self-served distribution)",
@@ -177,10 +199,38 @@ var uag = (function(parent, $, window, document, undefined) {
                                     "required": true
                                 },
                                 "tag": {
-                                    "description": "product info obtained from QR code scanning",
-                                    "type": "string",
+                                    "description": "product info obtained from scanning a 1D or 2D barcode",
+                                    "type": "object",
                                     "required": false,
-                                    "minLength": 0
+                                    "properties" : {
+                                        "text": {
+                                            "description": "tag content, in general either plain text, email address, phone number, SMS content",
+                                            "type": "string",
+                                            "required": true,
+                                            "minLength": 0
+                                        },
+                                        "format": {
+                                            "description": "barcode types supported by Barcode Scanner plugin for Cordova, see http://github.com/phonegap/phonegap-plugins/tree/master/Android/BarcodeScanner for more",
+                                            "type": "string",
+                                            "required": true,
+                                            "enum": [
+                                                "QR_CODE",
+                                                "DATA_MATRIX",
+                                                "UPC_E",
+                                                "UPC_A",
+                                                "EAN_8",
+                                                "EAN_13",
+                                                "CODE_128",
+                                                "CODE_39",
+                                                "CODE_93",
+                                                "CODABAR",
+                                                "ITF",
+                                                "RSS14",
+                                                "PDF417",
+                                                "RSS_EXPANDED"
+                                            ]
+                                        }
+                                    }
                                 },
                                 "photos": {
                                     "description": "list of product photos",
@@ -204,10 +254,11 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 }
             }
+            /** @const */
             var JSV_ENVIRONMENT_OBJ = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
 
             // other vars
-            var storedBasketKeysArr = [];
+            var storedBasketKeysArr = []; // array of strings
             var currentBasketObj = null;
             var currentProductObj = null;
 
@@ -217,7 +268,7 @@ var uag = (function(parent, $, window, document, undefined) {
              */
             return {
                 /**
-                 * @description Get a sorted list of stored baskets timestamps (older first).
+                 * @description Get a sorted list of stored baskets dates (older first).
                  * @returns {array} Array of Date objects.
                  */
                 getStoredBasketDates: function() {
@@ -227,7 +278,8 @@ var uag = (function(parent, $, window, document, undefined) {
                     var dates = [];
                     for (var i = 0, len = storedBasketKeysArr.length; i < len; i++) {
                         var keyStr = storedBasketKeysArr[i];
-                        dates.push(uAgBasket.Basket.getDateFromKey(keyStr));
+                        var date = uAgBasket.Basket.getDateFromKey(keyStr);
+                        dates.push(date);
                     }
                     return dates;
                 },
@@ -264,6 +316,10 @@ var uag = (function(parent, $, window, document, undefined) {
                         if (result.errors.length === 0) { // success JSON schema
                             console.info('Info: input string follows JSON schema for basket data');
                             currentBasketObj = uAgBasket.Basket.decorate(obj);
+
+                            // sanity check with timestamp
+                            var date = new Date(currentBasketObj.timestamp);
+                            currentBasketObj.timestamp = date.toISOString(); // converting to full ISO8601 format (with ms)
                             return true;
                         } else { // failure JSON schema
                             var errorArr = result.errors;
@@ -287,16 +343,17 @@ var uag = (function(parent, $, window, document, undefined) {
                     var key = uAgBasket.Basket.getKeyFromDate(date);
                     var basketStr = window.localStorage.getItem(key);
                     if (basketStr !== null) {
-                        // converting basket string to basket object
-                        try { // sanity check
-                            var basketObj = JSON.parse(basketStr);
-                            currentBasketObj = basketObj;
+                        // sanity check with JSON parse
+                        try {
+                            var obj = JSON.parse(basketStr);
+                            currentBasketObj = uAgBasket.Basket.decorate(obj);
                             return true;
                         } catch (e) {
                             console.error(e.message);
                             return false;
                         }
                     } else {
+                        console.info('Info: creating new basket');
                         currentBasketObj = new uAgBasket.Basket(date);
                         return true;
                     }
@@ -324,36 +381,39 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description Store basket in local storage: key is the distribution date string, value is the file string.
+                 * @description Store basket in local storage.
                  * @returns {boolean} Success.
                  */
                 storeCurrentBasket: function() {
+                    // sanity check with current basket
                     if (currentBasketObj !== null) {
-                        // sanity check with key
-                        var key = currentBasketObj.getKey();
-                        if (window.localStorage.getItem(key) === null) { // success unique key
-                            // sanity check with JSON schema
-                            var result = JSV_ENVIRONMENT_OBJ.validate(currentBasketObj, JSON_SCHEMA_OBJ);
-                            if (result.errors.length === 0) { // success JSON schema
-                                // sanity check with JSON
-                                try {
-                                    var basketStr = JSON.stringify(currentBasketObj);
-                                    window.localStorage.setItem(key, basketStr);
+
+                        // sanity check with JSON schema
+                        var result = JSV_ENVIRONMENT_OBJ.validate(currentBasketObj, JSON_SCHEMA_OBJ);
+                        if (result.errors.length === 0) {
+
+                            // sanity check with JSON stringify
+                            try {
+                                var basketStr = JSON.stringify(currentBasketObj);
+
+                                // checking if key already exists in local storage
+                                var key = currentBasketObj.getKey();
+                                var value = window.localStorage.getItem(key);
+                                if (value === null) {
+                                    console.info('Info: adding new key-value pair to local storage');
                                     storedBasketKeysArr.push(key);
-                                    return true;
-                                } catch (e) { // failure JSON
-                                    console.error(e.message);
-                                    return false;
                                 }
-                            } else { // failure JSON schema
-                                var errorArr = result.errors;
-                                console.error('Error: file object does not follow JSON schema for basket data\n' +
-                                              'Error: > uri: ' + errorArr[0].uri + '\n' +
-                                              'Error: > message: ' + errorArr[0].message);
+                                window.localStorage.setItem(key, basketStr);
+                                return true;
+                            } catch (e) { // failure JSON
+                                console.error(e.message);
                                 return false;
                             }
-                        } else { // failure unique key
-                            console.error('Error: key already exists in localStorage');
+                        } else { // failure JSON schema
+                            var errorArr = result.errors;
+                            console.error('Error: file object does not follow JSON schema for basket data\n' +
+                                          'Error: > uri: ' + errorArr[0].uri + '\n' +
+                                          'Error: > message: ' + errorArr[0].message);
                             return false;
                         }
                     } else { // failure current basket
