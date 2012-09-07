@@ -115,6 +115,7 @@
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/_global_.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.basket.Controller.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src \
+/home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/uag.utils.Tag.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-utils-file-explorer.js.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-basket-controller.js.html \
 /home/db/src/uag/basket/assets/www/js/doc/jsdoc/symbols/src/uag-basket-model.js.html \

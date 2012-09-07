@@ -125,10 +125,10 @@ var uag = (function(parent, $, window, document, undefined) {
             /** @ignore */
             function onProductPageInit(event) {
                 var controller = uAgBasket.Controller.getInstance();
-                $('#product-isIn').on('change', controller.onProductIsInChange);
-                $('#product-name').on('change', controller.onProductNameChange);
-                $('#product-producerName').on('change', controller.onProductProducerNameChange);
-                $('#product-weight').on('change', controller.onProductWeightChange);
+                $('#product-isIn').on('change', controller.onProductIsInChange); // TODO CONST VAR
+                $('#product-name').on('change', controller.onProductNameChange); // TODO CONST VAR
+                $('#product-producerName').on('change', controller.onProductProducerNameChange); // TODO CONST VAR
+                $('#product-weight').on('change', controller.onProductWeightChange); // TODO CONST VAR
                 $('#product-tag-btn').on('click', controller.onOpenScanTagClick);
                 $('#product-photos-btn').on('click', controller.onTakePhotosClick);
                 $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
@@ -136,10 +136,11 @@ var uag = (function(parent, $, window, document, undefined) {
 
             /** @ignore */
             function onProductPageBeforeChange() {
-                $('#product-isIn').val(false); // TODO CONST VAR
-                $('#product-name').val(''); // TODO CONST VAR
-                $('#product-producerName').val(''); // TODO CONST VAR
-                $('#product-weight').val(0); // TODO CONST VAR
+                // reset values
+                $('#product-isIn').val('false');
+                $('#product-name').val('');
+                $('#product-producerName').val('');
+                $('#product-weight').val(0);
             }
 
             /** @ignore */

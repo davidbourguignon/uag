@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag.basket.Basket</title>
+		<title>JsDoc Reference - uag.utils.Tag</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -216,7 +216,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class uag.basket.Basket
+				Class uag.utils.Tag
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -233,7 +233,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Basket.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.utils.Tag.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -246,9 +246,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.basket.Basket.html#constructor">uag.basket.Basket</a></b>(date)
+								<b><a href="../symbols/uag.utils.Tag.html#constructor">uag.utils.Tag</a></b>(text, format)
 							</div>
-							<div class="description">Basket object constructor.</div>
+							<div class="description">Tag object constructor.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -259,7 +259,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class uag.basket.Basket.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class uag.utils.Tag.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -273,9 +273,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/uag.basket.Basket.html#products">products</a></b>
+								<b><a href="../symbols/uag.utils.Tag.html#format">format</a></b>
 								</div>
-								<div class="description">List of products in the basket.</div>
+								<div class="description">Barcode types supported by <a href="http://github.com/phonegap/phonegap-plugins/tree/master/Android/BarcodeScanner">Barcode Scanner plugin for Cordova</a>.</div>
 							</td>
 						</tr>
 					
@@ -283,9 +283,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/uag.basket.Basket.html#timestamp">timestamp</a></b>
+								<b><a href="../symbols/uag.utils.Tag.html#text">text</a></b>
 								</div>
-								<div class="description">Date-time info in ISO 8601 format.</div>
+								<div class="description">Tag content, in general either plain text, email address, phone number, SMS content.</div>
 							</td>
 						</tr>
 					
@@ -300,7 +300,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.Basket.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.utils.Tag.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -311,47 +311,11 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Basket.<b><a href="../symbols/uag.basket.Basket.html#.decorate">decorate</a></b>(obj)
-								</div>
-								<div class="description">Decorate a JSON data object following the basket JSON Schema with Basket prototype methods.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Basket.<b><a href="../symbols/uag.basket.Basket.html#.getDateFromKey">getDateFromKey</a></b>(keyStr)
-								</div>
-								<div class="description">Generate dates from storage keys.</div>
-							</td>
-						</tr>
-					
-						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/uag.basket.Basket.html#getKey">getKey</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/uag.utils.Tag.html#toString">toString</a></b>()
 								</div>
-								<div class="description">Get the storage key of a basket object.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.basket.Basket.<b><a href="../symbols/uag.basket.Basket.html#.getKeyFromDate">getKeyFromDate</a></b>(date)
-								</div>
-								<div class="description">Utility function to generate storage keys from dates.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/uag.basket.Basket.html#toString">toString</a></b>()
-								</div>
-								<div class="description">Using JSON stringify method with pretty print (4 white spaces per indentation).</div>
+								<div class="description">Using JSON stringification with pretty print (4 white spaces per indentation).</div>
 							</td>
 						</tr>
 					
@@ -372,11 +336,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag.basket.Basket</b>(date)
+						<b>uag.utils.Tag</b>(text, format)
 				</div>
 				
 				<div class="description">
-					Basket object constructor.
+					Tag object constructor.
 					
 				</div>
 				
@@ -388,10 +352,16 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{date}</span>  <b>date</b>
+								 <b>text</b>
 								
 							</dt>
-								<dd>Date object defining basket timestamp.</dd>
+								<dd></dd>
+						
+							<dt>
+								 <b>format</b>
+								
+							</dt>
+								<dd></dd>
 						
 						</dl>
 					
@@ -411,15 +381,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="products"> </a>
+					<a name="format"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{array}</span>
-					<b>products</b>
+					<span class="light">{string}</span>
+					<b>format</b>
 					
 					</div>
 					<div class="description">
-						List of products in the basket.
+						Barcode types supported by <a href="http://github.com/phonegap/phonegap-plugins/tree/master/Android/BarcodeScanner">Barcode Scanner plugin for Cordova</a>.
 						
 						
 					</div>
@@ -433,15 +403,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="timestamp"> </a>
+					<a name="text"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{string}</span>
-					<b>timestamp</b>
+					<b>text</b>
 					
 					</div>
 					<div class="description">
-						Date-time info in ISO 8601 format.
+						Tag content, in general either plain text, email address, phone number, SMS content.
 						
 						
 					</div>
@@ -463,176 +433,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".decorate"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{object}</span>
-					<span class="light">uag.basket.Basket.</span><b>decorate</b>(obj)
-					
-					</div>
-					<div class="description">
-						Decorate a JSON data object following the basket JSON Schema with Basket prototype methods.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{object}</span> <b>obj</b>
-									
-								</dt>
-								<dd>JSON data object.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{object}</span> Decorated JSON data object.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getDateFromKey"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{string}</span>
-					<span class="light">uag.basket.Basket.</span><b>getDateFromKey</b>(keyStr)
-					
-					</div>
-					<div class="description">
-						Generate dates from storage keys.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{string}</span> <b>keyStr</b>
-									
-								</dt>
-								<dd>Key string.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{string}</span> Date object.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getKey"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{string}</span>
-					<b>getKey</b>()
-					
-					</div>
-					<div class="description">
-						Get the storage key of a basket object.
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{string}</span> Key string.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getKeyFromDate"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{string}</span>
-					<span class="light">uag.basket.Basket.</span><b>getKeyFromDate</b>(date)
-					
-					</div>
-					<div class="description">
-						Utility function to generate storage keys from dates.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{date}</span> <b>date</b>
-									
-								</dt>
-								<dd>Date object.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{string}</span> Key string.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
 					<a name="toString"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					
 					<b>toString</b>()
 					
 					</div>
 					<div class="description">
-						Using JSON stringify method with pretty print (4 white spaces per indentation).
+						Using JSON stringification with pretty print (4 white spaces per indentation).
 						
 						
 					</div>
@@ -643,13 +452,6 @@ ul.inheritsList
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{string}</span> String representation of the basket object.</dd>
-							
-							</dl>
 						
 						
 						
@@ -668,7 +470,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 07 2012 17:24:44 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 07 2012 17:24:45 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

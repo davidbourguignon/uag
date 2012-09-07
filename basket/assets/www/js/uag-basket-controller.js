@@ -207,10 +207,9 @@ var uag = (function(parent, $, window, document, undefined) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
                     var productId = $(event.target).attr('id');
-                    var model = uAgBasket.Model.getInstance();
-                    // removing prefix
                     productNbr
                         = productId.slice(uAgBasket.Product.PREFIX_STR.length);
+                    var model = uAgBasket.Model.getInstance();
                     model.setCurrentProduct(productNbr);
                 },
 

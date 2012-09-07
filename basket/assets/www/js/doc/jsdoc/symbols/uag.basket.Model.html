@@ -205,6 +205,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/uag.utils.makeFileExplorer.html">uag.utils.makeFileExplorer</a></li>
 	
+	<li><a href="../symbols/uag.utils.Tag.html">uag.utils.Tag</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -282,6 +284,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getCurrentProduct">getCurrentProduct</a></b>()
+								</div>
+								<div class="description">Get current product object.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getInstance">getInstance</a></b>()
 								</div>
 								<div class="description">Get the Singleton instance if one exists or create one if it doesn't.</div>
@@ -293,7 +304,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getStoredBasketDates">getStoredBasketDates</a></b>()
 								</div>
-								<div class="description">TODO</div>
+								<div class="description">Get a sorted list of stored baskets dates (older first).</div>
 							</td>
 						</tr>
 					
@@ -302,7 +313,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.setCurrentBasketFromDate">setCurrentBasketFromDate</a></b>(date)
 								</div>
-								<div class="description">TODO</div>
+								<div class="description">Set current basket object using a Date object input, as unique timestamp.</div>
 							</td>
 						</tr>
 					
@@ -311,7 +322,16 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.setCurrentBasketFromStr">setCurrentBasketFromStr</a></b>(str)
 								</div>
-								<div class="description">TODO</div>
+								<div class="description">Set current basket object using a JSON string input.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.setCurrentProduct">setCurrentProduct</a></b>(nbr)
+								</div>
+								<div class="description">Set current product object using its index in the basket products array.</div>
 							</td>
 						</tr>
 					
@@ -320,7 +340,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.storeCurrentBasket">storeCurrentBasket</a></b>()
 								</div>
-								<div class="description">Store basket in local storage: key is the distribution date string, value is the file string.</div>
+								<div class="description">Store basket in local storage.</div>
 							</td>
 						</tr>
 					
@@ -404,6 +424,38 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name=".getCurrentProduct"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">uag.basket.Model.</span><b>getCurrentProduct</b>()
+					
+					</div>
+					<div class="description">
+						Get current product object.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{object}</span> Current product object representation (or null if it does not exist).</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name=".getInstance"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -439,12 +491,12 @@ ul.inheritsList
 					<a name=".getStoredBasketDates"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{array}</span>
 					<span class="light">uag.basket.Model.</span><b>getStoredBasketDates</b>()
 					
 					</div>
 					<div class="description">
-						TODO
+						Get a sorted list of stored baskets dates (older first).
 						
 						
 					</div>
@@ -455,6 +507,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{array}</span> Array of Date objects.</dd>
+							
+							</dl>
 						
 						
 						
@@ -469,7 +528,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						TODO
+						Set current basket object using a Date object input, as unique timestamp.
 						
 						
 					</div>
@@ -512,7 +571,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						TODO
+						Set current basket object using a JSON string input.
 						
 						
 					</div>
@@ -547,6 +606,49 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name=".setCurrentProduct"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{boolean}</span>
+					<span class="light">uag.basket.Model.</span><b>setCurrentProduct</b>(nbr)
+					
+					</div>
+					<div class="description">
+						Set current product object using its index in the basket products array.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{number}</span> <b>nbr</b>
+									
+								</dt>
+								<dd>Index in the basket products array.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name=".storeCurrentBasket"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -555,7 +657,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Store basket in local storage: key is the distribution date string, value is the file string.
+						Store basket in local storage.
 						
 						
 					</div>
@@ -591,7 +693,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Sep 05 2012 19:14:28 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 07 2012 17:24:44 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
