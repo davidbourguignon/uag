@@ -12,11 +12,11 @@
 var uag = (function (parent) {
 	"use strict";	
 		
-	/**
-	 * @name uag.util
-	 * @namespace uag.util
-	 */
-	parent.util = parent.util || {};
+	///**
+	// * @name uag.util
+	// * @namespace uag.util
+	// */
+	//parent.util = parent.util || {};
 	
 	/**
 	 * @name uag.field
@@ -31,48 +31,54 @@ var uag = (function (parent) {
 	parent.field.dataContext = parent.field.dataContext || {};
 	
 	// storage object declaration 
-	/**
-	 * @memberOf uag.util
-	 * @class Storage
-	 */
-	var Storage = function() {};
+	///**
+	// * @memberOf uag.util
+	// * @class Storage
+	// */
+	//var Storage = function() {};
 	
 	/** @description <b>Retrieve methods</b>, get data from local storage
-	 * @name uag.util.Storage.Retrieve
+	 * @name StorageRetrieve
 	 * @function
+	 * @private
 	 * @static
 	 * @param key the local storage key 
 	 * @returns {JSON} json object list 
 	 */
-	Storage.Retrieve = function(key) {
+	//Storage.Retrieve = function(key) {
+	var StorageRetrieve = function(key) {
 		// return json 
 		return JSON.parse(localStorage.getItem(key));	
 	};
 	
 	/** @description <b>Save method</b>, set data to the local storage 
-	 * @name uag.util.Storage.Save
+	 * @name StorageSave
 	 * @function
+	 * @private
 	 * @static
 	 * @param key the local storage key
 	 * @param json json data 
 	 */
-	Storage.Save =  function(key, json) {	
+	//Storage.Save =  function(key, json) {	
+	var StorageSave =  function(key, json) {	
 		// save list in local storage for key  
 		localStorage.setItem(key, JSON.stringify(json));
 	}; 
 	
 	/** @description <b>Delete method</b>, delete data from local storage 
-	 * @name uag.util.Storage.Delete
+	 * @name StorageDelete
 	 * @function
+	 * @private
 	 * @static
 	 * @param key the local storage key
 	 */
-	Storage.Delete = function(key) {
+	//Storage.Delete = function(key) {
+	var StorageDelete = function(key) {
 		// remove item for key from local storage  
 		localStorage.removeItem(key);
 	};
 	
-	parent.util.Storage = Storage;
+	//parent.util.Storage = Storage;
 
 
 	// producers object declaration 
@@ -100,7 +106,7 @@ var uag = (function (parent) {
 	 */
 	Producers.get = function() {
 		// get producer's list 
-		return Storage.Retrieve(Producers.getLocalStorageKey()) || [];
+		return StorageRetrieve(Producers.getLocalStorageKey()) || [];
 	};
 	
 	/** @description <b>findById method</b>, find current setup producer 
@@ -118,7 +124,7 @@ var uag = (function (parent) {
 			// filter producers 
 			for ( var int = 0; int < producers.length; int++) {
 				// if ids match, 
-				alert(worker.producerId + " - " + producers[int].id);
+				//alert(worker.producerId + " - " + producers[int].id);
 				if (worker.producerId === producers[int].id) {
 					// then return it
 					return producers[int];
@@ -299,7 +305,7 @@ var uag = (function (parent) {
 			// so else remove implicitly producer for id 
 		}
 		// save updated producers list  
-		Storage.Save(Producers.getLocalStorageKey(),updatedProducers);
+		StorageSave(Producers.getLocalStorageKey(),updatedProducers);
 	};
 	
 	/** @description <b>clear method</b>, clear all producers 
@@ -310,7 +316,7 @@ var uag = (function (parent) {
 	 */
 	Producers.clear = function() {
 		// delete producer key 
-		Storage.Delete(Producers.getLocalStorageKey());
+		StorageDelete(Producers.getLocalStorageKey());
 	};
 	
 	parent.field.dataContext.Producers = Producers;
@@ -355,7 +361,7 @@ var uag = (function (parent) {
 	 */
 	WorkerContainers.get = function() {
 		// get workerContainers
-		return Storage.Retrieve(WorkerContainers.getLocalStorageKey());
+		return StorageRetrieve(WorkerContainers.getLocalStorageKey());
 	};
 	
 	/** @description <b>getWorker method</b>, 
@@ -411,7 +417,7 @@ var uag = (function (parent) {
 			};
 		
 		// save new workers list 
-		Storage.Save(
+		StorageSave(
 				WorkerContainers.getLocalStorageKey(), 
 				WorkerContainers.getJSON(worker, []));
 		
@@ -426,7 +432,7 @@ var uag = (function (parent) {
 	 */
 	WorkerContainers.getContainers = function() {
 		// get worker's containers
-		var workerContainers = Storage.Retrieve(WorkerContainers.getLocalStorageKey());
+		var workerContainers = StorageRetrieve(WorkerContainers.getLocalStorageKey());
 		
 		var isAvailableContainers = 
 			(undefined !== workerContainers && null !== workerContainers &&
@@ -469,7 +475,7 @@ var uag = (function (parent) {
 		// add container
 		containers.push(container);
 		// save new containers list
-		Storage.Save(
+		StorageSave(
 				WorkerContainers.getLocalStorageKey(), 
 				WorkerContainers.getJSON(worker,containers));
 		
@@ -493,7 +499,7 @@ var uag = (function (parent) {
 		// get worker 
 		var worker = WorkerContainers.getWorker();			
 		// save worker's containers list
-		Storage.Save(
+		StorageSave(
 				WorkerContainers.getLocalStorageKey(), 
 				WorkerContainers.getJSON(worker,containers));
 	};
@@ -537,7 +543,7 @@ var uag = (function (parent) {
 			// so else remove implicitly container for id 
 		}
 		// save worker's containers list  
-		Storage.Save(
+		StorageSave(
 				WorkerContainers.getLocalStorageKey(),
 				WorkerContainers.getJSON(WorkerContainers.getWorker(), updatedContainers));
 	};
@@ -549,7 +555,7 @@ var uag = (function (parent) {
 	 */
 	WorkerContainers.removeContainers = function() {
 		// save worker's containers list  
-		Storage.Save(
+		StorageSave(
 				WorkerContainers.getLocalStorageKey(),
 				WorkerContainers.getJSON(WorkerContainers.getWorker(), []));
 	};
@@ -561,7 +567,7 @@ var uag = (function (parent) {
 	 */
 	WorkerContainers.clear = function() {
 		// delete worker's containers key 
-		Storage.Delete(WorkerContainers.getLocalStorageKey());
+		StorageDelete(WorkerContainers.getLocalStorageKey());
 	};
 	
 	parent.field.dataContext.WorkerContainers = WorkerContainers;
@@ -604,7 +610,7 @@ var uag = (function (parent) {
 			// add json producer data to json producers list 
 			producers.push(jsonProducerData);
 			// set json producers list to local storage   
-			Storage.Save(Producers.getLocalStorageKey(), producers);
+			StorageSave(Producers.getLocalStorageKey(), producers);
 			
 			// return producer's id
 			return jsonProducerData.id;

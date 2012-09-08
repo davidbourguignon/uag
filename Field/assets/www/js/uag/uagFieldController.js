@@ -4,146 +4,13 @@
  * */
 
 
-	// temp
-	// producer1s id
-	var _producerId1 = "producer_id_1";
-
-	// producer1 full definition string 
-	var _jsonProducer1Data = 
-		{  
-			"id":_producerId1,  
-			"name":"producerName1", 
-			"smartphoneId":"producerSmartphoneId1",  
-			"farmName":"producerFarmname1",  
-			"websiteUrl":"http://www.producer1Domaine.ext",   
-			"workersId":[],  
-			"fieldsId":  
-			[  
-				"field_id_1",  
-				"field_id_2",  
-				"field_id_3"  
-			],  
-			"fields":  
-			[  
-				{  
-					"id":"field_id_1",  
-					"name":"fieldName1",  
-					"description":"fieldDescription1",   
-					"producerId":"producer_id_1",  
-					"positionId":"position_id_1",   
-					"position":{"id":"position_id_1","latitude":1,"longitude":2,"altitude":4}, 
-					"productsId":  
-					[  
-						"product_id_1",  
-						"product_id_2",  
-						"product_id_3"  
-					]  
-				},   
-				{  
-					"id":"field_id_2",  
-					"name":"fieldName2",  
-					"description":"fieldDescription2",   
-					"producerId":"producer_id_1",  
-					"positionId":"position_id_2",    
-					"position":{"id":"position_id_2","latitude":2,"longitude":4,"altitude":8}, 
-					"productsId":  
-					[  
-						"product_id_2",  
-						"product_id_3"  
-					]  
-				},   
-				{  
-					"id":"field_id_3",  
-					"name":"fieldName3",  
-					"description":"fieldDescription3",   
-					"producerId":"producer_id_1",  
-					"positionId":"position_id_3",    
-					"position":{"id":"position_id_3","latitude":3,"longitude":6,"altitude":12}, 
-					"productsId":  
-					[  
-						"product_id_3",  
-						"product_id_4",  
-						"product_id_5",  
-						"product_id_6"  
-					]  
-				}   
-			],  
-			"productsId":  
-			[  
-				"product_id_1",  
-				"product_id_2",  
-				"product_id_3",  
-				"product_id_4",  
-				"product_id_5",  
-				"product_id_6"  
-			],  
-			"products":  
-			[  
-				{ 
-					"id":"product_id_1",  
-					"name":"productName1",  
-					"description":"productDescription1"   
-				},  
-				{ 
-					"id":"product_id_2",  
-					"name":"productName2",  
-					"description":"productDescription2"   
-				},  
-				{ 
-					"id":"product_id_3",  
-					"name":"productName3",  
-					"description":"productDescription3"   
-				},  
-				{ 
-					"id":"product_id_4",  
-					"name":"productName4",  
-					"description":"productDescription4"   
-				},  
-				{ 
-					"id":"product_id_5",  
-					"name":"productName5",  
-					"description":"productDescription5"   
-				},  
-				{ 
-					"id":"product_id_6",  
-					"name":"productName6",  
-					"description":"productDescription6"   
-				}  
-			],  
-			"qualities": 
-			[  
-				{  
-					"id":"quality_id_1",  
-					"name":"bad",  
-					"description":"bad quality"   
-				},  
-				{  
-					"id":"quality_id_2",  
-					"name":"poor",  
-					"description":"poor quality"   
-				},  
-				{  
-					"id":"quality_id_3",  
-					"name":"good",  
-					"description":"good quality"   
-				},  
-				{  
-					"id":"quality_id_4",  
-					"name":"superior",  
-					"description":"superior quality"   
-				},  
-				{  
-					"id":"quality_id_5",  
-					"name":"excellent",  
-					"description":"excellent quality"   
-				}  
-			]  
-		};
-
-
-
 uag.field = uag.field || {};
 
+
+/**
+ * @name uag.field.Controller
+ * @namespace uag.field.Controller
+ */
 uag.field.Controller = (function($, dataContext) {
 	"use strict";
 	
@@ -152,12 +19,14 @@ uag.field.Controller = (function($, dataContext) {
 	//var containersListPageContentSelector = "containers-list-page-content";
 	var containersListPageContentListSelector = "containers-list-page-content-list";
 	var containersListPageFooterResetSelector = "containers-list-page-footer-reset";
+	var containersListPageFooterExportSelector = "containers-list-page-footer-export";
 	var containersListPageFooterTextSelector = "containers-list-page-footer-text";
 	
 	// container page
 	var containerPageSelector = "container-page";
 	var containerPageSaveSelector = "container-page-save";
 	var containerPageDeleteSelector = "container-page-delete";
+	var containerPageEncodeSelector = "container-page-encode";
 	var containerPageFormIdSelector = "container-page-form-id";
 	var containerPageFormWeightSelector = "container-page-form-weight";
 	var containerPageFormQualitiesSelector = "container-page-form-qualities";
@@ -179,6 +48,11 @@ uag.field.Controller = (function($, dataContext) {
 	var containerIdUrlKey = "containerId";
 	var containerId = null;
 	
+	/** @description <b>init method</b>, bootstrap controller application  
+	 * @name uag.field.Controller.init
+	 * @function
+	 * @static 
+	 */
 	var init = function() {
 		
 		//dataContext.init();
@@ -194,17 +68,26 @@ uag.field.Controller = (function($, dataContext) {
 		// container page event 
 		$(document).delegate("#" + containerPageSaveSelector, tapEvent, onSaveContainerTapped);
 		$(document).delegate("#" + containerPageDeleteSelector, tapEvent, onDeleteContainerTapped);
+		$(document).delegate("#" + containerPageEncodeSelector, tapEvent, onEncodeContainerTapped);
 		$(document).delegate("#" + containerPageFormFieldsSelector, "change", onFieldChanged);
 		
 		// containers list page event 
 		$(document).delegate("#" + containersListPageFooterResetSelector, tapEvent, onResetContainersTapped);
+		$(document).delegate("#" + containersListPageFooterExportSelector, tapEvent, onExportContainersTapped);
 		
 	};
 
+	/** @description <b>onPageBeforeChange method</b>, callback event method linked to jQuery mobile pagebeforechange event
+	 * @name uag.field.Controller.onPageBeforeChange
+	 * @private
+	 * @function
+	 * @param event 
+	 * @param data 
+	 */
 	var onPageBeforeChange = function(event, data) {
 		//alert("pagebeforechange");
 		
-		// TODO : upgrade this code specific 
+		// TODO : refexion on this specific code 
 		
 		// We only want to handle changePage() calls where the caller is asking us to load a page by URL.
 		if ( typeof data.toPage === "string" ) {
@@ -241,6 +124,13 @@ uag.field.Controller = (function($, dataContext) {
 		}
 	};
 	
+	/** @description <b>onPageChange method</b>, callback event method linked to jQuery mobile onPageChange event   
+	 * @name uag.field.Controller.onPageChange
+	 * @private
+	 * @function
+	 * @param event 
+	 * @param data 
+	 */
 	var onPageChange = function(event, data) {
 		//alert("pagechange");
 		var toPageId = data.toPage.attr("id");
@@ -266,13 +156,23 @@ uag.field.Controller = (function($, dataContext) {
 				break;
 		}
 	};
-	
+		
+	/** @description <b>renderContainersListPage method</b>, rendering containers list page    
+	 * @name uag.field.Controller.renderContainersListPage
+	 * @private
+	 * @function
+	 */
 	var renderContainersListPage = function() {
 		//alert("renderContainersListPage");
 		renderContainersListPageContent();
 		renderContainersListPageFooter();
 	};
-	
+		
+	/** @description <b>renderContainersListPageFooter method</b>, rendering containers list page footer    
+	 * @name uag.field.Controller.renderContainersListPageFooter
+	 * @private
+	 * @function
+	 */
 	var renderContainersListPageFooter = function() {
 		//alert("renderContainersListTitle");
 		var worker = dataContext.WorkerContainers.getWorker();
@@ -287,6 +187,11 @@ uag.field.Controller = (function($, dataContext) {
 		$("#"+containersListPageFooterTextSelector).html(footerText);
 	};
 	
+	/** @description <b>renderContainersListPageContent method</b>, rendering containers list page content    
+	 * @name uag.field.Controller.renderContainersListPageContent
+	 * @private
+	 * @function
+	 */
 	var renderContainersListPageContent = function() {
 		//alert("renderContainersListContent");
 		var containers = dataContext.WorkerContainers.getContainers();
@@ -323,6 +228,11 @@ uag.field.Controller = (function($, dataContext) {
 		view.listview('refresh');
 	};
 	
+	/** @description <b>renderContainerPage method</b>, rendering container page     
+	 * @name uag.field.Controller.renderContainerPage
+	 * @private
+	 * @function
+	 */
 	var renderContainerPage = function() {
 		//alert("renderContainerPage");		
 		var qualityId = null;
@@ -350,24 +260,44 @@ uag.field.Controller = (function($, dataContext) {
 		renderProductsSelectList(fieldId, productId);		
 	};
 	
+	/** @description <b>renderQualitiesSelectList method</b>, rendering qualities select list      
+	 * @name uag.field.Controller.renderQualitiesSelectList
+	 * @private
+	 * @function
+	 */
 	var renderQualitiesSelectList = function(selectedValue) {
 		//alert("renderQualitiesSelectList");
 		var qualities = dataContext.Producers.getQualities();
 		return renderSelectListOptions(containerPageFormQualitiesSelector, qualities, selectedValue);
 	};
 	
+	/** @description <b>renderFieldsSelectList method</b>, rendering fields select list      
+	 * @name uag.field.Controller.renderFieldsSelectList
+	 * @private
+	 * @function
+	 */
 	var renderFieldsSelectList = function(selectedValue) {
 		//alert("renderFieldsSelectList");
 		var fields = dataContext.Producers.getFields();
 		return renderSelectListOptions(containerPageFormFieldsSelector, fields, selectedValue);
 	};
 	
+	/** @description <b>renderProductsSelectList method</b>, rendering products select list      
+	 * @name uag.field.Controller.renderProductsSelectList
+	 * @private
+	 * @function
+	 */
 	var renderProductsSelectList = function(fieldId, selectedValue) {
 		//alert("renderProductsSelectList");
 		var products = dataContext.Producers.getFieldProducts(fieldId);
 		return renderSelectListOptions(containerPageFormProductsSelector, products, selectedValue);
 	};
 	
+	/** @description <b>renderSetupPage method</b>, rendering setup page       
+	 * @name uag.field.Controller.renderSetupPage
+	 * @private
+	 * @function
+	 */
 	var renderSetupPage = function() {
 		//alert("renderSetupPage");
 		var worker = dataContext.WorkerContainers.getWorker();
@@ -380,12 +310,22 @@ uag.field.Controller = (function($, dataContext) {
 		}
 	};
 	
+	/** @description <b>renderProducersSelectList method</b>, rendering producers select list      
+	 * @name uag.field.Controller.renderProducersSelectList
+	 * @private
+	 * @function
+	 */
 	var renderProducersSelectList = function(selectedValue) {
 		//alert("renderProducersList");
 		var producers = dataContext.Producers.get();
 		return renderSelectListOptions(setupPageFormProducerSelector, producers, selectedValue);
 	};
 	
+	/** @description <b>renderSelectListOptions method</b>, generic rendering select list      
+	 * @name uag.field.Controller.renderSelectListOptions
+	 * @private
+	 * @function
+	 */
 	var renderSelectListOptions = function(selector, list, selectedValue) {
 		// 
 		var selectedItemId = "";
@@ -417,6 +357,11 @@ uag.field.Controller = (function($, dataContext) {
 		return selectedItemId;
 	};
 	
+	/** @description <b>onResetTapped method</b>, callback event method linked to application setup reset event   
+	 * @name uag.field.Controller.onResetTapped
+	 * @private
+	 * @function
+	 */
 	var onResetTapped = function() {
 		//alert("onResetTapped");
 		dataContext.Producers.clear();
@@ -424,12 +369,53 @@ uag.field.Controller = (function($, dataContext) {
 		renderSetupPage();
 	};
 	
+	/** @description <b>onImportProducersTapped method</b>, callback event method linked to application setup import producers event 
+	 * @name uag.field.Controller.onImportProducersTapped
+	 * @private
+	 * @function
+	 */
 	var onImportProducersTapped = function() {
 		//alert("onImportProducersTapped");
-		var producerId = uag.field.dataContext.Import.addProducer(_jsonProducer1Data);
-		renderProducersSelectList(producerId);
+		
+		// TODO : miss select import file logic 
+		
+		var selectedFile = "file:///mnt/sdcard/Download/Bluetooth/producerId1.json";
+		
+		window.resolveLocalFileSystemURI(
+				selectedFile, 
+				function(fileEntry) {
+					//console.log("sdcard - directory : " + directoryEntry.name);
+					//console.log("sdcard - directory : " + directoryEntry.fullPath);
+					fileEntry.file(
+							function(file) {
+								var reader = new FileReader();
+								reader.onloadend = function(evt) {
+							        console.log("read success");
+							        //console.log(evt.target.result);
+							        var producerJSON = JSON.parse(evt.target.result);
+							        console.log("id : " + producerJSON.id);
+							        console.log("name : " + producerJSON.name);
+									var producerId = dataContext.Import.addProducer(producerJSON);
+									renderProducersSelectList(producerId);
+							    };
+							    reader.readAsText(file);
+							}, 
+							function(evt) {
+								console.log("fileEntry.file - error : " + evt.target.error.code);
+							} 
+					);
+				}, 
+				function(error) {
+					console.log("resolveLocalFileSystemURI - error : " + error.code);
+				}
+		);
 	};
 	
+	/** @description <b>onSaveWorkerTapped method</b>, callback event method linked to application setup save worker event 
+	 * @name uag.field.Controller.onSaveWorkerTapped
+	 * @private
+	 * @function
+	 */
 	var onSaveWorkerTapped = function() {
 		//alert("onSaveWorkerTapped");
 		var workerNameTextInput = $("#" + setupPageFormNameSelector);
@@ -441,6 +427,11 @@ uag.field.Controller = (function($, dataContext) {
 		$.mobile.changePage($("#" + containersListPageSelector));
 	};
 	
+	/** @description <b>onSaveContainerTapped method</b>, callback event method linked to application container save event 
+	 * @name uag.field.Controller.ononSaveContainerTapped
+	 * @private
+	 * @function
+	 */
 	var onSaveContainerTapped = function() {
 		//alert("onSaveContainerTapped");
 		// get user input 
@@ -478,6 +469,11 @@ uag.field.Controller = (function($, dataContext) {
 		$.mobile.changePage($("#" + containersListPageSelector));
 	};
 	
+	/** @description <b>onDeleteContainerTapped method</b>, callback event method linked to application container delete event 
+	 * @name uag.field.Controller.onDeleteContainerTapped
+	 * @private
+	 * @function
+	 */
 	var onDeleteContainerTapped = function() {
 		//alert("onDeleteContainerTapped");
 		dataContext.WorkerContainers.removeContainer(containerId);
@@ -485,17 +481,82 @@ uag.field.Controller = (function($, dataContext) {
 		$.mobile.changePage($("#" + containersListPageSelector));
 	};
 	
+	/** @description <b>onEncodeContainerTapped method</b>, callback event method linked to application container encode event 
+	 * @name uag.field.Controller.onEncodeContainerTapped
+	 * @private
+	 * @function
+	 */
+	var onEncodeContainerTapped = function() {
+		//alert(onEncodeContainerTapped);
+		var dataToEncode = "http://www.mobiledevelopersolutions.com";
+		
+	    window.plugins.barcodeScanner.encode(
+	            BarcodeScanner.Encode.TEXT_TYPE,
+	            dataToEncode,
+	            function(success) {
+	                alert("Encode success: " + success);
+	            }, 
+	            function(fail) {
+	                alert("Encoding failed: " + fail);
+	            });
+	}
+	
+	/** @description <b>onFieldChanged method</b>, callback event method linked to application container change selected field event 
+	 * @name uag.field.Controller.onFieldChanged
+	 * @private
+	 * @function
+	 */
+	var onFieldChanged = function() {
+		//alert("onFieldChanged");
+		var fieldId = $("#" + containerPageFormFieldsSelector).val();
+		// 
+		renderProductsSelectList(fieldId);
+	};
+
+	/** @description <b>onResetContainersTapped method</b>, callback event method linked to application containers reset event 
+	 * @name uag.field.Controller.onResetContainersTapped
+	 * @private
+	 * @function
+	 */
 	var onResetContainersTapped = function() {
 		//alert("onResetContainersTapped");
 		dataContext.WorkerContainers.removeContainers();
 		renderContainersListPageContent();
 	};
 	
-	var onFieldChanged = function() {
-		//alert("onFieldChanged");
-		var fieldId = $("#" + containerPageFormFieldsSelector).val();
-		// 
-		renderProductsSelectList(fieldId);
+	var onExportContainersTapped = function() {
+		console.log("onExportContainersTapped");
+		
+		// set data
+		var data = JSON.stringify(dataContext.WorkerContainers.get());
+		
+		// create exported data file 
+		var fileName = "workerId1.json";
+		var fileDirectory = "file:///mnt/sdcard/Download/Bluetooth/";
+		var filePath = "file:///mnt/sdcard/Download/Bluetooth/workerId1.json";
+		
+		// phonegap file write 
+		window.resolveLocalFileSystemURI(fileDirectory, succes, fail); 
+
+		function succes(directoryEntry) {
+			console.log("succes");
+			directoryEntry.getFile(fileName, { create : true , exclusive : false }, gotFileEntry, fail);
+		};
+		
+		function gotFileEntry(fileEntry) {
+			console.log("gotFileEntry");
+			fileEntry.createWriter(gotFileWriter, fail);
+		};
+		
+		function gotFileWriter(writer) {
+			console.log("gotFileWriter");
+			writer.write(data);
+		};
+		
+		function fail(error) {
+			console.log("export container - error : " + error.code);
+		};		
+		
 	};
 	
 	return {
@@ -514,46 +575,14 @@ $(document).bind("mobileinit", function () {
 // cordova is ready 
 function onDeviceReady() {
 	"use strict";
-	alert('cordova loaded !');
 	
 	// wait for jQuery load : declare a callback for jQuery to call when its load
 	$(document).ready(function(e, data) {
 		// place to bootstrap application 
-		alert('jQuery loaded !');
 		uag.field.Controller.init();
-	});
+	});	
 	
-	/*
-	window.requestFileSystem(
-			LocalFileSystem.PERSISTENT, 
-			0, 
-			function(fileSystem) {
-				console.log("fileSystem : " + fileSystem.name);
-				console.log("fileSystem : " + fileSystem.root.name);
-				console.log("fileSystem : " + fileSystem.root.fullpath);
-				
-			}, 
-			function(error) {
-				console.log("error : " + error.code);				
-			});
-	*/
-	
-	// 
-	var encodeText = function() {
-	    window.plugins.barcodeScanner.encode(
-	            BarcodeScanner.Encode.TEXT_TYPE,
-	            "http://www.mobiledevelopersolutions.com",
-	            function(success) {
-	                alert("Encode success: " + success);
-	            }, function(fail) {
-	                alert("Encoding failed: " + fail);
-	            });
-	};
-	
-	encodeText();
-	
-
 };
 
 // on mobile phone  
-document.addEventListener("deviceready",onDeviceReady,false);
+document.addEventListener("deviceready", onDeviceReady, false);
