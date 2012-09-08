@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Utils File Explorer
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-31
+ * @version 2012-09-06
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -13,11 +13,16 @@ var uag = (function(parent, $, window, document, undefined) {
     // namespace declaration
     var uAgUtils = parent.utils = parent.utils || {};
 
+    // is there a better way to achieve this file exploring capability?
+    // ideally should be a subclass of controller?
+    // rename vars with type suffixes (arr, str, etc.) to make them more explicit
+    // TODO
+
     /**
      * @class
      * @returns File explorer object
      * @exports uAgUtils.makeFileExplorer as uag.utils.makeFileExplorer
-     * @description File explorer class constructor
+     * @description File explorer is a full-fledged component containing a small model, view and controller inside.
      */
     uAgUtils.makeFileExplorer = function() {
         /**
@@ -37,12 +42,10 @@ var uag = (function(parent, $, window, document, undefined) {
 
         // callbacks from caller
         var onFileCheck = null;
-        var onClose = null;
 
         // other vars
         var directoryEntries = [];
         var fileEntries = [];
-        var fileReadStr = '';
 
         // callback functions
         /** @ignore */
@@ -135,6 +138,8 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileDivClick(event) {
+            // put an effect with hover, then click down and click up (same for files)
+            // TODO
             var name = $(event.target).text();
             if (currentDir !== null) {
                 currentDir.getFile(name, {create:false},
@@ -147,6 +152,8 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onBackDivClick(event) {
+            // same idea: put an effect, this time a bit special
+            // TODO
             if (parentDir !== null) {
                 showDirectory(parentDir);
             }
@@ -154,19 +161,14 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function onFileReaderLoadEnd(event) {
-            // store in the local storage instead?
-            // use a combination of file name and date as key?
-            // no!  we should use basket info (distrib date) instead
-            // TODO
-            fileReadStr = event.target.result;
-            console.info('Info: > file content is');
-            console.info(fileReadStr);
-            if (onFileCheck(fileReadStr)) {
-                onClose();
-            } else {
-                // use also jQuery Mobile 1.2.0 popup?
+            var fileReadStr = event.target.result;
+            //console.info('Info: > file content is');
+            //console.info(fileReadStr);
+            var isFileChecked = onFileCheck(fileReadStr);
+            if (!isFileChecked) {
+                // use jQuery Mobile 1.2.0 popup
                 // TODO
-                throw new Error('Error: file format is not recognized');
+                console.warn('Warning: file is not checked');
             }
         }
 
@@ -212,14 +214,14 @@ var uag = (function(parent, $, window, document, undefined) {
          */
         return {
             /**
-             *  @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
-             *  @param {function} fileCheckCb Function callback invoked when checking the chosen file (param: string as fileStr; returns: boolean).
-             *  @param {function} closeCb Function callback invoked when closing the explorer view (param: object as event; returns: void).
+             *  @param {object} $gridDiv JQuery Mobile object refering to a div with a 3-row grid class.
+             *  @param {function} fileCheckCb Callback invoked when checking the chosen file. <em>Params: fileStr (string). Returns: boolean.</em>
              *  @throws {TypeError} If $gridDiv type is not div[class="ui-grid-b"].
              **/
-            run: function($gridDiv, fileCheckCb, closeCb) {
+            run: function($gridDiv, fileCheckCb) {
                 // how to make sure this is called after onDeviceReady has fired?
                 // TODO
+
                 // set params
                 if ($gridDiv instanceof jQuery &&
                     $gridDiv.is('div[class="ui-grid-b"]')) {
@@ -228,7 +230,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     throw new TypeError('Error: expecting explorer view objects');
                 }
                 onFileCheck = fileCheckCb;
-                onClose = closeCb;
+
                 // get root directory of the local file system
                 if (gridDiv !== null) {
                     if (rootDir !== null) {
