@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag.field.dataContext.WorkerContainers</title>
+		<title>JsDoc Reference - uag.basket.Model</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,19 +193,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/uag.html">uag</a></li>
 	
-	<li><a href="../symbols/uag.field.html">uag.field</a></li>
+	<li><a href="../symbols/uag.basket.Basket.html">uag.basket.Basket</a></li>
 	
-	<li><a href="../symbols/uag.field.Controller.html">uag.field.Controller</a></li>
+	<li><a href="../symbols/uag.basket.Controller.html">uag.basket.Controller</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.html">uag.field.dataContext</a></li>
+	<li><a href="../symbols/uag.basket.Model.html">uag.basket.Model</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.Export.html">uag.field.dataContext.Export</a></li>
+	<li><a href="../symbols/uag.basket.Product.html">uag.basket.Product</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.Import.html">uag.field.dataContext.Import</a></li>
+	<li><a href="../symbols/uag.basket.View.html">uag.basket.View</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.Producers.html">uag.field.dataContext.Producers</a></li>
+	<li><a href="../symbols/uag.utils.makeFileExplorer.html">uag.utils.makeFileExplorer</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.WorkerContainers.html">uag.field.dataContext.WorkerContainers</a></li>
+	<li><a href="../symbols/uag.utils.Tag.html">uag.utils.Tag</a></li>
 	
 </ul>
 <hr />
@@ -216,7 +216,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class uag.field.dataContext.WorkerContainers
+				Class uag.basket.Model
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -224,16 +224,16 @@ ul.inheritsList
 				
 				
 			
-				workerContainers
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/C__Users_Sebstien_git_Field_Field_assets_www_js_uag_uagFieldDataContext.js.html">uagFieldDataContext.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-model.js.html">uag-basket-model.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.field.dataContext.WorkerContainers.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Model.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -246,9 +246,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#constructor">uag.field.dataContext.WorkerContainers</a></b>()
+								<b><a href="../symbols/uag.basket.Model.html#constructor">uag.basket.Model</a></b>()
 							</div>
-							<div class="description"></div>
+							<div class="description">Model of the Basket app (singleton pattern)</div>
 						</td>
 					</tr>
 				</tbody>
@@ -262,7 +262,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.field.dataContext.WorkerContainers.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class uag.basket.Model.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -275,99 +275,72 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.addContainer">addContainer</a></b>()
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getCurrentBasket">getCurrentBasket</a></b>()
 								</div>
-								<div class="description"><b>addContainers method</b>,</div>
+								<div class="description">Get current basket object.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.clear">clear</a></b>()
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getCurrentProduct">getCurrentProduct</a></b>()
 								</div>
-								<div class="description"><b>clear method</b>,</div>
+								<div class="description">Get current product object.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.findContainer">findContainer</a></b>(containerId)
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getInstance">getInstance</a></b>()
 								</div>
-								<div class="description"><b>findContainerById method</b>,</div>
+								<div class="description">Get the Singleton instance if one exists or create one if it doesn't.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.get">get</a></b>()
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.getStoredBasketDates">getStoredBasketDates</a></b>()
 								</div>
-								<div class="description"><b>get method</b>,</div>
+								<div class="description">Get a sorted list of stored baskets dates (older first).</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.getContainers">getContainers</a></b>()
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.setCurrentBasketFromDate">setCurrentBasketFromDate</a></b>(date)
 								</div>
-								<div class="description"><b>getContainers method</b>,</div>
+								<div class="description">Set current basket object using a Date object input, as unique timestamp.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.getJSON">getJSON</a></b>(worker, containers)
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.setCurrentBasketFromStr">setCurrentBasketFromStr</a></b>(str)
 								</div>
-								<div class="description"><b>getJSON method</b>, from object to json</div>
+								<div class="description">Set current basket object using a JSON string input.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.getLocalStorageKey">getLocalStorageKey</a></b>()
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.setCurrentProduct">setCurrentProduct</a></b>(nbr)
 								</div>
-								<div class="description"><b>getLocalStorageKey method</b>,</div>
+								<div class="description">Set current product object using its index in the basket products array.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.getWorker">getWorker</a></b>()
+								<div class="fixedFont">uag.basket.Model.<b><a href="../symbols/uag.basket.Model.html#.storeCurrentBasket">storeCurrentBasket</a></b>()
 								</div>
-								<div class="description"><b>getWorker method</b>,</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.removeContainer">removeContainer</a></b>(containerId)
-								</div>
-								<div class="description"><b>removeContainers method</b>,</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.removeContainers">removeContainers</a></b>()
-								</div>
-								<div class="description"><b>remove method</b>,</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">uag.field.dataContext.WorkerContainers.<b><a href="../symbols/uag.field.dataContext.WorkerContainers.html#.setWorker">setWorker</a></b>(name, producerId)
-								</div>
-								<div class="description"><b>setWorker method</b>,</div>
+								<div class="description">Store basket in local storage.</div>
 							</td>
 						</tr>
 					
@@ -388,11 +361,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>uag.field.dataContext.WorkerContainers</b>()
+						<b>uag.basket.Model</b>()
 				</div>
 				
 				<div class="description">
-					
+					Model of the Basket app (singleton pattern)
 					
 				</div>
 				
@@ -419,15 +392,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".addContainer"> </a>
+					<a name=".getCurrentBasket"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{String}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>addContainer</b>()
+					<span class="light">{object}</span>
+					<span class="light">uag.basket.Model.</span><b>getCurrentBasket</b>()
 					
 					</div>
 					<div class="description">
-						<b>addContainers method</b>,
+						Get current basket object.
 						
 						
 					</div>
@@ -442,7 +415,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{String}</span> container's id</dd>
+								<dd><span class="light fixedFont">{object}</span> Current basket object representation (or null if it does not exist).</dd>
 							
 							</dl>
 						
@@ -451,15 +424,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".clear"> </a>
+					<a name=".getCurrentProduct"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>clear</b>()
+					<span class="light">{object}</span>
+					<span class="light">uag.basket.Model.</span><b>getCurrentProduct</b>()
 					
 					</div>
 					<div class="description">
-						<b>clear method</b>,
+						Get current product object.
 						
 						
 					</div>
@@ -470,21 +443,92 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{object}</span> Current product object representation (or null if it does not exist).</dd>
+							
+							</dl>
 						
 						
 						
 
 					<hr />
 				
-					<a name=".findContainer"> </a>
+					<a name=".getInstance"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{Object}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>findContainer</b>(containerId)
+					<span class="light">{object}</span>
+					<span class="light">uag.basket.Model.</span><b>getInstance</b>()
 					
 					</div>
 					<div class="description">
-						<b>findContainerById method</b>,
+						Get the Singleton instance if one exists or create one if it doesn't.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{object}</span> Model singleton instance.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getStoredBasketDates"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{array}</span>
+					<span class="light">uag.basket.Model.</span><b>getStoredBasketDates</b>()
+					
+					</div>
+					<div class="description">
+						Get a sorted list of stored baskets dates (older first).
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{array}</span> Array of Date objects.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setCurrentBasketFromDate"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{boolean}</span>
+					<span class="light">uag.basket.Model.</span><b>setCurrentBasketFromDate</b>(date)
+					
+					</div>
+					<div class="description">
+						Set current basket object using a Date object input, as unique timestamp.
 						
 						
 					</div>
@@ -496,10 +540,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>containerId</b>
+									<span class="light fixedFont">{date}</span> <b>date</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>Date object defining basket timestamp.</dd>
 							
 							</dl>
 						
@@ -510,7 +554,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Object}</span> container</dd>
+								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
 							
 							</dl>
 						
@@ -519,79 +563,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".get"> </a>
+					<a name=".setCurrentBasketFromStr"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{JSON}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>get</b>()
+					<span class="light">{boolean}</span>
+					<span class="light">uag.basket.Model.</span><b>setCurrentBasketFromStr</b>(str)
 					
 					</div>
 					<div class="description">
-						<b>get method</b>,
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{JSON}</span> </dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getContainers"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{Array}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>getContainers</b>()
-					
-					</div>
-					<div class="description">
-						<b>getContainers method</b>,
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Array}</span> containers list</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getJSON"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{JSON}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>getJSON</b>(worker, containers)
-					
-					</div>
-					<div class="description">
-						<b>getJSON method</b>, from object to json
+						Set current basket object using a JSON string input.
 						
 						
 					</div>
@@ -603,16 +583,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>worker</b>
+									<span class="light fixedFont">{string}</span> <b>str</b>
 									
 								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>containers</b>
-									
-								</dt>
-								<dd>updated containers list</dd>
+								<dd>String of data in JSON format following the basket JSON Schema.</dd>
 							
 							</dl>
 						
@@ -623,7 +597,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{JSON}</span> </dd>
+								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
 							
 							</dl>
 						
@@ -632,79 +606,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".getLocalStorageKey"> </a>
+					<a name=".setCurrentProduct"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{String}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>getLocalStorageKey</b>()
+					<span class="light">{boolean}</span>
+					<span class="light">uag.basket.Model.</span><b>setCurrentProduct</b>(nbr)
 					
 					</div>
 					<div class="description">
-						<b>getLocalStorageKey method</b>,
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> setup local storage key</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getWorker"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{Object}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>getWorker</b>()
-					
-					</div>
-					<div class="description">
-						<b>getWorker method</b>,
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Object}</span> </dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".removeContainer"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>removeContainer</b>(containerId)
-					
-					</div>
-					<div class="description">
-						<b>removeContainers method</b>,
+						Set current product object using its index in the basket products array.
 						
 						
 					</div>
@@ -716,77 +626,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>containerId</b>
+									<span class="light fixedFont">{number}</span> <b>nbr</b>
 									
 								</dt>
-								<dd>container's id</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".removeContainers"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>removeContainers</b>()
-					
-					</div>
-					<div class="description">
-						<b>remove method</b>,
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setWorker"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{String}</span>
-					<span class="light">uag.field.dataContext.WorkerContainers.</span><b>setWorker</b>(name, producerId)
-					
-					</div>
-					<div class="description">
-						<b>setWorker method</b>,
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>name</b>
-									
-								</dt>
-								<dd>worker's name</dd>
-							
-								<dt>
-									<b>producerId</b>
-									
-								</dt>
-								<dd>worker's selected producer id</dd>
+								<dd>Index in the basket products array.</dd>
 							
 							</dl>
 						
@@ -797,7 +640,39 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{String}</span> worker's id</dd>
+								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".storeCurrentBasket"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{boolean}</span>
+					<span class="light">uag.basket.Model.</span><b>storeCurrentBasket</b>()
+					
+					</div>
+					<div class="description">
+						Store basket in local storage.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> Success.</dd>
 							
 							</dl>
 						
@@ -818,7 +693,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Sep 08 2012 11:01:56 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 07 2012 17:24:44 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

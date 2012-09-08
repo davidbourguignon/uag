@@ -1,35 +1,35 @@
 {
-    "distribDate": "2012-09-18T17:30:00Z",
+    "timestamp": "2012-09-18T17:30:00Z",
     "products": [
         {
             "name": "sand carrots",
-            "approxWeight": 0.8,
-            "in": true
+            "weight": 0.8,
+            "isIn": true
         },
         {
             "name": "white cabbage",
-            "approxWeight": 1,
-            "in": false
+            "weight": 1,
+            "isIn": false
         },
         {
             "name": "queen of reinette apples",
-            "approxWeight": 1.5,
-            "in": true
+            "weight": 1.5,
+            "isIn": true
         },
         {
             "name": "charlotte potatoes",
-            "approxWeight": 1.2,
-            "in": true
+            "weight": 1.2,
+            "isIn": true
         },
         {
             "name": "frisee salad",
-            "approxWeight": 0.3,
-            "in": false
+            "weight": 0.3,
+            "isIn": false
         },
         {
             "name": "pink turnips",
-            "approxWeight": 1.7,
-            "in": true
+            "weight": 1.7,
+            "isIn": true
         }
     ]
 }

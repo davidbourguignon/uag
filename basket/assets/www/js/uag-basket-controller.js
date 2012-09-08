@@ -5,14 +5,14 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-08-31
+ * @version 2012-09-07
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declarations
-    var uAgUtils = parent.utils = parent.utils || {};
     var uAgBasket = parent.basket = parent.basket || {};
+    var uAgUtils = parent.utils = parent.utils || {};
 
     /**
      * @class
@@ -24,49 +24,26 @@ var uag = (function(parent, $, window, document, undefined) {
 
         /** @ignore */
         function init() {
-            // view objects
-            var platformSpan = null;
-            var versionSpan = null;
-            var uuidSpan = null;
-            var pageDiv = null;
-            var gridDiv = null;
-
-            // other vars
-            var isJQueryMobileReady = false;
-            var isCordovaReady = false;
-            var fileExplorer = uAgUtils.makeFileExplorer();
-            var fileObj = null;
+            var productNbr = 0;
 
             /** @ignore */
-            function onFileExplorerCheck(fileStr) {
-                try {
-                    fileObj = JSON.parse(fileStr);
-                    console.info('Info: file object is valid JSON');
-                } catch (e) {
-                    console.error(e.message);
-                    return false;
-                }
-                var env = JSV.createEnvironment("json-schema-draft-03"); // current default draft version
-                var result = env.validate(fileObj, uAgBasket.model.JSON_SCHEMA);
-                if (result.errors.length === 0) { // success
-                    console.info('Info: file object follows JSON schema for basket data');
-                    return true;
-                } else { // failure
-                    var errorArr = result.errors;
-                    console.error('Error: file object does not follow JSON schema for basket data\n' +
-                                  'Error: > uri: ' + errorArr[0].uri + '\n' +
-                                  'Error: > message: ' + errorArr[0].message);
-                    return false;
-                }
+            function onTagScanSuccess(result) {
+                console.info('Info: barcode scan successful');
+
+                // get barcode
+                var tag = new uAgUtils.Tag(result.text, result.format);
+                var model = uAgBasket.Model.getInstance();
+                var basketObj = model.getCurrentBasket();
+                basketObj.products[productNbr].tag = tag;
+
+                // display barcode
+                var view = uAgBasket.View.getInstance();
+                view.switchToTagPage();
             }
 
             /** @ignore */
-            function onFileExplorerClose(event) {
-                if (pageDiv !== null) {
-                    pageDiv.dialog('close');
-                } else {
-                    console.error('Error: explorer view objects are not set');
-                }
+            function onTagScanFailure(error) {
+                console.error('Error: barcode scanning failed - ' + error);
             }
 
             /**
@@ -74,112 +51,186 @@ var uag = (function(parent, $, window, document, undefined) {
              * @lends uag.basket.Controller
              */
             return {
-                /** @description Function callback invoked when jQuery Mobile starts. */
-                onMobileInit: function(event) {
-                    console.info('Info: mobileinit event fired');
-                    isJQueryMobileReady = true;
-                    // add page loading symbol in jQuery Mobile 1.2
-                    // TODO
-                },
-
-                /** @description Function callback invoked when a Cordova application is ready. */
-                onDeviceReady: function(event) {
-                    console.info('Info: deviceready event fired');
-                    isCordovaReady = true;
-                    platformSpan.text(window.device.platform);
-                    versionSpan.text(window.device.version);
-                    uuidSpan.text(window.device.uuid);
-                },
-
-                /** @description Function callback invoked when a new page is loaded and created by jQuery Mobile. */
-                onPageInit: function(event) {
-                    console.info('Info: pageinit event fired');
-                },
-
-                /** @description Function callback invoked when a Cordova application is put into the background. */
-                onPause: function(event) {
-                    console.info('Info: pause event fired');
-                },
-
-                /** @description Function callback invoked when a Cordova application is retrieved from the background. */
-                onResume: function(event) {
-                    console.info('Info: resume event fired');
+                /** @description TODO */
+                onNewBasketClick: function(event) {
+                    var model =  uAgBasket.Model.getInstance();
+                    var date = new Date(); // current date
+                    var isBasketSet = model.setCurrentBasketFromDate(date);
+                    if (!isBasketSet) {
+                        console.error('Error: current basket not set');
+                    }
                 },
 
                 /** @description TODO */
-                newBasket: function(event) {
+                onImportBasketClick: function(event) {
+                    var view = uAgBasket.View.getInstance();
+                    view.switchToImportPage();
                 },
 
                 /** @description TODO */
-                openBasket: function(event) {
+                onAddNewProductClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        var productObj = new uAgBasket.Product();
+                        basketObj.products.push(productObj);
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
                 },
 
                 /** @description TODO */
-                importBasket: function(event) {
-                    if (isCordovaReady) {
-                        console.info('Info: uag.basket.controller ready');
-                        try {
-                            fileExplorer.run(gridDiv,
-                                             onFileExplorerCheck,
-                                             onFileExplorerClose);
-                        } catch (e) {
-                            console.error(e.message);
+                onSaveBasketClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var isBasketStored = model.storeCurrentBasket();
+                    if (!isBasketStored) {
+                        console.error('Error: current basket not stored');
+                    } else {
+                        // use jQuery Mobile 1.2.0 popup to acknowledge saved?
+                        // TODO
+                    }
+                },
+
+                /** @description TODO */
+                onRemoveLastProductClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products.pop();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onProductIsInChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products[productNbr].isIn
+                            = ($(event.target).val() === 'true'); // conversion of string value to boolean
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onProductNameChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products[productNbr].name
+                            = $(event.target).val();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onProductProducerNameChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products[productNbr].producerName
+                            = $(event.target).val();
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onProductWeightChange: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products[productNbr].weight
+                            = (+ $(event.target).val()); // conversion of string value to number
+                    } else {
+                        console.error('Error: no current basket available');
+                    }
+                },
+
+                /** @description TODO */
+                onOpenScanTagClick: function(event) {
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        if (basketObj.products[productNbr].tag === null) {
+                            console.info('Info: no product tag available, scanning barcode...');
+                            window.plugins.barcodeScanner.scan(onTagScanSuccess,
+                                                               onTagScanFailure);
+                        } else {
+                            var view = uAgBasket.View.getInstance();
+                            view.switchToTagPage();
                         }
                     } else {
-                        console.error('Error: uag.basket.controller NOT READY');
+                        console.error('Error: no current basket available');
                     }
                 },
 
                 /** @description TODO */
-                saveBasket: function(event) {
-                },
-
-                /** @description TODO */
-                captureTag: function(event) {
-                },
-
-                /** @description TODO */
-                addBasketItem: function(event) {
-                },
-
-                /**
-                 * @param {object} $platformSpan JQuery Mobile object containing the DOM reference to a span.
-                 * @param {object} $versionSpan JQuery Mobile object containing the DOM reference to a span.
-                 * @param {object} $uuidSpan JQuery Mobile object containing the DOM reference to a span.
-                 * @description Set the jQuery Mobile objects of the about dialog view.
-                 */
-                setInfoView: function($platformSpan, $versionSpan, $uuidSpan) {
-                    if ($platformSpan instanceof jQuery && $platformSpan.is('span') &&
-                        $versionSpan instanceof jQuery && $versionSpan.is('span') &&
-                        $uuidSpan instanceof jQuery && $uuidSpan.is('span')) {
-                        platformSpan = $platformSpan;
-                        versionSpan = $versionSpan;
-                        uuidSpan = $uuidSpan;
-                    } else {
-                        console.error('Error: wrong info view objects');
-                    }
-                },
-
-                /**
-                 * @param {object} $pageDiv JQuery Mobile object containing the DOM reference to the div with the page role.
-                 * @param {object} $gridDiv JQuery Mobile object containing the DOM reference to the div with the grid class.
-                 * @description Set the jQuery Mobile objects of the file explorer view.
-                 */
-                setFileExplorerView: function($pageDiv, $gridDiv) {
-                    // how to make sure the page div has been opened as a dialog?
+                onTakePhotosClick: function(event) {
                     // TODO
-                    if ($pageDiv instanceof jQuery &&
-                        $pageDiv.is('div[data-role="page"]') &&
-                        $gridDiv instanceof jQuery &&
-                        $gridDiv.is('div[class="ui-grid-b"]')) {
-                        pageDiv = $pageDiv;
-                        gridDiv = $gridDiv;
+                },
+
+                /** @description TODO */
+                onRemoveCurrentProductClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
+                    var model = uAgBasket.Model.getInstance();
+                    var basketObj = model.getCurrentBasket();
+                    if (basketObj !== null) {
+                        basketObj.products.splice(productNbr, 1);
                     } else {
-                        console.error('Error: wrong file explorer view objects');
+                        console.error('Error: no current basket available');
                     }
                 },
-            }; // return {}
-        }; // function init()
+
+                /**
+                 * @description TODO
+                 */
+                onBasketListClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
+                    var model = uAgBasket.Model.getInstance();
+                    var date = new Date($(event.target).attr('id'));
+                    var isBasketSet = model.setCurrentBasketFromDate(date);
+                    if (!isBasketSet) {
+                        console.error('Error: current basket not set');
+                    }
+                },
+
+                /**
+                 * @description TODO
+                 */
+                onProductListClick: function(event) {
+                    // View-Controller tightly coupled: is there a better way?
+                    // TODO
+                    var productId = $(event.target).attr('id');
+                    productNbr
+                        = productId.slice(uAgBasket.Product.PREFIX_STR.length);
+                    var model = uAgBasket.Model.getInstance();
+                    model.setCurrentProduct(productNbr);
+                },
+
+                /**
+                 * @description TODO
+                 * @returns {boolean} Success.
+                 */
+                onFileExplorerCheck: function(fileStr) {
+                    var model = uAgBasket.Model.getInstance();
+                    var isBasketSet = model.setCurrentBasketFromStr(fileStr);
+                    if (isBasketSet) {
+                        var view = uAgBasket.View.getInstance();
+                        view.switchToEditPage();
+                        return true;
+                    } else  {
+                        console.error('Error: current basket not set');
+                        return false;
+                    }
+                },
+            }; // return
+        }; // private function init()
 
         /**
          * @public
@@ -197,7 +248,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 }
                 return instance;
             },
-        }; // return {}
+        }; // return
     }()); // immediately-invoked function expression (IIFE)
 
     return parent;

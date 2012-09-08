@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - uag.field</title>
+		<title>JsDoc Reference - uag.basket.Model-init-Basket</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,19 +193,17 @@ ul.inheritsList
 	
 	<li><a href="../symbols/uag.html">uag</a></li>
 	
-	<li><a href="../symbols/uag.field.html">uag.field</a></li>
+	<li><a href="../symbols/uag.basket.Controller.html">uag.basket.Controller</a></li>
 	
-	<li><a href="../symbols/uag.field.Controller.html">uag.field.Controller</a></li>
+	<li><a href="../symbols/uag.basket.Model.html">uag.basket.Model</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.html">uag.field.dataContext</a></li>
+	<li><a href="../symbols/uag.basket.Model-init-Basket.html">uag.basket.Model-init-Basket</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.Export.html">uag.field.dataContext.Export</a></li>
+	<li><a href="../symbols/uag.basket.Model-init-Product.html">uag.basket.Model-init-Product</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.Import.html">uag.field.dataContext.Import</a></li>
+	<li><a href="../symbols/uag.basket.View.html">uag.basket.View</a></li>
 	
-	<li><a href="../symbols/uag.field.dataContext.Producers.html">uag.field.dataContext.Producers</a></li>
-	
-	<li><a href="../symbols/uag.field.dataContext.WorkerContainers.html">uag.field.dataContext.WorkerContainers</a></li>
+	<li><a href="../symbols/uag.utils.makeFileExplorer.html">uag.utils.makeFileExplorer</a></li>
 	
 </ul>
 <hr />
@@ -216,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace uag.field
+				Class uag.basket.Model-init-Basket
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -224,17 +222,17 @@ ul.inheritsList
 				
 				
 			
-				uag.field
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/C__Users_Sebstien_git_Field_Field_assets_www_js_uag_uagFieldDataContext.js.html">uagFieldDataContext.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/uag-basket-model.js.html">uag-basket-model.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.field.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class uag.basket.Model-init-Basket.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -243,12 +241,12 @@ ul.inheritsList
 				</thead>
 				<tbody>
 					<tr>
-						<td class="attributes">&nbsp;</td>
+						<td class="attributes">&lt;inner&gt; &nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/uag.field.html#constructor">uag.field</a></b>
+								<b><a href="../symbols/uag.basket.Model-init-Basket.html#constructor">uag.basket.Model-init-Basket</a></b>(basketDate)
 							</div>
-							<div class="description"></div>
+							<div class="description">Basket object constructor.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -258,6 +256,39 @@ ul.inheritsList
 <!-- ============================== properties summary ===================== -->
 			
 				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class uag.basket.Model-init-Basket.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Model-init-Basket.html#distribDate">distribDate</a></b>
+								</div>
+								<div class="description">Basket distribution date in ISO 8601 format.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/uag.basket.Model-init-Basket.html#products">products</a></b>
+								</div>
+								<div class="description">List of products in the basket.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
 				
 				
 				
@@ -272,21 +303,32 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
-				<div class="fixedFont">
-						<b>uag.field</b>
+				<div class="fixedFont">&lt;inner&gt; 
+						<b>uag.basket.Model-init-Basket</b>(basketDate)
 				</div>
 				
 				<div class="description">
-					
+					Basket object constructor.
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								 <b>basketDate</b>
+								
+							</dt>
+								<dd></dd>
+						
+						</dl>
 					
 					
 					
@@ -299,6 +341,55 @@ ul.inheritsList
 			
 
 <!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="distribDate"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>distribDate</b>
+					
+					</div>
+					<div class="description">
+						Basket distribution date in ISO 8601 format.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="products"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{array}</span>
+					<b>products</b>
+					
+					</div>
+					<div class="description">
+						List of products in the basket.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
 			
 
 <!-- ============================== method details ========================= -->		
@@ -314,7 +405,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Sep 08 2012 11:01:55 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Sep 05 2012 10:06:06 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

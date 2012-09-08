@@ -1,16 +1,30 @@
 <!--
     File overview: uAg Basket View HTML
     Author: www.davidbourguignon.net
-    Version: 2012-08-31
+    Version: 2012-09-07
 -->
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>uAg Basket</title>
-    <link rel="stylesheet" href="css/jquery.mobile-1.1.1.css" />
-    <link rel="stylesheet" href="css/uag-basket-view.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>uAg Basket View</title>
+    <link type="text/css" charset="utf-8" href="css/jquery.mobile-1.1.1.css" rel="stylesheet" media="screen" title="no title" />
+    <link type="text/css" charset="utf-8" href="css/uag-basket-view.css" rel="stylesheet" media="screen" title="no title" />
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uri.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jsv.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/json-schema-draft-03.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-shims.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-utils.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-utils-file-explorer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-basket-model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-basket-controller.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/uag-basket-view.js"></script>
+    <!-- jQuery Mobile is called after registering callback for mobileinit event -->
+    <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
 </head>
 <body>
 
@@ -20,8 +34,6 @@
                data-role="button"
                data-icon="info"
                data-iconpos="notext"
-               data-rel="dialog"
-               data-transition="pop"
                class="ui-btn-left">Info</a>
             <h1>uAg Basket</h1>
         </div><!-- /header -->
@@ -31,40 +43,42 @@
                         margin-left: auto;
                         margin-right: auto;
                         width: 99%" />
-            <!-- Source: http://www.dicocitations.com/citation.php?mot=panier -->
             <!-- TODO: same in english? -->
-            <p style="text-align:center"><small>
+            <!-- Source: http://www.dicocitations.com/citation.php?mot=panier -->
+            <p style="text-align:center;font-size:70%;">
                 L'été remplit sa grange, affaisse ses greniers&nbsp;;<br />
                 L'automne d'un doux poids fait gémir ses paniers&nbsp;;<br />
                 Et les derniers soleils, sur les côtes vineuses,<br />
                 Achèvent de mûrir les grappes paresseuses.<br />
                 &#150;&nbsp;Virgile, <em>Géorgiques</em><br />
-            </small></p>
+            </p>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
                     <li><a id ="home-new-btn"
-                           href="#new"
+                           href="#edit"
                            data-role="button">New</a></li>
                     <li><a id="home-open-btn"
                            href="#open"
-                           data-role="button"
-                           data-rel="dialog"
-                           data-transition="pop">Open</a></li>
+                           data-role="button">Open</a></li>
                     <li><a id="home-import-btn"
                            href="#import"
-                           data-role="button"
-                           data-rel="dialog"
-                           data-transition="pop">Import</a></li>
+                           data-role="button">Import</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <div id="info" data-role="page"><!-- dialog -->
+    <div id="info" data-role="page">
         <div data-role="header" data-theme="a">
-            <h1>About uAg Basket</h1>
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
+            <h1>About</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <p>
@@ -82,16 +96,137 @@
                           data-rel="external">S&eacute;bastien Vivier</a>).</p>
             <p>
                 Device info:<br />
-                <small>
-                    -&nbsp;Platform: <span id="device-platform"></span><br />
-                    -&nbsp;Version: <span id="device-version"></span><br />
-                    -&nbsp;UUID: <span id="device-uuid"></span><br />
-                </small>
+                &nbsp;-&nbsp;Platform: <span id="device-platform"></span><br />
+                &nbsp;-&nbsp;Version: <span id="device-version"></span><br />
+                &nbsp;-&nbsp;UUID: <span id="device-uuid"></span><br />
             </p>
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <div id="new" data-role="page">
+    <div id="edit" data-role="page">
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               class="ui-btn-left">Cancel</a>
+            <h1>Edit basket</h1>
+        </div><!-- /header -->
+        <div data-role="content" data-theme="c">
+            <h3 id="edit-basket-title"></h3>
+            <ul id="edit-basket-listview" data-role="listview">
+                <!-- basket content -->
+            </ul>
+        </div><!-- /content -->
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a id ="edit-add-btn"
+                           href="#edit"
+                           data-role="button">Add</a></li>
+                    <li><a id ="edit-save-btn"
+                           href="#home"
+                           data-role="button">Save</a></li>
+                    <li><a id ="edit-remove-btn"
+                           href="#edit"
+                           data-role="button">Remove</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <div id="product" data-role="page">
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#edit"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               class="ui-btn-left">Cancel</a>
+            <h1>Edit product</h1>
+        </div><!-- /header -->
+        <div data-role="content" data-theme="c">
+<!-- TODO add title
+            <h4 id="product-title">
+                <span id="product-name-title"></span>,
+                <span id="product-weight-title"></span>
+            </h4>
+-->
+            <div data-role="fieldcontain">
+                <select id="product-isIn"
+                        name="product-isIn"
+                        data-role="slider"
+                        data-mini="true">
+                    <option value="false">Out</option>
+                    <option value="true">In</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="product-name">Product name</label>
+                <input id="product-name"
+                       type="text"
+                       name="product-name"
+                       value="?"
+                       data-mini="true" />
+            </div>
+            <div data-role="fieldcontain">
+                <label for="product-producerName">Producer name</label>
+                <input id="product-producerName"
+                       type="text"
+                       name="product-producerName"
+                       value="?"
+                       data-mini="true" />
+            </div>
+            <div data-role="fieldcontain">
+                <!-- TODO set maximum weight 0 < w < 100 in options. Here 5. -->
+                <label for="product-weight">Product weight</label>
+                <input id="product-weight"
+                       type="range"
+                       name="product-weight"
+                       value="0"
+                       min="0"
+                       max="5"
+                       step="0.1"
+                       data-highlight="true"
+                       data-mini="true" />
+            </div>
+            <div data-role="controlgroup">
+                <a id="product-tag-btn" href="#" data-role="button">Tag</a>
+                <a id="product-photos-btn" href="#" data-role="button">Photos</a>
+            </div>
+        </div><!-- /content -->
+        <div data-role="footer" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a id ="product-update-btn"
+                           href="#edit"
+                           data-role="button">Update</a>
+                    <li><a id ="product-remove-btn"
+                           href="#edit"
+                           data-role="button">Remove</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <div id="tag" data-role="page">
+        <div data-role="header" data-position="fixed" data-theme="a">
+            <a href="#product"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
+            <h1>Read tag</h1>
+        </div><!-- /header -->
+        <div data-role="content" data-theme="c">
+            <div id="tag-div" style="display: block;
+                                     margin: auto">
+                <!-- tag content -->
+            </div>
+        </div><!-- /content -->
+    </div><!-- /page -->
+
+    <div id="open" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
             <a href="#home"
                data-role="button"
@@ -99,79 +234,25 @@
                data-iconpos="notext"
                data-rel="back"
                class="ui-btn-left">Cancel</a>
-            <h1>Create new basket</h1>
+            <h1>Open basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
-            <div data-role="fieldcontain">
-                <label for="basket-distrib-date">Distrib. date</label>
-                <input type="date"
-                       name="basket-distrib-date"
-                       id="basket-distrib-date"
-                       value="" />
-            </div>
-            <div data-role="fieldcontain">
-                <label for="basket-approx-weight">Approx. weight</label>
-                <input type="number"
-                       name="basket-approx-weight"
-                       id="basket-approx-weight"
-                       value="" />
-            </div>
-            <div data-role="collapsible"
-                 data-collapsed="false"
-                 data-theme="c">
-                <h3>Basket item</h3>
-                <div data-role="fieldcontain">
-                    <label for="is-basket-item-in">In</label>
-                    <select name="is-basket-item-in"
-                            id="is-basket-item-in"
-                            data-role="slider">
-                        <option value="off">No</option>
-                        <option value="on">Yes</option>
-                    </select>
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="basket-item-desc">Desc.</label>
-                    <input type="text"
-                           name="basket-item-desc"
-                           id="basket-item-desc"
-                           value="" />
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="basket-item-approx-weight">Approx. weight</label>
-                    <input type="number"
-                           name="basket-item-approx-weight"
-                           id="basket-item-approx-weight"
-                           value="" />
-                </div>
-                <button id="new-tag-btn">Capture tag</button>
-            </div>
-            <button id="new-add-btn"
-                    data-icon="add"
-                    data-theme="b">Add new item</button>
-        </div><!-- /content -->
-        <div data-role="footer" data-position="fixed" data-theme="a">
-            <div data-role="navbar">
-                <ul>
-                    <li><a id ="new-save-btn"
-                           href="#home"
-                           data-role="button">Save</a></li>
-                </ul>
-            </div><!-- /navbar -->
-        </div><!-- /footer -->
-    </div><!-- /page -->
-
-    <div id="open" data-role="page"><!-- dialog -->
-        <div data-role="header" data-position="fixed" data-theme="a">
-            <h1>Open existing basket</h1>
-        </div><!-- /header -->
-        <div data-role="content" data-theme="c">
-            <!-- TODO basket explorer content -->
+            <h3 id="open-basket-explorer-title"></h3>
+            <ul id="open-basket-explorer-listview" data-role="listview">
+                <!-- basket explorer content -->
+            </ul>
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <div id="import" data-role="page"><!-- dialog -->
+    <div id="import" data-role="page">
         <div data-role="header" data-position="fixed" data-theme="a">
-            <h1>Import basket data</h1>
+            <a href="#home"
+               data-role="button"
+               data-icon="delete"
+               data-iconpos="notext"
+               data-rel="back"
+               class="ui-btn-left">Cancel</a>
+            <h1>Import basket</h1>
         </div><!-- /header -->
         <div data-role="content" data-theme="c">
             <div id="import-file-explorer-div" class="ui-grid-b">
@@ -180,88 +261,40 @@
         </div><!-- /content -->
     </div><!-- /page -->
 
-    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="js/cordova-2.0.0.js"></script>
-    <script type="text/javascript" src="js/barcodescanner.js"></script>
-    <script type="text/javascript" src="js/uri.js"></script>
-    <script type="text/javascript" src="js/jsv.js"></script>
-    <script type="text/javascript" src="js/json-schema-draft-03.js"></script>
-    <script type="text/javascript" src="js/uag-utils-file-explorer.js"></script>
-    <script type="text/javascript" src="js/uag-basket-model.js"></script>
-    <script type="text/javascript" src="js/uag-basket-controller.js"></script>
-    <script type="text/javascript" src="js/uag-basket-view.js"></script>
-    <!-- jQuery Mobile is called after registering callback for mobileinit event -->
-    <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
+    <script>
+        (function() {
+            var view = uag.basket.View.getInstance();
+
+            // jQuery Mobile first
+            var $doc = $(document);
+            $doc.on('pageinit', view.onPageInit);
+            $doc.on('pagebeforechange', view.onPageBeforeChange);
+            $doc.on('pagechange', view.onPageChange);
+            $doc.on('pagechangefailed', view.onPageChangeFailed);
+
+            // Cordova second
+            document.addEventListener('deviceready', onDeviceReady, false);
+            document.addEventListener('pause', onPause, false);
+            document.addEventListener('resume', onResume, false);
+
+            // when the Cordova application is ready
+            function onDeviceReady() {
+                console.info('Info: deviceready event fired');
+                view.setOnDeviceReady();
+                window.localStorage.clear(); /////////////////////////// TMP//////////////////////////////////////////
+            }
+
+            // when the Cordova application is put into the background
+            function onPause() {
+                console.info('Info: pause event fired');
+            }
+
+            // when the Cordova application is retrieved from the background
+            function onResume() {
+                console.info('Info: resume event fired');
+            }
+        }());
+    </script>
 
 </body>
 </html>
-
-<!-- BARCODE SCANNER DEMO
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <meta name="viewport" content="width=320; user-scalable=no" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>uAg Basket</title>
-      <link rel="stylesheet" href="css/barcodescanner-demo.css" type="text/css"
-            media="screen" title="no title" charset="utf-8">
-      <script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
-      <script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
-      <script type="text/javascript" charset="utf-8">
-
-    function init(){
-        console.log("GOT AN ONLOAD!!!")
-        document.addEventListener("touchmove", preventBehavior, false);
-        document.addEventListener("deviceready", deviceInfo, true);
-    }
-
-    var preventBehavior = function(e) {
-      e.preventDefault();
-    };
-
-    var deviceInfo = function(){
-      console.log("In deviceInfo!");
-      document.getElementById("platform").innerHTML = device.platform;
-      document.getElementById("version").innerHTML = device.version;
-      document.getElementById("uuid").innerHTML = device.uuid;
-    }
-
-    function scan() {
-        window.plugins.barcodeScanner.scan(function(result) {
-                alert("We got a barcode\n" +
-                      "Result: " + result.text + "\n" +
-                      "Format: " + result.format);
-            }, function(error) {
-                alert("Scanning failed: " + error);
-            });
-    }
-
-    function encode(type, data) {
-        window.plugins.barcodeScanner.encode(type, data, function(result) {
-                alert("encode success: " + result);
-            }, function(error) {
-                alert("encoding failed: " + error);
-            });
-    }
-
-  </script>
-  </head>
-  <body onload="init();" id="stage" class="theme">
-    <h1>Welcome to PhoneGap!</h1>
-    <h2>this file is located at assets/index.html</h2>
-    <div id="info">
-      <h4>Platform: <span id="platform">&nbsp;</span></h4>
-      <h4>Version: <span id="version">&nbsp;</span></h4>
-      <h4>UUID:   <span id="uuid">&nbsp;</span></h4>
-    </div>
-    <a href="#" class="btn large"
-       onclick="scan();">Scan</a>
-    <a href="#" class="btn large"
-       onclick="encode(BarcodeScanner.Encode.TEXT_TYPE, 'http://www.phonegap.com');">Encode Text</a>
-    <a href="#" class="btn large"
-       onclick="encode(BarcodeScanner.Encode.EMAIL_TYPE, 'someone@somewhere.com');">Encode Email</a>
-    <a href="#" class="btn large"
-       onclick="encode(BarcodeScanner.Encode.PHONE_TYPE, '1800551212');">Encode Phone</a>
-  </body>
-</html>
--->
