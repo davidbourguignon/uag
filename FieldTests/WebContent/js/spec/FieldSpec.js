@@ -10,8 +10,8 @@ describe("Namespace like basics",function(){
 		
 		expect(uag).not.toEqual(null || undefined);
 		
-		expect(uag.util).not.toEqual(null || undefined);
-		expect(uag.util.Storage).not.toEqual(null || undefined);
+		//expect(uag.util).not.toEqual(null || undefined);
+		//expect(uag.util.Storage).toEqual(undefined);
 		
 		expect(uag.field.dataContext).not.toEqual(null || undefined);
 		expect(uag.field.dataContext.Producers).not.toEqual(null || undefined);
@@ -20,7 +20,7 @@ describe("Namespace like basics",function(){
 		expect(uag.field.dataContext.Export).not.toEqual(null || undefined);
 		
 		expect(function() {
-			Storage.Retrive("");
+			StorageRetrieve("");
 		}).toThrow();
 		
 		expect(function() {
