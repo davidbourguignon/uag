@@ -29,16 +29,10 @@ var uag = (function(parent, $, window, document, undefined) {
             /** @ignore */
             function onTagScanSuccess(result) {
                 console.info('Info: barcode scan successful (' + result.format + ')');
-
-                // get barcode
                 var tag = new uAgUtils.Tag(result.text, result.format);
                 var model = uAgBasket.Model.getInstance();
                 var basketObj = model.getCurrentBasket();
                 basketObj.products[productNbr].tag = tag;
-
-                // display barcode
-                //var view = uAgBasket.View.getInstance();
-                //view.switchToTagPage();
             }
 
             /** @ignore */
@@ -162,10 +156,6 @@ var uag = (function(parent, $, window, document, undefined) {
                             window.plugins.barcodeScanner.scan(onTagScanSuccess,
                                                                onTagScanFailure);
                         }
-                        //else {
-                            //var view = uAgBasket.View.getInstance();
-                            //view.switchToTagPage();
-                        //}
                     } else {
                         console.error('Error: no current basket available');
                     }

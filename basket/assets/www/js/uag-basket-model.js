@@ -157,7 +157,7 @@ var uag = (function(parent, $, window, document, undefined) {
      */
     uAgUtils.Tag = function(text, format) {
         this.text = text || ''; // sanity assignement
-        this.format = format || ''; // sanity assignement
+        this.format = format || 'QR_CODE'; // sanity assignement
     };
 
     /** @description Using JSON stringification with pretty print (4 white spaces per indentation). */
@@ -374,7 +374,7 @@ var uag = (function(parent, $, window, document, undefined) {
                         // sanity check with JSON parse
                         try {
                             var obj = JSON.parse(basketStr);
-                            currentBasketObj = uAgBasket.Basket.decorate(obj);
+                            currentBasketObj = uAgBasket.Basket.basketify(obj);
                             return true;
                         } catch (e) {
                             console.error(e.message);

@@ -1,49 +1,43 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Jasmine Spec Runner</title>
+    <meta charset="utf-8" />
+    <title>Jasmine Spec Runner</title>
+    <link rel="shortcut icon" type="image/png" href="images/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-core/jasmine.css">
+    <script type="text/javascript" charset="utf-8" src="lib/jasmine-core/jasmine.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/jasmine-core/jasmine-html.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../js/uri.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../js/jsv.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../js/json-schema-draft-03.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../../js/uag-basket-model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="spec/uag-basket-model-spec.js"></script>
+    <script type="text/javascript">
+        (function() {
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 250;
 
-  <link rel="shortcut icon" type="image/png" href="images/jasmine_favicon.png">
+            var htmlReporter = new jasmine.HtmlReporter();
+            jasmineEnv.addReporter(htmlReporter);
+            jasmineEnv.specFilter = function(spec) {
+                return htmlReporter.specFilter(spec);
+            };
 
-  <link rel="stylesheet" type="text/css" href="lib/jasmine-core/jasmine.css">
-  <script type="text/javascript" src="lib/jasmine-core/jasmine.js"></script>
-  <script type="text/javascript" src="lib/jasmine-core/jasmine-html.js"></script>
+            var currentWindowOnload = window.onload;
+            window.onload = function() {
+                if (currentWindowOnload) {
+                  currentWindowOnload();
+                }
+                execJasmine();
+            };
 
-  <!-- include source files here... -->
-  <script type="text/javascript" src="../../convert.js"></script>
-
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/convert-spec.js"></script>
-
-  <script type="text/javascript">
-    (function() {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 250;
-
-      var htmlReporter = new jasmine.HtmlReporter();
-      jasmineEnv.addReporter(htmlReporter);
-
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
-
-      var currentWindowOnload = window.onload;
-      window.onload = function() {
-        if (currentWindowOnload) {
-          currentWindowOnload();
-        }
-        execJasmine();
-      };
-
-      function execJasmine() {
-        jasmineEnv.execute();
-      }
-
-    })();
-  </script>
-
+            function execJasmine() {
+                jasmineEnv.execute();
+            }
+        }());
+    </script>
 </head>
-
 <body>
 </body>
 </html>

@@ -92,7 +92,7 @@
 /home/db/src/uag/basket/assets/www/js/test/jasmine/lib \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/images \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/runner.html \
-/home/db/src/uag/basket/assets/www/js/test/jasmine/spec/convert-spec.js \
+/home/db/src/uag/basket/assets/www/js/test/jasmine/spec/uag-basket-model-spec.js \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/lib/jasmine-core \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/lib/jasmine-core/jasmine.css \
 /home/db/src/uag/basket/assets/www/js/test/jasmine/lib/jasmine-core/jasmine-html.js \

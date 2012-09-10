@@ -357,15 +357,6 @@ var uag = (function(parent, $, window, document, undefined) {
                     // TODO
                     $.mobile.changePage($('#edit'), {transition:'none'}); // TODO CONST VAR
                 },
-
-                /**
-                 * @description Switch current page to "#tag" page (see View HTML).
-                 */
-                //switchToTagPage: function() {
-                    // check transition quality. try fade, pop, etc. if necessary
-                    // TODO
-                    //$.mobile.changePage($('#tag'), {transition:'none'}); // TODO CONST VAR
-                //},
             }; // return
         } // private function init()
 
