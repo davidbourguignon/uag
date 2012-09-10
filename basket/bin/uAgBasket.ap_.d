@@ -65,7 +65,6 @@
 /home/db/src/uag/basket/assets/www/barcodescanner-demo.html \
 /home/db/src/uag/basket/assets/www/js \
 /home/db/src/uag/basket/assets/www/css \
-/home/db/src/uag/basket/assets/www/file-explorer-demo.html \
 /home/db/src/uag/basket/assets/www/uag-basket-view.html \
 /home/db/src/uag/basket/assets/www/images \
 /home/db/src/uag/basket/assets/www/test.html \
@@ -73,7 +72,6 @@
 /home/db/src/uag/basket/assets/www/js/jquery.mobile-1.1.1.js \
 /home/db/src/uag/basket/assets/www/js/barcodescanner.js \
 /home/db/src/uag/basket/assets/www/js/uag-shims.js \
-/home/db/src/uag/basket/assets/www/js/file-explorer-demo.js \
 /home/db/src/uag/basket/assets/www/js/uag-utils-file-explorer.js \
 /home/db/src/uag/basket/assets/www/js/jquery-1.7.1.js \
 /home/db/src/uag/basket/assets/www/js/jquery.mobile-1.1.1.min.js \

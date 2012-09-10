@@ -74,13 +74,21 @@ var uag = (function(parent, $, window, document, undefined) {
     };
 
     /**
-     * @description Decorate a JSON data object following the basket JSON Schema with Basket prototype methods.
+     * @description Decorate a JSON data object following the basket JSON Schema as a Basket object.
      * @param {object} obj JSON data object.
      * @returns {object} Decorated JSON data object.
      */
-    uAgBasket.Basket.decorate = function(obj) {
+    uAgBasket.Basket.basketify = function(obj) {
         // Could do that with a loop over Basket prototype properties?
         // TODO
+        // sanity check with timestamp (converting to full ISO8601 format, with ms)
+        var date = new Date(obj.timestamp);
+        obj.timestamp = date.toISOString();
+        // productify products
+        for (var i = 0, len = obj.products.length; i < len; i++) {
+            obj.products[i] = uAgBasket.Product.productify(obj.products[i]);
+        }
+        // add Basket methods
         obj.toString = uAgBasket.Basket.prototype.toString;
         obj.getKey = uAgBasket.Basket.prototype.getKey;
         return obj;
@@ -104,8 +112,10 @@ var uag = (function(parent, $, window, document, undefined) {
         this.producerName = '?';
         this.weight = 0;
         this.isIn = false;
-        this.tag = null;
-        this.images = []; // TODO storing data or filenames? check if what is the right idea
+        this.tag = new uAgUtils.Tag(); // default: empty tag
+        // storing data or filenames? check if what is the right idea
+        // TODO
+        //this.images = [];
     };
 
     /** @description Using JSON stringification with pretty print (4 white spaces per indentation). */
@@ -113,6 +123,26 @@ var uag = (function(parent, $, window, document, undefined) {
         // TODO TEST
         var indentation = '    '; // 4 white spaces
         return JSON.stringify(this, null, indentation);
+    };
+
+    /**
+     * @description Decorate a JSON data object following the product JSON Schema as a Product object.
+     * @param {object} obj JSON data object.
+     * @returns {object} Decorated JSON data object.
+     */
+    uAgBasket.Product.productify = function(obj) {
+        // Could do that with a loop over Product prototype properties?
+        // TODO
+        // fill in non required fields in product JSON schema
+        if(obj.producerName === undefined) {
+            obj.producerName = '?';
+        }
+        if (obj.tag === undefined) {
+            obj.tag = new uAgUtils.Tag();
+        }
+        // add Product methods
+        obj.toString = uAgBasket.Product.prototype.toString;
+        return obj;
     };
 
     /** @const */
@@ -167,7 +197,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     "products": {
                         "description": "list of products in the basket",
                         "type": "array",
-                        "required": false,
+                        "required": true,
                         "items": {
                             "description": "JSON schema describing product data",
                             "type": "object",
@@ -315,11 +345,9 @@ var uag = (function(parent, $, window, document, undefined) {
                         var result = JSV_ENVIRONMENT_OBJ.validate(obj, JSON_SCHEMA_OBJ);
                         if (result.errors.length === 0) { // success JSON schema
                             console.info('Info: input string follows JSON schema for basket data');
-                            currentBasketObj = uAgBasket.Basket.decorate(obj);
 
-                            // sanity check with timestamp
-                            var date = new Date(currentBasketObj.timestamp);
-                            currentBasketObj.timestamp = date.toISOString(); // converting to full ISO8601 format (with ms)
+                            // decorate JSON object
+                            currentBasketObj = uAgBasket.Basket.basketify(obj);
                             return true;
                         } else { // failure JSON schema
                             var errorArr = result.errors;
@@ -387,6 +415,8 @@ var uag = (function(parent, $, window, document, undefined) {
                 storeCurrentBasket: function() {
                     // sanity check with current basket
                     if (currentBasketObj !== null) {
+
+                        console.log('STORE CURR BSK ' + currentBasketObj.toString());/////////////TMP
 
                         // sanity check with JSON schema
                         var result = JSV_ENVIRONMENT_OBJ.validate(currentBasketObj, JSON_SCHEMA_OBJ);

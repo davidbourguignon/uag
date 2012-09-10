@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Basket View
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-07
+ * @version 2012-09-10
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -129,7 +129,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 $('#product-name').on('change', controller.onProductNameChange); // TODO CONST VAR
                 $('#product-producerName').on('change', controller.onProductProducerNameChange); // TODO CONST VAR
                 $('#product-weight').on('change', controller.onProductWeightChange); // TODO CONST VAR
-                $('#product-tag-btn').on('click', controller.onOpenScanTagClick);
+                $('#product-tag-btn').on('click', controller.onScanOpenTagClick);
                 $('#product-photos-btn').on('click', controller.onTakePhotosClick);
                 $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
             }
@@ -141,6 +141,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 $('#product-name').val('');
                 $('#product-producerName').val('');
                 $('#product-weight').val(0);
+                $('#product-tag-btn').text(''); // TODO CONST VAR
             }
 
             /** @ignore */
@@ -148,7 +149,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 var model = uAgBasket.Model.getInstance();
                 var productObj = model.getCurrentProduct();
                 if (productObj !== null) {
-                    // change values
+                    // change fields
                     $('#product-isIn').val(productObj.isIn.toString());
                     $('#product-name').val(productObj.name);
                     $('#product-producerName').val(productObj.producerName);
@@ -156,6 +157,12 @@ var uag = (function(parent, $, window, document, undefined) {
                     // refresh widgets
                     $('#product-isIn').slider('refresh');
                     $('#product-weight').slider('refresh');
+                    // change buttons
+                    if (productObj.tag.text === '') {
+                        $('#product-tag-btn').text('Scan tag');
+                    } else {
+                        $('#product-tag-btn').text('Open tag');
+                    }
                 } else {
                     console.error('Error: no current product available');
                 }
@@ -170,9 +177,7 @@ var uag = (function(parent, $, window, document, undefined) {
             function onTagPageChange() {
                 var model = uAgBasket.Model.getInstance();
                 var productObj = model.getCurrentProduct();
-                if (productObj !== null &&
-                    productObj.tag !== null &&
-                    productObj.tag.txt !== null) { // TODO useful? check
+                if (productObj !== null && productObj.tag.text !== '') {
                     var $tagDiv = $('#tag-div');
                     var text = productObj.tag.text;
                     if ($.mobile.path.isAbsoluteUrl(text)) {
@@ -230,7 +235,7 @@ var uag = (function(parent, $, window, document, undefined) {
              */
             return {
                 /**
-                 * @description TODO
+                 * @description Set view singleton ready.
                  */
                 setOnDeviceReady: function() {
                     // store all $() objects in CONST VAR (caching) for speed up
@@ -238,7 +243,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Global callback function for JQuery Mobile onpageinit events. Sub-callbacks are in general available per page.
                  */
                 onPageInit: function(event) {
                     var pageId = $(event.target).attr('id');
@@ -267,7 +272,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Global callback function for JQuery Mobile onpagebeforechange events. Sub-callbacks are in general available per page.
                  */
                 onPageBeforeChange: function(event, data) {
                     var pageId = pageDataToId(data.toPage);
@@ -296,7 +301,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Global callback function for JQuery Mobile onpagechange events. Sub-callbacks are in general available per page.
                  */
                 onPageChange: function(event, data) {
                     var pageId = pageDataToId(data.toPage);
@@ -325,14 +330,14 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Global callback function for JQuery Mobile onpagechangefailed events. For sanity check only.
                  */
                 onPageChangeFailed: function(event, data) {
                     console.error('Error: pagechangefailed event fired for '  + pageDataToId(data.toPage));
                 },
 
                 /**
-                 * @description TODO
+                 * @description Switch current page to "#import" page (see View HTML).
                  */
                 switchToImportPage: function() {
                     var controller = uAgBasket.Controller.getInstance();
@@ -345,7 +350,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Switch current page to "#edit" page (see View HTML).
                  */
                 switchToEditPage: function() {
                     // check transition quality. try fade, pop, etc. if necessary
@@ -354,13 +359,13 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Switch current page to "#tag" page (see View HTML).
                  */
-                switchToTagPage: function() {
+                //switchToTagPage: function() {
                     // check transition quality. try fade, pop, etc. if necessary
                     // TODO
-                    $.mobile.changePage($('#tag'), {transition:'none'}); // TODO CONST VAR
-                },
+                    //$.mobile.changePage($('#tag'), {transition:'none'}); // TODO CONST VAR
+                //},
             }; // return
         } // private function init()
 

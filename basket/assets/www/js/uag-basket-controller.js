@@ -5,7 +5,7 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-07
+ * @version 2012-09-10
  */
 /** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
@@ -28,7 +28,7 @@ var uag = (function(parent, $, window, document, undefined) {
 
             /** @ignore */
             function onTagScanSuccess(result) {
-                console.info('Info: barcode scan successful');
+                console.info('Info: barcode scan successful (' + result.format + ')');
 
                 // get barcode
                 var tag = new uAgUtils.Tag(result.text, result.format);
@@ -37,8 +37,8 @@ var uag = (function(parent, $, window, document, undefined) {
                 basketObj.products[productNbr].tag = tag;
 
                 // display barcode
-                var view = uAgBasket.View.getInstance();
-                view.switchToTagPage();
+                //var view = uAgBasket.View.getInstance();
+                //view.switchToTagPage();
             }
 
             /** @ignore */
@@ -151,18 +151,21 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /** @description TODO */
-                onOpenScanTagClick: function(event) {
+                onScanOpenTagClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
-                        if (basketObj.products[productNbr].tag === null) {
+                        var productObj = basketObj.products[productNbr];
+                        // scan or open tag
+                        if (productObj.tag.text === '') {
                             console.info('Info: no product tag available, scanning barcode...');
                             window.plugins.barcodeScanner.scan(onTagScanSuccess,
                                                                onTagScanFailure);
-                        } else {
-                            var view = uAgBasket.View.getInstance();
-                            view.switchToTagPage();
                         }
+                        //else {
+                            //var view = uAgBasket.View.getInstance();
+                            //view.switchToTagPage();
+                        //}
                     } else {
                         console.error('Error: no current basket available');
                     }
