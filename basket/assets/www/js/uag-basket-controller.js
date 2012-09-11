@@ -5,9 +5,8 @@
 /**
  * @fileOverview uAg Basket Controller
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-10
+ * @version 2012-09-11
  */
-/** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declarations
@@ -45,7 +44,7 @@ var uag = (function(parent, $, window, document, undefined) {
              * @lends uag.basket.Controller
              */
             return {
-                /** @description TODO */
+                /** @description Button callback function for creating a new basket. Create a basket timestamped with the current date. */
                 onNewBasketClick: function(event) {
                     var model =  uAgBasket.Model.getInstance();
                     var date = new Date(); // current date
@@ -55,13 +54,13 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Button callback function for importing basket data. Switch to the import page. */
                 onImportBasketClick: function(event) {
                     var view = uAgBasket.View.getInstance();
                     view.switchToImportPage();
                 },
 
-                /** @description TODO */
+                /** @description Button callback function for adding a new product at the bottom of the current basket list. */
                 onAddNewProductClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
@@ -73,7 +72,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Button callback function for saving basket information to local storage. */
                 onSaveBasketClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var isBasketStored = model.storeCurrentBasket();
@@ -85,7 +84,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Button callback function for removing the last product from the current basket list. */
                 onRemoveLastProductClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
@@ -96,7 +95,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Change callback function for updating the product isIn field. */
                 onProductIsInChange: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
@@ -108,7 +107,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Change callback function for updating the product name field. */
                 onProductNameChange: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
@@ -120,7 +119,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Change callback function for updating the product producerName field. */
                 onProductProducerNameChange: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
@@ -132,7 +131,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Change callback function for updating the product weight field. */
                 onProductWeightChange: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
@@ -144,13 +143,12 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
+                /** @description Button callback function for scanning or opening a product tag. */
                 onScanOpenTagClick: function(event) {
                     var model = uAgBasket.Model.getInstance();
                     var basketObj = model.getCurrentBasket();
                     if (basketObj !== null) {
                         var productObj = basketObj.products[productNbr];
-                        // scan or open tag
                         if (productObj.tag.text === '') {
                             console.info('Info: no product tag available, scanning barcode...');
                             window.plugins.barcodeScanner.scan(onTagScanSuccess,
@@ -161,12 +159,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /** @description TODO */
-                onTakePhotosClick: function(event) {
-                    // TODO
-                },
-
-                /** @description TODO */
+                /** @description Button callback function for removing the current product. */
                 onRemoveCurrentProductClick: function(event) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
@@ -179,9 +172,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /**
-                 * @description TODO
-                 */
+                /** @description Button callback function for selecting a basket in the basket list (from the local storage). */
                 onBasketListClick: function(event) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
@@ -193,9 +184,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     }
                 },
 
-                /**
-                 * @description TODO
-                 */
+                /** @description Button callback function for selecting a product in the product list (from the current basket). */
                 onProductListClick: function(event) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
@@ -207,7 +196,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 },
 
                 /**
-                 * @description TODO
+                 * @description Callback function passed to the basket file explorer to check selected files.
                  * @returns {boolean} Success.
                  */
                 onFileExplorerCheck: function(fileStr) {

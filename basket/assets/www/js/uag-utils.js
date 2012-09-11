@@ -5,9 +5,8 @@
 /**
  * @fileOverview uAg Utils
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-07
+ * @version 2012-09-11
  */
-/** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declaration

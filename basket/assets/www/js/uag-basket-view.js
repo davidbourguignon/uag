@@ -5,9 +5,8 @@
 /**
  * @fileOverview uAg Basket View
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-10
+ * @version 2012-09-11
  */
-/** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declarations
@@ -130,7 +129,6 @@ var uag = (function(parent, $, window, document, undefined) {
                 $('#product-producerName').on('change', controller.onProductProducerNameChange); // TODO CONST VAR
                 $('#product-weight').on('change', controller.onProductWeightChange); // TODO CONST VAR
                 $('#product-tag-btn').on('click', controller.onScanOpenTagClick);
-                $('#product-photos-btn').on('click', controller.onTakePhotosClick);
                 $('#product-remove-btn').on('click', controller.onRemoveCurrentProductClick);
             }
 

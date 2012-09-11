@@ -1,0 +1,6 @@
+TODO
+
+- allow removing a basket (not only a product) or remove basket automatically when it is empty? (+ does not save an empty basket?)
+
+- put sanity checks with popus (eg. did you save your product info?) everywhere.
+

@@ -6,9 +6,8 @@
 /**
  * @fileOverview uAg Basket Model
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-06
+ * @version 2012-09-11
  */
-/** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declarations
@@ -18,8 +17,9 @@ var uag = (function(parent, $, window, document, undefined) {
     /**
      * @const
      * @exports uAgBasket.PREFIX_STR as uag.basket.PREFIX_STR
+     * @description Prefix string used for Basket app purposes, to avoid storage key collision with other apps.
      */
-    uAgBasket.PREFIX_STR = 'uag-basket-'; // useful to avoid storage key collision with other apps
+    uAgBasket.PREFIX_STR = 'uag-basket-';
 
     /**
      * @class
@@ -145,8 +145,11 @@ var uag = (function(parent, $, window, document, undefined) {
         return obj;
     };
 
-    /** @const */
-    uAgBasket.Product.PREFIX_STR = 'product-'; // useful for building id string values in HTML elements
+    /**
+     * @const
+     * @description Prefix string used for building product id string values in HTML elements.
+     */
+    uAgBasket.Product.PREFIX_STR = 'product-';
 
     /**
      * @class
@@ -415,8 +418,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 storeCurrentBasket: function() {
                     // sanity check with current basket
                     if (currentBasketObj !== null) {
-
-                        console.log('STORE CURR BSK ' + currentBasketObj.toString());/////////////TMP
+                        console.info('Info: current basket details\n' + currentBasketObj.toString());
 
                         // sanity check with JSON schema
                         var result = JSV_ENVIRONMENT_OBJ.validate(currentBasketObj, JSON_SCHEMA_OBJ);
