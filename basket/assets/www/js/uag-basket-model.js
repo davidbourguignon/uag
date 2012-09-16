@@ -70,7 +70,7 @@ var uag = (function(parent, $, window, document, undefined) {
      */
     uAgBasket.Basket.getDateFromKey = function(keyStr) {
         var isoDateStr = keyStr.slice(uAgBasket.PREFIX_STR.length); // removing initial prefix
-        return new Date(isoDateStr);
+        return new Date().fromISOString(isoDateStr);
     };
 
     /**
@@ -82,7 +82,7 @@ var uag = (function(parent, $, window, document, undefined) {
         // Could do that with a loop over Basket prototype properties?
         // TODO
         // sanity check with timestamp (converting to full ISO8601 format, with ms)
-        var date = new Date(obj.timestamp);
+        var date = new Date().fromISOString(obj.timestamp);
         obj.timestamp = date.toISOString();
         // productify products
         for (var i = 0, len = obj.products.length; i < len; i++) {
@@ -468,7 +468,7 @@ var uag = (function(parent, $, window, document, undefined) {
             getInstance: function() {
                 if (instance === null) {
                     instance = init();
-                    Object.freeze(instance);
+                    //Object.freeze(instance); // not supported on Android 2.2 (works on 4.1)
                 }
                 return instance;
             },

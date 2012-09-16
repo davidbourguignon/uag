@@ -370,7 +370,7 @@ var uag = (function(parent, $, window, document, undefined) {
             getInstance: function() {
                 if (instance === null) {
                     instance = init();
-                    Object.freeze(instance);
+                    //Object.freeze(instance); // not supported on Android 2.2 (works on 4.1)
                 }
                 return instance;
             },

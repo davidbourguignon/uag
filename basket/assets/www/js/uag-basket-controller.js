@@ -177,7 +177,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     // View-Controller tightly coupled: is there a better way?
                     // TODO
                     var model = uAgBasket.Model.getInstance();
-                    var date = new Date($(event.target).attr('id'));
+                    var date = new Date().fromISOString($(event.target).attr('id'));
                     var isBasketSet = model.setCurrentBasketFromDate(date);
                     if (!isBasketSet) {
                         console.error('Error: current basket not set');
@@ -226,7 +226,7 @@ var uag = (function(parent, $, window, document, undefined) {
             getInstance: function() {
                 if (instance === null) {
                     instance = init();
-                    Object.freeze(instance);
+                    //Object.freeze(instance); // not supported on Android 2.2 (works on 4.1)
                 }
                 return instance;
             },

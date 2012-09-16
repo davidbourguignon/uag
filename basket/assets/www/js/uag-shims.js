@@ -38,7 +38,7 @@ if (!Date.prototype.fromISOString) {
                 rx = /^(\d{4}\-\d\d\-\d\d([tT][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/,
                 p = rx.exec(s) || [];
                 if (p[1]) {
-                    day= p[1].split(/\D/);
+                    day = p[1].split(/\D/);
                     for (var i = 0, L = day.length; i < L; i++) {
                         day[i] = parseInt(day[i], 10) || 0;
                     }
@@ -50,10 +50,10 @@ if (!Date.prototype.fromISOString) {
                     if (p[5]) {
                         tz = (parseInt(p[5], 10)*60);
                         if (p[6]) {
-                            tz+= parseInt(p[6], 10);
+                            tz += parseInt(p[6], 10);
                         }
                         if (p[4] === '+') {
-                            tz*= -1;
+                            tz *= -1;
                         }
                         if (tz) {
                             day.setUTCMinutes(day.getUTCMinutes()+ tz);
@@ -63,7 +63,7 @@ if (!Date.prototype.fromISOString) {
                 }
                 return NaN;
             }
-            console.warn('Warning: ISO 8601 Date object not correctly implemented');
+            console.warn('Warning: ISO 8601 Date object not correctly implemented -- providing new function fromISOString instead');
         } else {
             Date.prototype.fromISOString = function(s) { // my contribution
                 return new Date(s);
