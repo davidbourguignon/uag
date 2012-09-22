@@ -6,9 +6,8 @@
 /**
  * @fileOverview uAg Basket Model
  * @author <a href="http://www.davidbourguignon.net">David Bourguignon</a>
- * @version 2012-09-06
+ * @version 2012-09-11
  */
-/** @namespace uAg project */
 var uag = (function(parent, $, window, document, undefined) {
     'use strict';
     // namespace declarations
@@ -18,8 +17,9 @@ var uag = (function(parent, $, window, document, undefined) {
     /**
      * @const
      * @exports uAgBasket.PREFIX_STR as uag.basket.PREFIX_STR
+     * @description Prefix string used for Basket app purposes, to avoid storage key collision with other apps.
      */
-    uAgBasket.PREFIX_STR = 'uag-basket-'; // useful to avoid storage key collision with other apps
+    uAgBasket.PREFIX_STR = 'uag-basket-';
 
     /**
      * @class
@@ -70,17 +70,25 @@ var uag = (function(parent, $, window, document, undefined) {
      */
     uAgBasket.Basket.getDateFromKey = function(keyStr) {
         var isoDateStr = keyStr.slice(uAgBasket.PREFIX_STR.length); // removing initial prefix
-        return new Date(isoDateStr);
+        return new Date().fromISOString(isoDateStr);
     };
 
     /**
-     * @description Decorate a JSON data object following the basket JSON Schema with Basket prototype methods.
+     * @description Decorate a JSON data object following the basket JSON Schema as a Basket object.
      * @param {object} obj JSON data object.
      * @returns {object} Decorated JSON data object.
      */
-    uAgBasket.Basket.decorate = function(obj) {
+    uAgBasket.Basket.basketify = function(obj) {
         // Could do that with a loop over Basket prototype properties?
         // TODO
+        // sanity check with timestamp (converting to full ISO8601 format, with ms)
+        var date = new Date().fromISOString(obj.timestamp);
+        obj.timestamp = date.toISOString();
+        // productify products
+        for (var i = 0, len = obj.products.length; i < len; i++) {
+            obj.products[i] = uAgBasket.Product.productify(obj.products[i]);
+        }
+        // add Basket methods
         obj.toString = uAgBasket.Basket.prototype.toString;
         obj.getKey = uAgBasket.Basket.prototype.getKey;
         return obj;
@@ -104,8 +112,10 @@ var uag = (function(parent, $, window, document, undefined) {
         this.producerName = '?';
         this.weight = 0;
         this.isIn = false;
-        this.tag = null;
-        this.images = []; // TODO storing data or filenames? check if what is the right idea
+        this.tag = new uAgUtils.Tag(); // default: empty tag
+        // storing data or filenames? check if what is the right idea
+        // TODO
+        //this.images = [];
     };
 
     /** @description Using JSON stringification with pretty print (4 white spaces per indentation). */
@@ -115,8 +125,31 @@ var uag = (function(parent, $, window, document, undefined) {
         return JSON.stringify(this, null, indentation);
     };
 
-    /** @const */
-    uAgBasket.Product.PREFIX_STR = 'product-'; // useful for building id string values in HTML elements
+    /**
+     * @description Decorate a JSON data object following the product JSON Schema as a Product object.
+     * @param {object} obj JSON data object.
+     * @returns {object} Decorated JSON data object.
+     */
+    uAgBasket.Product.productify = function(obj) {
+        // Could do that with a loop over Product prototype properties?
+        // TODO
+        // fill in non required fields in product JSON schema
+        if(obj.producerName === undefined) {
+            obj.producerName = '?';
+        }
+        if (obj.tag === undefined) {
+            obj.tag = new uAgUtils.Tag();
+        }
+        // add Product methods
+        obj.toString = uAgBasket.Product.prototype.toString;
+        return obj;
+    };
+
+    /**
+     * @const
+     * @description Prefix string used for building product id string values in HTML elements.
+     */
+    uAgBasket.Product.PREFIX_STR = 'product-';
 
     /**
      * @class
@@ -127,7 +160,7 @@ var uag = (function(parent, $, window, document, undefined) {
      */
     uAgUtils.Tag = function(text, format) {
         this.text = text || ''; // sanity assignement
-        this.format = format || ''; // sanity assignement
+        this.format = format || 'QR_CODE'; // sanity assignement
     };
 
     /** @description Using JSON stringification with pretty print (4 white spaces per indentation). */
@@ -167,7 +200,7 @@ var uag = (function(parent, $, window, document, undefined) {
                     "products": {
                         "description": "list of products in the basket",
                         "type": "array",
-                        "required": false,
+                        "required": true,
                         "items": {
                             "description": "JSON schema describing product data",
                             "type": "object",
@@ -315,11 +348,9 @@ var uag = (function(parent, $, window, document, undefined) {
                         var result = JSV_ENVIRONMENT_OBJ.validate(obj, JSON_SCHEMA_OBJ);
                         if (result.errors.length === 0) { // success JSON schema
                             console.info('Info: input string follows JSON schema for basket data');
-                            currentBasketObj = uAgBasket.Basket.decorate(obj);
 
-                            // sanity check with timestamp
-                            var date = new Date(currentBasketObj.timestamp);
-                            currentBasketObj.timestamp = date.toISOString(); // converting to full ISO8601 format (with ms)
+                            // decorate JSON object
+                            currentBasketObj = uAgBasket.Basket.basketify(obj);
                             return true;
                         } else { // failure JSON schema
                             var errorArr = result.errors;
@@ -346,7 +377,7 @@ var uag = (function(parent, $, window, document, undefined) {
                         // sanity check with JSON parse
                         try {
                             var obj = JSON.parse(basketStr);
-                            currentBasketObj = uAgBasket.Basket.decorate(obj);
+                            currentBasketObj = uAgBasket.Basket.basketify(obj);
                             return true;
                         } catch (e) {
                             console.error(e.message);
@@ -387,6 +418,7 @@ var uag = (function(parent, $, window, document, undefined) {
                 storeCurrentBasket: function() {
                     // sanity check with current basket
                     if (currentBasketObj !== null) {
+                        console.info('Info: current basket details\n' + currentBasketObj.toString());
 
                         // sanity check with JSON schema
                         var result = JSV_ENVIRONMENT_OBJ.validate(currentBasketObj, JSON_SCHEMA_OBJ);
@@ -436,7 +468,7 @@ var uag = (function(parent, $, window, document, undefined) {
             getInstance: function() {
                 if (instance === null) {
                     instance = init();
-                    Object.freeze(instance);
+                    //Object.freeze(instance); // not supported on Android 2.2 (works on 4.1)
                 }
                 return instance;
             },

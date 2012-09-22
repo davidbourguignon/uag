@@ -12,8 +12,6 @@ public class MainActivity extends DroidGap
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //super.loadUrl("file:///android_asset/www/barcodescanner-demo.html");//TMP
         super.loadUrl("file:///android_asset/www/uag-basket-view.html");
-        //super.loadUrl("file:///android_asset/www/test.html");//TMP
     }
 }
