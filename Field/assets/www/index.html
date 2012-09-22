@@ -19,14 +19,16 @@
 <script type="text/javascript" charset="utf-8" src="js/uag/uagFieldDataContext.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/uag/uagFieldController.js"></script>
 <!-- <script type="text/javascript" charset="utf-8" src="js/index.js"></script> -->
+<!-- jQuery Mobile is called after registering callback for mobileinit event -->
+<!-- mettre ici appel à cordova on device ready avec le mobileinit event -->
 <script type="text/javascript" charset="utf-8" src="js/jquery/jquery.mobile-1.1.1.js"></script>
 
 </head>
-<body>
+<body onload="onLoad()">
 
 	<div data-role="page" id="containers-list-page">
 	
-		<div data-role="header" data-position="inline">
+		<div data-role="header" data-position="fixed">
 			<h1>Containers</h1>
 			<a href="#setup-page" data-role="button" data-icon="gear" class="ui-btn-right">Setup</a>
 		</div>
@@ -35,7 +37,7 @@
 			<ul data-role="listview" id="containers-list-page-content-list"></ul>
 		</div>
 		
-		<div data-role="footer">
+		<div data-role="footer" data-position="fixed">
 			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left" style="margin: 1px">
 				<a href="#container-page" data-role="button" data-icon="plus">Add</a>
 				<a data-role="button" id="containers-list-page-footer-reset" data-icon="delete">Reset</a>
@@ -48,7 +50,7 @@
 	
 	<div data-role="page" id="container-page">
 
-		<div data-role="header" data-position="inline">
+		<div data-role="header" data-position="fixed">
 			<a href="#containers-list-page" data-icon="home" data-iconpos="notext" data-role="button">Home</a>
 			<h1>Container</h1>
 		</div>
@@ -73,7 +75,7 @@
 			</form>
 		</div>
 		
-		<div data-role="footer">
+		<div data-role="footer" data-position="fixed">
 			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left" style="margin: 1px">
 				<a href="#" id="container-page-save" data-role="button" data-icon="check">Save</a>
 				<a href="#" id="container-page-delete" data-role="button" data-icon="delete">Delete</a> 
@@ -86,7 +88,7 @@
 	
 	<div data-role="page" id="setup-page">
 
-		<div data-role="header" data-position="inline">
+		<div data-role="header" data-position="fixed">
 			<a href="#containers-list-page" data-role="button" data-icon="home" data-iconpos="notext">Home</a>
 			<h1>Setup</h1>
 			<a id="setup-page-import" href="#" data-role="button" data-icon="plus">Import</a>
@@ -101,7 +103,7 @@
 			</form>
 		</div>
 
-		<div data-role="footer">
+		<div data-role="footer" data-position="fixed">
 			<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left" style="margin: 1px">
 				<a id="setup-page-save" href="" data-role="button" data-icon="check">Save</a>
 				<a id="setup-page-reset" href="#" data-role="button" data-icon="delete">Reset</a>

@@ -50,13 +50,14 @@ uag.field.Controller = (function($, dataContext) {
 	
 	/** @description <b>init method</b>, bootstrap controller application  
 	 * @name uag.field.Controller.init
+	 * @deprecated
 	 * @function
 	 * @static 
 	 */
 	var init = function() {
 		
 		//dataContext.init();
-		
+		/*
 		$(document).bind("pagebeforechange", onPageBeforeChange);
 		$(document).bind("pagechange", onPageChange);
 		
@@ -74,18 +75,57 @@ uag.field.Controller = (function($, dataContext) {
 		// containers list page event 
 		$(document).delegate("#" + containersListPageFooterResetSelector, tapEvent, onResetContainersTapped);
 		$(document).delegate("#" + containersListPageFooterExportSelector, tapEvent, onExportContainersTapped);
-		
+		*/
 	};
-
-	/** @description <b>onPageBeforeChange method</b>, callback event method linked to jQuery mobile pagebeforechange event
-	 * @name uag.field.Controller.onPageBeforeChange
+	
+	/** @description <b>pageInit method</b>, callback event method linked to jQuery mobile pageinit event
+	 * @name uag.field.Controller.pageInit
 	 * @private
 	 * @function
 	 * @param event 
 	 * @param data 
 	 */
-	var onPageBeforeChange = function(event, data) {
-		//alert("pagebeforechange");
+	var pageInit = function(event, data) {
+		console.log("fieldController.pageInit()");
+		// 
+		var pageId = $(event.target).attr('id'); 
+		switch(pageId) {
+			case "containers-list-page" :
+				console.log("init page containers-list-page");
+				// attach event to control
+				$("#" + containersListPageFooterResetSelector).on(tapEvent, onResetContainersTapped);
+				$("#" + containersListPageFooterExportSelector).on(tapEvent, onExportContainersTapped);
+				break;
+			case "container-page" : 
+				console.log("init page container-page");
+				// attach event to control
+				$("#" + containerPageSaveSelector).on(tapEvent, onSaveContainerTapped);
+				$("#" + containerPageDeleteSelector).on(tapEvent, onDeleteContainerTapped);
+				$("#" + containerPageEncodeSelector).on(tapEvent, onEncodeContainerTapped);
+				$("#" + containerPageFormFieldsSelector).on("change", onFieldChanged);
+				break;
+			case "setup-page" : 
+				console.log("init page setup-page");
+				// attach event to control
+				$("#" + setupPageResetSelector).on(tapEvent, onResetTapped);
+				$("#" + setupPageImportSelector).on(tapEvent, onImportProducersTapped);
+				$("#" + setupPageSaveSelector).on(tapEvent, onSaveWorkerTapped);
+				break;
+			default : 
+				console.log("init page default");
+				break
+		}
+	};
+	
+	/** @description <b>pageBeforeChange method</b>, callback event method linked to jQuery mobile pagebeforechange event
+	 * @name uag.field.Controller.pageBeforeChange
+	 * @private
+	 * @function
+	 * @param event 
+	 * @param data 
+	 */
+	var pageBeforeChange = function(event, data) {
+		console.log("fieldController.pageBeforeChange()");
 		
 		// TODO : refexion on this specific code 
 		
@@ -124,15 +164,16 @@ uag.field.Controller = (function($, dataContext) {
 		}
 	};
 	
-	/** @description <b>onPageChange method</b>, callback event method linked to jQuery mobile onPageChange event   
-	 * @name uag.field.Controller.onPageChange
+	/** @description <b>pageChange method</b>, callback event method linked to jQuery mobile onPageChange event   
+	 * @name uag.field.Controller.pageChange
 	 * @private
 	 * @function
 	 * @param event 
 	 * @param data 
 	 */
-	var onPageChange = function(event, data) {
-		//alert("pagechange");
+	var pageChange = function(event, data) {
+		console.log("fieldController.pageChange()");
+		
 		var toPageId = data.toPage.attr("id");
 		//alert(toPageId);
 		switch(toPageId) {
@@ -140,6 +181,8 @@ uag.field.Controller = (function($, dataContext) {
 			case containersListPageSelector : 
 				//alert("containers list");
 				renderContainersListPage();
+				// reset container page input hidden (id) value  
+				$("#" + containerPageFormIdSelector).val("");
 				break;
 				
 			case containerPageSelector : 
@@ -163,7 +206,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderContainersListPage = function() {
-		//alert("renderContainersListPage");
+		console.log("fieldController.renderContainersListPage()");
+		// render 
 		renderContainersListPageContent();
 		renderContainersListPageFooter();
 	};
@@ -174,7 +218,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderContainersListPageFooter = function() {
-		//alert("renderContainersListTitle");
+		console.log("fieldController.renderContainersListPageFooter()");
+		
 		var worker = dataContext.WorkerContainers.getWorker();
 		 
 		var footerText = "";
@@ -193,7 +238,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderContainersListPageContent = function() {
-		//alert("renderContainersListContent");
+		console.log("fieldController.renderContainersListPageContent()");
+		
 		var containers = dataContext.WorkerContainers.getContainers();
 		var view = $("#" + containersListPageContentListSelector);
 		view.empty();
@@ -234,7 +280,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderContainerPage = function() {
-		//alert("renderContainerPage");		
+		console.log("fieldController.renderContainerPage()");
+		
 		var qualityId = null;
 		var fieldId = null;
 		var productId = null 
@@ -266,7 +313,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderQualitiesSelectList = function(selectedValue) {
-		//alert("renderQualitiesSelectList");
+		console.log("fieldController.renderQualitiesSelectList()");
+		
 		var qualities = dataContext.Producers.getQualities();
 		return renderSelectListOptions(containerPageFormQualitiesSelector, qualities, selectedValue);
 	};
@@ -277,7 +325,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderFieldsSelectList = function(selectedValue) {
-		//alert("renderFieldsSelectList");
+		console.log("fieldController.renderFieldsSelectList()");
+		
 		var fields = dataContext.Producers.getFields();
 		return renderSelectListOptions(containerPageFormFieldsSelector, fields, selectedValue);
 	};
@@ -288,7 +337,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderProductsSelectList = function(fieldId, selectedValue) {
-		//alert("renderProductsSelectList");
+		console.log("fieldController.renderProductsSelectList()");
+		
 		var products = dataContext.Producers.getFieldProducts(fieldId);
 		return renderSelectListOptions(containerPageFormProductsSelector, products, selectedValue);
 	};
@@ -299,7 +349,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderSetupPage = function() {
-		//alert("renderSetupPage");
+		console.log("fieldController.renderSetupPage()");
+		
 		var worker = dataContext.WorkerContainers.getWorker();
 		if (worker.isAvailable) {
 			$("#" + setupPageFormNameSelector).val(worker.name);
@@ -316,7 +367,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderProducersSelectList = function(selectedValue) {
-		//alert("renderProducersList");
+		console.log("fieldController.renderProducersSelectList()");
+		
 		var producers = dataContext.Producers.get();
 		return renderSelectListOptions(setupPageFormProducerSelector, producers, selectedValue);
 	};
@@ -327,6 +379,7 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var renderSelectListOptions = function(selector, list, selectedValue) {
+		console.log("fieldController.renderSelectListOptions()");
 		// 
 		var selectedItemId = "";
 		var view = $("#" + selector);
@@ -363,7 +416,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onResetTapped = function() {
-		//alert("onResetTapped");
+		console.log("fieldController.onResetTapped()");
+		
 		dataContext.Producers.clear();
 		dataContext.WorkerContainers.clear();
 		renderSetupPage();
@@ -375,9 +429,11 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onImportProducersTapped = function() {
-		//alert("onImportProducersTapped");
+		console.log("fieldController.onImportProducersTapped()");
 		
 		// TODO : miss select import file logic 
+		//var producerId = dataContext.Import.addProducer(jsonProducer);
+		//renderProducersSelectList(producerId);
 		
 		var selectedFile = "file:///mnt/sdcard/Download/Bluetooth/producerId1.json";
 		
@@ -409,6 +465,7 @@ uag.field.Controller = (function($, dataContext) {
 					console.log("resolveLocalFileSystemURI - error : " + error.code);
 				}
 		);
+		
 	};
 	
 	/** @description <b>onSaveWorkerTapped method</b>, callback event method linked to application setup save worker event 
@@ -417,7 +474,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onSaveWorkerTapped = function() {
-		//alert("onSaveWorkerTapped");
+		console.log("fieldController.onSaveWorkerTapped()");
+		
 		var workerNameTextInput = $("#" + setupPageFormNameSelector);
 		var producersSelectList = $("#" + setupPageFormProducerSelector);
 		var uuid = device.uuid;
@@ -433,7 +491,7 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onSaveContainerTapped = function() {
-		//alert("onSaveContainerTapped");
+		console.log("fieldController.onSaveContainerTapped()");
 		// get user input 
 		var idHiddenInput = $("#" + containerPageFormIdSelector);
 		var weightTextInput = $("#" + containerPageFormWeightSelector);
@@ -465,6 +523,9 @@ uag.field.Controller = (function($, dataContext) {
 			// TODO : error message 
 		}
 		
+		// reset hidden input (id) value 
+		idHiddenInput.val("");
+		
 		// redirect to containers list page 
 		$.mobile.changePage($("#" + containersListPageSelector));
 	};
@@ -475,7 +536,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onDeleteContainerTapped = function() {
-		//alert("onDeleteContainerTapped");
+		console.log("fieldController.onDeleteContainerTapped()");
+		
 		dataContext.WorkerContainers.removeContainer(containerId);
 		// redirect to containers list page 
 		$.mobile.changePage($("#" + containersListPageSelector));
@@ -487,7 +549,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onEncodeContainerTapped = function() {
-		//alert(onEncodeContainerTapped);
+		console.log("fieldController.onEncodeContainerTapped()");
+		
 		var dataToEncode = "http://www.mobiledevelopersolutions.com";
 		
 	    window.plugins.barcodeScanner.encode(
@@ -507,7 +570,8 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onFieldChanged = function() {
-		//alert("onFieldChanged");
+		console.log("fieldController.onFieldChanged()");
+		
 		var fieldId = $("#" + containerPageFormFieldsSelector).val();
 		// 
 		renderProductsSelectList(fieldId);
@@ -519,22 +583,20 @@ uag.field.Controller = (function($, dataContext) {
 	 * @function
 	 */
 	var onResetContainersTapped = function() {
-		//alert("onResetContainersTapped");
+		console.log("fieldController.onResetContainersTapped()");
+		
 		dataContext.WorkerContainers.removeContainers();
 		renderContainersListPageContent();
 	};
 	
 	var onExportContainersTapped = function() {
-		console.log("onExportContainersTapped");
-		
+		console.log("fieldController.onExportContainersTapped()");
 		// set data
 		var data = JSON.stringify(dataContext.WorkerContainers.get());
-		
 		// create exported data file 
 		var fileName = "workerId1.json";
 		var fileDirectory = "file:///mnt/sdcard/Download/Bluetooth/";
 		var filePath = "file:///mnt/sdcard/Download/Bluetooth/workerId1.json";
-		
 		// phonegap file write 
 		window.resolveLocalFileSystemURI(fileDirectory, succes, fail); 
 
@@ -560,10 +622,110 @@ uag.field.Controller = (function($, dataContext) {
 	};
 	
 	return {
-		init : init
+		//init : init
+		onPageInit : pageInit, 
+		onPageBeforeChange : pageBeforeChange, 
+		onPageChange : pageChange
 	};
 	
 } (jQuery, uag.field.dataContext));
+
+
+
+// JQUERY MOBILE
+//setting jQuery mobile mobileinit event callback function 
+$(document).bind("mobileinit", onMobileInit);
+
+//mobileinit event callback function 
+function onMobileInit(event, data) { 
+	"use strict";
+	
+	console.log("jQuery mobile mobileinit event"); 
+	
+	// idealy here apply overrides to jQuery Mobile's default auto-initialization configuration 
+	//properties on $.mobile.
+}
+
+//setting jQuery mobile page initialization event callback function
+$(document).bind("pageinit", uag.field.Controller.onPageInit);	
+//setting jQuery mobile page change events callback function
+$(document).bind("pagebeforechange", uag.field.Controller.onPageBeforeChange);
+$(document).bind("pagechange", uag.field.Controller.onPageChange);
+
+/*
+//setting jQuery mobile page event callback 
+//setting others jQuery mobile page initialization event callback function
+$(document).bind("pagebeforecreate", function(event, data) { console.log("jQuery mobile pagebeforecreate event"); });
+$(document).bind("pagecreate", function(event, data) { console.log("jQuery mobile pagecreate event"); });
+$(document).bind("pageinit", onPageInit);	
+//setting jQuery mobile page change events callback function
+$(document).bind("pagebeforechange", function(event, data) { console.log("jQuery mobile pagebeforechange event"); });
+$(document).bind("pagechange", function(event, data) { console.log("jQuery mobile pagechange event"); });
+$(document).bind("pagechangefailed", function(event, data) { console.log("jQuery mobile pagechangefailed event"); });
+//setting jQuery mobile page transition event callback function 
+$(document).bind("pagebeforeshow", function(event, ui) { console.log("jQuery mobile pagebeforeshow event"); });
+$(document).bind("pagebeforehide", function(event, ui) { console.log("jQuery mobile pagebeforehide event"); });
+$(document).bind("pageshow", function(event, ui) { console.log("jQuery mobile pageshow event"); });
+$(document).bind("pagehide", function(event, ui) { console.log("jQuery mobile pagehide event"); });
+
+//setting jQuery mobile touch events callback function : tap, taphold, swipe, swipeleft, swiperight, 
+//setting jQuery mobile virtual mouse events callback function : vmouseover, vmousedown, vmousemove, vmouseup, vmouseclick, vmousecancel 
+//setting jQuery mobile orientation change event callback function : orientationchange
+//setting jQuery mobile scroll events callback function : scrollstart, scrollstop 
+//setting jQuery mobile page load events callback function : pagebeforeload, pageload, pageloadfailed
+*/
+
+
+// APACHE CORDOVA 
+
+// At this point, the document has loaded but cordova-2.0.0.js has not.
+function onLoad() {
+	"use strict";
+	
+	// When Cordova is loaded and talking with the native device, it will call the event "deviceready".
+    document.addEventListener("deviceready", onDeviceReady, false);
+    
+}
+
+// Cordova is loaded and it is now safe to make calls Cordova methods
+function onDeviceReady() {
+	"use strict";
+    
+    // Handle the pause event
+    document.addEventListener("pause", onPause, false);
+    function onPause() { console.log("cordova pause event "); }
+    
+    // Handle the resume event
+    document.addEventListener("resume", onResume, false);
+    function onResume() { console.log("cordova resume event "); }
+
+    // Handle the back button
+    document.addEventListener("backbutton", onBackKeyDown, false);
+    function onBackKeyDown() { console.log("cordova back button event "); }
+    
+    // Handle the menu button
+    document.addEventListener("menubutton", onMenuKeyDown, false);
+    function onMenuKeyDown() { console.log("cordova menu button event "); }
+    
+    // Handle the search button
+    document.addEventListener("searchbutton", onSearchKeyDown, false);
+    function onSearchKeyDown() { console.log("cordova search button event "); }
+
+    // Handle the start call button
+    document.addEventListener("startcallbutton", onStartCallKeyDown, false);
+    function onStartCallKeyDown() { console.log("cordova start call button event "); }
+    
+    // Handle the end call button
+    document.addEventListener("endcallbutton", onEndCallKeyDown, false);
+    function onEndCallKeyDown() { console.log("cordova end call button event "); }
+    
+	// place to bootstrap application 
+	//uag.field.Controller.init();    
+
+}
+
+
+
 
 /*
 // on the web 
@@ -571,7 +733,7 @@ $(document).bind("mobileinit", function () {
 	uag.field.Controller.init();
 });
 */
-
+/*
 // cordova is ready 
 function onDeviceReady() {
 	"use strict";
@@ -586,3 +748,4 @@ function onDeviceReady() {
 
 // on mobile phone  
 document.addEventListener("deviceready", onDeviceReady, false);
+*/
